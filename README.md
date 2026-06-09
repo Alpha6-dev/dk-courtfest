@@ -17,9 +17,13 @@ Part of the **Alpha 6 / Tech 6** stack: **React 19 + Vite + Tailwind 4 + TypeScr
 | Admin contacts / CRM | ✅ `/admin/contacts` |
 | Ticketing — issue, QR, public ticket page, WhatsApp share | ✅ `/admin/tickets` |
 | Check-in — manual + camera scan, live headcount | ✅ `/admin/checkin` |
+| **Offline-first check-in PWA** (local ticket cache + queued sync, installable) | ✅ |
 | Mobile-money payments (Wave/Orange Money via CinetPay/PayDunya) | 🟡 scaffold — see [PAYMENTS.md](./PAYMENTS.md) |
 
-**Next:** offline-first check-in PWA (local cache + queued sync), tournament + broadcast overlays, analytics + SYSCOHADA ledger export.
+**Next:** tournament brackets + broadcast overlays, analytics + SYSCOHADA ledger export.
+
+### Offline check-in (PWA)
+Installable web app (Add to Home Screen). Staff **sync the ticket manifest once online**, then the scanner validates QR codes **entirely on-device** (IndexedDB) and queues each scan; queued check-ins flush to Supabase via the idempotent `sync_check_ins` RPC when the connection returns. Built for the patchy signal at Place de l'Indépendance.
 
 ## Setup
 

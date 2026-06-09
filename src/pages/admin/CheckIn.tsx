@@ -1,6 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { supabase } from '../../lib/supabase'
+import {
+  cacheTickets,
+  ticketCount,
+  localFind,
+  markLocalUsed,
+  enqueue,
+  queueAll,
+  queueCount,
+  dequeue,
+  uid,
+  type CachedTicket,
+} from '../../lib/offline'
 
 interface Verdict {
   ok: boolean
@@ -10,38 +22,125 @@ interface Verdict {
   already?: boolean
 }
 
-// Phase 3 starter: online check-in. Manual token entry always works; camera
-// scanning uses the browser BarcodeDetector when available (Chrome/Android).
-// The full offline-first PWA (local cache + queued sync) is the next iteration.
+// Offline-first check-in. Sync the ticket manifest once online, then validate
+// QR codes locally (no network) and queue scans; they flush to Supabase when
+// the connection returns. Built for the patchy signal at the venue.
 export default function CheckIn() {
   const [token, setToken] = useState('')
   const [last, setLast] = useState<Verdict | null>(null)
-  const [count, setCount] = useState(0)
+  const [session, setSession] = useState(0)
+  const [online, setOnline] = useState(navigator.onLine)
+  const [cached, setCached] = useState(0)
+  const [pending, setPending] = useState(0)
   const [scanning, setScanning] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
 
+  async function refreshCounts() {
+    setCached(await ticketCount())
+    setPending(await queueCount())
+  }
+
+  useEffect(() => {
+    refreshCounts()
+    const up = () => {
+      setOnline(true)
+      flushQueue()
+    }
+    const down = () => setOnline(false)
+    window.addEventListener('online', up)
+    window.addEventListener('offline', down)
+    return () => {
+      window.removeEventListener('online', up)
+      window.removeEventListener('offline', down)
+    }
+  }, [])
+
+  // Download the ticket manifest to this device (requires login + network).
+  async function syncTickets() {
+    if (!navigator.onLine) return toast.error('Hors-ligne — connexion requise pour synchroniser.')
+    const { data, error } = await supabase.from('tickets').select('qr_token, holder_name, type, status')
+    if (error) return toast.error(error.message)
+    const rows: CachedTicket[] = (data ?? []).map((t) => ({
+      token: t.qr_token as string,
+      holder: t.holder_name as string,
+      type: t.type as string,
+      status: t.status as string,
+    }))
+    await cacheTickets(rows)
+    await refreshCounts()
+    toast.success(`${rows.length} billets synchronisés sur l'appareil.`)
+  }
+
+  // Push queued offline scans to the server (idempotent via client_id).
+  async function flushQueue() {
+    const items = await queueAll()
+    if (!items.length || !navigator.onLine) return
+    const { data, error } = await supabase.rpc('sync_check_ins', {
+      p_rows: items.map((i) => ({
+        token: i.token,
+        gate: i.gate,
+        scanned_at: i.scanned_at,
+        client_id: i.client_id,
+        device: 'pwa',
+      })),
+    })
+    if (error) return // stay queued, retry next time
+    await dequeue(items.map((i) => i.client_id))
+    await refreshCounts()
+    const r = data as { inserted: number }
+    if (r?.inserted) toast.success(`${r.inserted} entrées synchronisées.`)
+  }
+
   async function validate(raw: string) {
     const t = raw.trim()
     if (!t) return
-    const { data, error } = await supabase.rpc('check_in_ticket', { p_token: t, p_gate: 'main' })
-    if (error) return toast.error(error.message)
-    const v = data as Verdict
-    setLast(v)
     setToken('')
-    if (v.ok && !v.already) {
-      setCount((c) => c + 1)
-      toast.success(`Entrée — ${v.holder}`)
-    } else if (v.ok && v.already) {
-      toast.warning(`Déjà scanné — ${v.holder}`)
+
+    const local = await localFind(t)
+    if (local) {
+      if (local.status === 'used') {
+        setLast({ ok: true, already: true, holder: local.holder, type: local.type })
+        toast.warning(`Déjà scanné — ${local.holder}`)
+        return
+      }
+      // Accept locally, record to queue, optimistic mark used.
+      await markLocalUsed(t)
+      await enqueue({
+        client_id: uid(),
+        token: t,
+        gate: 'main',
+        scanned_at: new Date().toISOString(),
+        holder: local.holder,
+      })
+      await refreshCounts()
+      setSession((c) => c + 1)
+      setLast({ ok: true, holder: local.holder, type: local.type })
+      toast.success(`Entrée — ${local.holder}`)
+      if (navigator.onLine) flushQueue()
+      return
+    }
+
+    // Not in local cache.
+    if (navigator.onLine) {
+      const { data, error } = await supabase.rpc('check_in_ticket', { p_token: t, p_gate: 'main' })
+      if (error) return toast.error(error.message)
+      const v = data as Verdict
+      setLast(v)
+      if (v.ok && !v.already) {
+        setSession((c) => c + 1)
+        toast.success(`Entrée — ${v.holder}`)
+      } else if (v.ok) toast.warning(`Déjà scanné — ${v.holder}`)
+      else toast.error(v.reason === 'not_found' ? 'Billet inconnu' : `Refusé — ${v.reason}`)
     } else {
-      toast.error(v.reason === 'not_found' ? 'Billet inconnu' : `Refusé — ${v.reason}`)
+      setLast({ ok: false, reason: 'non-synchronisé' })
+      toast.error('Billet inconnu hors-ligne — synchronisez d’abord.')
     }
   }
 
   async function startScan() {
-    const Detector = (window as any).BarcodeDetector
-    if (!Detector) return toast.error('Scanner non supporté ici — saisissez le code manuellement.')
+    const Detector = (window as unknown as { BarcodeDetector?: any }).BarcodeDetector
+    if (!Detector) return toast.error('Scanner non supporté — saisissez le code manuellement.')
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
       streamRef.current = stream
@@ -55,9 +154,7 @@ export default function CheckIn() {
         if (!streamRef.current || !videoRef.current) return
         try {
           const codes = await detector.detect(videoRef.current)
-          if (codes.length) {
-            await validate(codes[0].rawValue)
-          }
+          if (codes.length) await validate(codes[0].rawValue)
         } catch {
           /* ignore frame errors */
         }
@@ -65,7 +162,7 @@ export default function CheckIn() {
       }
       requestAnimationFrame(tick)
     } catch {
-      toast.error("Accès caméra refusé.")
+      toast.error('Accès caméra refusé.')
     }
   }
 
@@ -79,10 +176,26 @@ export default function CheckIn() {
 
   return (
     <section className="max-w-xl">
-      <h1 className="font-display text-5xl uppercase text-bone">
-        Check-in <span className="text-lion">· {count}</span>
-      </h1>
-      <p className="label mt-1 text-white/30">Entrées validées cette session</p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display text-5xl uppercase text-bone">
+          Check-in <span className="text-lion">· {session}</span>
+        </h1>
+        <span className={`label ${online ? 'text-lion' : 'text-flame'}`}>
+          ● {online ? 'En ligne' : 'Hors-ligne'}
+        </span>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-4">
+        <button onClick={syncTickets} className="label text-flame hover:text-sun">
+          ⟳ Synchroniser les billets
+        </button>
+        <span className="label text-white/40">{cached} en cache</span>
+        {pending > 0 && (
+          <button onClick={flushQueue} className="label text-sun hover:text-bone">
+            {pending} en attente ↑
+          </button>
+        )}
+      </div>
 
       <form
         onSubmit={(e) => {
