@@ -1,0 +1,8 @@
+# Minimal Supabase CLI config for DK CourtFest.
+# project_id is the local reference label (any slug); the remote is targeted
+# explicitly via --db-url / --project-ref when pushing.
+project_id = "dk-courtfest"
+
+[db]
+# Postgres major version of the hosted project (Supabase is on 15+).
+major_version = 15

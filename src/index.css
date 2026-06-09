@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Brand tokens — straight from the DK CourtFest Graphic Chart V1.0 */
+@theme {
+  --color-onyx: #0a0a0c; /* Court Onyx   — base */
+  --color-flame: #ff5c00; /* Dakar Flame  — voice, the K */
+  --color-sun: #ffb800; /* Téranga Sun  — highlights */
+  --color-lion: #00c853; /* Lion Green   — live/go */
+  --color-bone: #f5f0e8; /* Bone White   — type, negative */
+
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Barlow Condensed", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-onyx);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utility: the locked uppercase mono label used across the chart */
+.label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.7rem;
+}
