@@ -5,6 +5,21 @@ export type ContactType = 'sponsor' | 'partner' | 'media' | 'volunteer' | 'vip'
 export type TeamStatus = 'pending' | 'confirmed' | 'waitlist' | 'withdrawn'
 export type TicketType = 'general' | 'vip' | 'player' | 'staff'
 export type TicketStatus = 'valid' | 'used' | 'void'
+export type MatchStatus = 'scheduled' | 'live' | 'final' | 'cancelled'
+
+export interface Match {
+  id: string
+  edition_id: string
+  division: Division
+  round: string | null
+  team_a: string | null
+  team_b: string | null
+  score_a: number
+  score_b: number
+  court: string | null
+  scheduled_at: string | null
+  status: MatchStatus
+}
 
 export interface Ticket {
   id: string

@@ -18,9 +18,16 @@ Part of the **Alpha 6 / Tech 6** stack: **React 19 + Vite + Tailwind 4 + TypeScr
 | Ticketing — issue, QR, public ticket page, WhatsApp share | ✅ `/admin/tickets` |
 | Check-in — manual + camera scan, live headcount | ✅ `/admin/checkin` |
 | **Offline-first check-in PWA** (local ticket cache + queued sync, installable) | ✅ |
+| **Tournament + live broadcast overlays** (matches, realtime scoring, OBS overlays) | ✅ `/admin/matches`, `/overlay/*` |
 | Mobile-money payments (Wave/Orange Money via CinetPay/PayDunya) | 🟡 scaffold — see [PAYMENTS.md](./PAYMENTS.md) |
+| Hosting — GitHub Actions → Hostinger FTP auto-deploy | ✅ see [DEPLOY.md](./DEPLOY.md) |
 
-**Next:** tournament brackets + broadcast overlays, analytics + SYSCOHADA ledger export.
+**Next:** analytics dashboard + SYSCOHADA ledger export.
+
+### Broadcast overlays (OBS)
+Add as **Browser Sources** in OBS — transparent background, update live via Supabase Realtime as the admin scores in `/admin/matches`:
+- `/overlay/scoreboard?match=<id>` — scoreboard bug (or omit `match` to track the live game)
+- `/overlay/lower-third?name=Momar%20Diop&sub=Point%20Guard` — lower third
 
 ### Offline check-in (PWA)
 Installable web app (Add to Home Screen). Staff **sync the ticket manifest once online**, then the scanner validates QR codes **entirely on-device** (IndexedDB) and queues each scan; queued check-ins flush to Supabase via the idempotent `sync_check_ins` RPC when the connection returns. Built for the patchy signal at Place de l'Indépendance.
