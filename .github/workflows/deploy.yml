@@ -1,0 +1,43 @@
+name: Build & Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    env:
+      # Deploy step is skipped until these FTP secrets are set (see DEPLOY.md).
+      FTP_HOST: ${{ secrets.FTP_HOST }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # Supabase anon key is a public/publishable key — safe to inline.
+          VITE_SUPABASE_URL: https://rvgzydyrsnwcygfshryi.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2Z3p5ZHlyc253Y3lnZnNocnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NTkxNjYsImV4cCI6MjA5NjIzNTE2Nn0.whbH-QWm08vuA7FDZgj8sxQjJW5ov-EtzrBl36v3uLk
+
+      - name: Deploy dist/ to Hostinger via FTP
+        if: ${{ env.FTP_HOST != '' }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/
+          # Web root for the primary domain on Hostinger. If dkcourtfest.com is a
+          # secondary/addon domain, change to /domains/dkcourtfest.com/public_html/
+          server-dir: /public_html/
