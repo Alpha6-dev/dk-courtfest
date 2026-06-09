@@ -5,14 +5,10 @@ DK CourtFest collects entry fees (and could collect sponsorship) in **XOF / FCFA
 ## What works today
 - **Cash / manual issuance** — admins issue tickets in `/admin/tickets`; a `payments` row (`provider='cash'`, `status='paid'`) is recorded for each priced ticket. This feeds reporting and the SYSCOHADA ledger now, with **no third-party account required**.
 
-## What's scaffolded (needs your account)
-Online mobile-money checkout is wired but inactive until credentials are added. Use an aggregator that bundles Wave + Orange Money + card:
+## What's DEPLOYED (just add your key)
+Online **Wave + Orange Money + card** checkout via **CinetPay** is fully built and the Edge Functions are **deployed and ACTIVE** on the project (`payment-init`, `payment-webhook`). The public buy page (`/buy`) calls them. It returns `configured:false` until the CinetPay merchant key is set — then it returns a live checkout URL. Verified end-to-end (ticket + pending payment created on call).
 
-| Option | Notes |
-|--------|-------|
-| **CinetPay** | Wide West-Africa coverage, Wave + OM + card, hosted checkout |
-| **PayDunya** | Senegal-native, Wave + OM, simple API |
-| **Intouch / Paydunya** | Alternative aggregators |
+Prefer **PayDunya** or **direct Wave/Orange Money** instead? The provider lives in one adapter (`payment-init/index.ts`) — say so and it's a small swap.
 
 ### Flow
 1. Buyer fills the public ticket form → app calls Edge Function **`payment-init`**.
@@ -21,16 +17,16 @@ Online mobile-money checkout is wired but inactive until credentials are added. 
 4. Aggregator calls **`payment-webhook`** → we verify and flip `payments.status = 'paid'`.
 5. Buyer already holds the QR (`/ticket/:token`); ready for check-in.
 
-### To go live
-```bash
-# 1. Create a CinetPay (or PayDunya) merchant account → get API key + site id
-# 2. Set secrets
-supabase secrets set CINETPAY_API_KEY=xxx CINETPAY_SITE_ID=xxx
-# 3. Deploy the functions
-supabase functions deploy payment-init
-supabase functions deploy payment-webhook --no-verify-jwt
-# 4. Fill the TODO(account) blocks in supabase/functions/payment-*/index.ts
-```
+### To go live (1 step — functions are already deployed)
+1. Create a **CinetPay** merchant account → get **API key** + **Site ID**.
+2. Supabase → Project → **Edge Functions → Secrets** (or `supabase secrets set`), add:
+   - `CINETPAY_API_KEY`
+   - `CINETPAY_SITE_ID`
+   - *(optional)* `SITE_URL=https://dkcourtfest.com`
+3. In your CinetPay dashboard set the **notify URL** to:
+   `https://rvgzydyrsnwcygfshryi.supabase.co/functions/v1/payment-webhook`
+
+That's it — `/buy` then redirects buyers to Wave/Orange Money checkout, and the webhook flips the payment to `paid`.
 
 ### Security
 - `payment-webhook` **must verify** the aggregator's signature/HMAC (or re-query the transaction) before trusting a "paid" notification — see the `TODO(account)` note in the function.

@@ -48,6 +48,12 @@ export default function Home() {
             Are you ready? →
           </Link>
           <Link
+            to="/buy"
+            className="border border-sun/60 px-8 py-4 font-display text-2xl uppercase tracking-wide text-sun transition hover:bg-sun hover:text-onyx"
+          >
+            Billetterie
+          </Link>
+          <Link
             to="/admin"
             className="border border-white/20 px-8 py-4 font-display text-2xl uppercase tracking-wide text-bone transition hover:border-flame"
           >

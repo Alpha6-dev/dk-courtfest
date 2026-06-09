@@ -19,10 +19,14 @@ Part of the **Alpha 6 / Tech 6** stack: **React 19 + Vite + Tailwind 4 + TypeScr
 | Check-in — manual + camera scan, live headcount | ✅ `/admin/checkin` |
 | **Offline-first check-in PWA** (local ticket cache + queued sync, installable) | ✅ |
 | **Tournament + live broadcast overlays** (matches, realtime scoring, OBS overlays) | ✅ `/admin/matches`, `/overlay/*` |
-| Mobile-money payments (Wave/Orange Money via CinetPay/PayDunya) | 🟡 scaffold — see [PAYMENTS.md](./PAYMENTS.md) |
+| **Mobile-money payments** (Wave + Orange Money + card via CinetPay) | ✅ deployed — add merchant key, see [PAYMENTS.md](./PAYMENTS.md) |
+| **Analytics + SYSCOHADA ledger export** | ✅ `/admin/analytics` |
 | Hosting — GitHub Actions → Hostinger FTP auto-deploy | ✅ see [DEPLOY.md](./DEPLOY.md) |
 
-**Next:** analytics dashboard + SYSCOHADA ledger export.
+**All planned phases (0–5) built.** Remaining = your accounts: CinetPay key, FTP secrets, first admin user.
+
+### Payments (Wave / Orange Money)
+Public buy page `/buy` → `payment-init` Edge Function → CinetPay hosted checkout (Wave + Orange Money + card) → `payment-webhook` verifies & marks paid. Functions are deployed; add `CINETPAY_API_KEY` + `CINETPAY_SITE_ID` secrets to activate.
 
 ### Broadcast overlays (OBS)
 Add as **Browser Sources** in OBS — transparent background, update live via Supabase Realtime as the admin scores in `/admin/matches`:

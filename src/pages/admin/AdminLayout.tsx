@@ -79,6 +79,9 @@ export default function AdminLayout() {
           <NavLink to="/admin/matches" className={tab}>
             Matchs
           </NavLink>
+          <NavLink to="/admin/analytics" className={tab}>
+            Analyse
+          </NavLink>
           <NavLink to="/admin/contacts" className={tab}>
             Contacts
           </NavLink>

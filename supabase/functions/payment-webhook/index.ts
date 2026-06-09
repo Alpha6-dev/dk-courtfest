@@ -1,35 +1,40 @@
 // DK CourtFest — payment webhook (Supabase Edge Function, Deno).
 //
-// SCAFFOLD. The aggregator (CinetPay/PayDunya) calls this URL when a payment
-// settles. We verify the notification, mark the payment paid, and confirm the
-// ticket. The buyer already holds the QR; this just flips it to confirmed.
-//
-// Deploy: supabase functions deploy payment-webhook --no-verify-jwt
-//
-// TODO(account): verify the signature/HMAC the aggregator sends before trusting.
+// CinetPay calls this when a payment settles. We DON'T trust the notification
+// body — we re-query CinetPay's /check endpoint with our transaction_id and only
+// then mark the payment paid. Deploy with verify_jwt = false (public endpoint).
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 Deno.serve(async (req) => {
   try {
-    const body = await req.json()
+    // CinetPay posts form-encoded: cpm_trans_id = our payment.id (transaction_id).
+    const form = await req.formData().catch(() => null)
+    const transactionId =
+      form?.get('cpm_trans_id')?.toString() ??
+      (await req.clone().json().catch(() => ({})))?.cpm_trans_id
+    if (!transactionId) return new Response('OK', { status: 200 })
 
-    // TODO(account): verify authenticity (CinetPay: re-query /v2/payment/check
-    // with the transaction_id; PayDunya: validate the hash) before updating.
-    const paymentId = body.transaction_id ?? body.cpm_trans_id
-    const settled = (body.status ?? body.cpm_result) // map provider status → boolean
+    const apikey = Deno.env.get('CINETPAY_API_KEY')
+    const site_id = Deno.env.get('CINETPAY_SITE_ID')
+    const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
 
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
-    )
+    // Verify with CinetPay (source of truth).
+    const check = await fetch('https://api-checkout.cinetpay.com/v2/payment/check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ apikey, site_id, transaction_id: transactionId }),
+    }).then((r) => r.json())
 
-    if (paymentId && settled) {
-      await supabase.from('payments').update({ status: 'paid', ref: String(settled) }).eq('id', paymentId)
-      // (ticket already valid; optionally promote / flag confirmed here)
-    }
+    const accepted = check?.data?.status === 'ACCEPTED'
+    const method = check?.data?.payment_method // WAVE / OM / CARD, etc.
 
-    // Always 200 so the aggregator stops retrying.
+    await supabase
+      .from('payments')
+      .update({ status: accepted ? 'paid' : 'failed', ref: method ?? check?.data?.status ?? null })
+      .eq('id', transactionId)
+
+    // Always 200 so CinetPay stops retrying.
     return new Response('OK', { status: 200 })
   } catch (err) {
     console.error('payment-webhook', err)
