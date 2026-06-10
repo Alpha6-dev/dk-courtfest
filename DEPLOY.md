@@ -13,9 +13,11 @@ On every push to `main`, GitHub Actions builds the app and publishes `dist/` to 
 |------|--------|
 | DNS A records → GitHub Pages | ✅ done (via hPanel) |
 | Workflow (build → upload-pages-artifact → deploy-pages) | ✅ in repo |
-| Repo visibility → **public** (required for free Pages) | ⬜ **owner action: repo Settings → General → Danger Zone → Change visibility** |
-| Enable Pages (Source: GitHub Actions) | ⬜ after repo is public: `gh api repos/Alpha6-dev/dk-courtfest/pages -X POST -f build_type=workflow` |
-| Custom domain + HTTPS enforce | ⬜ `gh api -X PUT repos/Alpha6-dev/dk-courtfest/pages -f cname=courtfest.com` then enable "Enforce HTTPS" |
+| Repo visibility → **public** (required for free Pages) | ✅ done 10 Jun 2026 |
+| Enable Pages (Source: GitHub Actions) | ✅ done |
+| Custom domain + HTTPS enforce | ✅ done — cert approved (renews ~2026-09-08, automatic) |
+
+**LIVE: https://courtfest.com** (verified: 200, HTTP→HTTPS 301, SPA fallback OK, PWA manifest OK).
 
 ## Verify
 - https://courtfest.com → landing page
