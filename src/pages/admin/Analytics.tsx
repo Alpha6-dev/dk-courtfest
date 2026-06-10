@@ -25,6 +25,7 @@ const debitAccount: Record<string, string> = {
   wave: '521-WAVE', // Banque · mobile money
   orange_money: '521-OM',
   cinetpay: '521-CINETPAY',
+  paydunya: '521-PAYDUNYA',
   card: '521',
 }
 

@@ -80,7 +80,7 @@ export default function Buy() {
         >
           {busy ? 'Redirection…' : `Payer ${price.toLocaleString('fr-FR')} XOF →`}
         </button>
-        <p className="label text-center text-white/30">Wave · Orange Money · Carte — paiement sécurisé CinetPay</p>
+        <p className="label text-center text-white/30">Wave · Orange Money · Free Money · Carte — paiement sécurisé PayDunya</p>
       </form>
     </main>
   )
