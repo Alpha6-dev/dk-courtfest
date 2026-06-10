@@ -68,6 +68,47 @@ export interface Contact {
   created_at: string
 }
 
+// ── DK Academy ───────────────────────────────────────────────────────────────
+export type EnrollmentStatus = 'pending' | 'active' | 'cancelled'
+export type MembershipStatus = 'due' | 'paid' | 'past_due'
+
+export interface Category {
+  id: string
+  name: string
+  age_min: number | null
+  age_max: number | null
+  schedule: string | null
+  monthly_fee_xof: number
+  sort: number
+  active: boolean
+}
+
+export interface Athlete {
+  id: string
+  first_name: string
+  last_name: string
+  dob: string | null
+  category_id: string | null
+  guardian_name: string | null
+  guardian_phone: string | null
+  guardian_email: string | null
+  created_at: string
+}
+
+export interface Coach {
+  id: string
+  full_name: string
+}
+
+export interface Session {
+  id: string
+  category_id: string | null
+  coach_id: string | null
+  starts_at: string | null
+  location: string | null
+  capacity: number | null
+}
+
 // Form-side shapes (no ids; the DB fills defaults).
 export interface PlayerDraft {
   first_name: string

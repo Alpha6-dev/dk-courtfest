@@ -22,8 +22,16 @@ Part of the **Alpha 6 / Tech 6** stack: **React 19 + Vite + Tailwind 4 + TypeScr
 | **Mobile-money payments** (Wave + Orange Money + card via CinetPay) | ✅ deployed — add merchant key, see [PAYMENTS.md](./PAYMENTS.md) |
 | **Analytics + SYSCOHADA ledger export** | ✅ `/admin/analytics` |
 | Hosting — GitHub Actions → Hostinger FTP auto-deploy | ✅ see [DEPLOY.md](./DEPLOY.md) |
+| **DK Academy** — training categories, public enrollment, athletes/sessions/attendance | ✅ `/academy`, `/admin/athletes`, `/admin/sessions` |
+| **Alpha 6 Sports umbrella** — portfolio + sponsor hub | ✅ `/sports` |
 
-**All planned phases (0–5) built.** Remaining = your accounts: CinetPay key, FTP secrets, first admin user.
+**All planned phases (0–5) + Academy + umbrella built.** Remaining = your accounts: CinetPay key, FTP secrets, first admin user.
+
+### Alpha 6 Sports platform
+One codebase + one Supabase backend now powers three surfaces, sharing the design system and admin:
+- **`/`** DK CourtFest (event) · **`/academy`** DK Academy (training) · **`/sports`** Alpha 6 Sports (umbrella/sponsors)
+- DK Academy: 7 seeded categories (U10→Open/Femmes), public enrollment (minor-aware, `enroll_athlete` RPC), admin athletes + monthly cotisation billing, sessions with attendance rosters.
+- Later these can map to subdomains (academy.dkcourtfest.com) at the host without code changes.
 
 ### Payments (Wave / Orange Money)
 Public buy page `/buy` → `payment-init` Edge Function → CinetPay hosted checkout (Wave + Orange Money + card) → `payment-webhook` verifies & marks paid. Functions are deployed; add `CINETPAY_API_KEY` + `CINETPAY_SITE_ID` secrets to activate.
