@@ -79,16 +79,24 @@ export default function Analytics() {
   ]
 
   function exportLedger() {
-    const rows = paid.map((p) => ({
-      date: p.created_at?.slice(0, 10),
-      piece: p.id.slice(0, 8),
-      libelle: p.sponsor_id ? 'Sponsoring DK CourtFest' : 'Billetterie DK CourtFest',
-      compte_debit: debitAccount[p.provider] ?? '521',
-      compte_credit: p.sponsor_id ? '7068' : '7061', // sponsoring · billetterie
-      montant_xof: p.amount_xof,
-      sens: 'recette',
-      business: 'Y',
-    }))
+    const rows = paid.map((p) => {
+      // Nature: sponsor → 7068 · ticket → 7061 · neither (academy cotisation) → 7062.
+      const nature = p.sponsor_id
+        ? { libelle: 'Sponsoring DK CourtFest', credit: '7068' }
+        : p.ticket_id
+          ? { libelle: 'Billetterie DK CourtFest', credit: '7061' }
+          : { libelle: 'Cotisation DK Academy', credit: '7062' }
+      return {
+        date: p.created_at?.slice(0, 10),
+        piece: p.id.slice(0, 8),
+        libelle: nature.libelle,
+        compte_debit: debitAccount[p.provider] ?? '521',
+        compte_credit: nature.credit,
+        montant_xof: p.amount_xof,
+        sens: 'recette',
+        business: 'Y',
+      }
+    })
     csv('dkcourtfest_journal_syscohada.csv', ['date', 'piece', 'libelle', 'compte_debit', 'compte_credit', 'montant_xof', 'sens', 'business'], rows)
   }
 

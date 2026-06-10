@@ -34,6 +34,11 @@ Deno.serve(async (req) => {
       .update({ status: accepted ? 'paid' : 'failed', ref: method ?? check?.data?.status ?? null })
       .eq('id', transactionId)
 
+    // Academy: a settled cotisation flips its membership to paid.
+    if (accepted) {
+      await supabase.from('memberships').update({ status: 'paid' }).eq('payment_id', transactionId)
+    }
+
     // Always 200 so CinetPay stops retrying.
     return new Response('OK', { status: 200 })
   } catch (err) {

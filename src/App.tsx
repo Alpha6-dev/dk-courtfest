@@ -4,6 +4,7 @@ import Sports from './pages/Sports'
 import Register from './pages/Register'
 import Buy from './pages/Buy'
 import Ticket from './pages/Ticket'
+import Pay from './pages/Pay'
 import AcademyHome from './pages/academy/AcademyHome'
 import AcademyEnroll from './pages/academy/AcademyEnroll'
 import Scoreboard from './pages/overlay/Scoreboard'
@@ -30,6 +31,7 @@ export default function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/buy" element={<Buy />} />
       <Route path="/ticket/:token" element={<Ticket />} />
+      <Route path="/pay/:membershipId" element={<Pay />} />
 
       {/* DK Academy (training) */}
       <Route path="/academy" element={<AcademyHome />} />

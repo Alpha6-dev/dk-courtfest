@@ -51,14 +51,25 @@ export default function Athletes() {
 
   async function bill(r: Row) {
     const fee = r.categories?.monthly_fee_xof ?? 0
-    const { error } = await supabase.from('memberships').insert({
-      athlete_id: r.id,
-      period: thisPeriod(),
-      amount_xof: fee,
-      status: 'due',
-    })
+    const { data, error } = await supabase
+      .from('memberships')
+      .insert({ athlete_id: r.id, period: thisPeriod(), amount_xof: fee, status: 'due' })
+      .select()
+      .single()
     if (error) return toast.error(error.message)
-    toast.success(`Cotisation ${thisPeriod()} créée (${fee.toLocaleString('fr-FR')} XOF).`)
+
+    // Shareable Wave/Orange Money payment link for the guardian.
+    const link = `${window.location.origin}/pay/${data.id}`
+    await navigator.clipboard?.writeText(link).catch(() => {})
+    const wa = r.guardian_phone
+      ? `https://wa.me/${r.guardian_phone.replace(/[^\d]/g, '')}?text=${encodeURIComponent(
+          `DK Academy — cotisation ${thisPeriod()} de ${r.first_name} (${fee.toLocaleString('fr-FR')} XOF). Payer par Wave/Orange Money : ${link}`,
+        )}`
+      : null
+    toast.success(`Cotisation ${thisPeriod()} créée · lien de paiement copié.`, {
+      action: wa ? { label: 'WhatsApp →', onClick: () => window.open(wa, '_blank') } : undefined,
+      duration: 8000,
+    })
   }
 
   if (loading) return <p className="label text-white/40">Chargement…</p>

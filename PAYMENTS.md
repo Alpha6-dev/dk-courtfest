@@ -8,7 +8,16 @@ DK CourtFest collects entry fees (and could collect sponsorship) in **XOF / FCFA
 ## What's DEPLOYED (just add your key)
 Online **Wave + Orange Money + card** checkout via **CinetPay** is fully built and the Edge Functions are **deployed and ACTIVE** on the project (`payment-init`, `payment-webhook`). The public buy page (`/buy`) calls them. It returns `configured:false` until the CinetPay merchant key is set — then it returns a live checkout URL. Verified end-to-end (ticket + pending payment created on call).
 
-Prefer **PayDunya** or **direct Wave/Orange Money** instead? The provider lives in one adapter (`payment-init/index.ts`) — say so and it's a small swap.
+Prefer **PayDunya** or **direct Wave/Orange Money** instead? The provider lives in one adapter (`openCheckout()` in `payment-init/index.ts`) — say so and it's a small swap.
+
+## Academy cotisations (same checkout)
+`payment-init` also accepts `{ membership_id }`: it resolves the cotisation, creates/reuses the pending payment, and opens the same Wave/OM checkout. The webhook flips both the payment **and the membership** to `paid`.
+- Admin flow: `/admin/athletes` → "+ 2026-06" creates the cotisation, **copies the pay link** (`/pay/<id>`) and offers a pre-filled **WhatsApp** message to the guardian.
+- Public flow: guardian opens `/pay/<id>` → straight to checkout (or "déjà réglée ✓").
+- Ledger: cotisations export as crédit **7062** (vs 7061 billetterie, 7068 sponsoring).
+
+## Provider landscape (for future reference)
+CinetPay (current, ~10 Francophone countries) · PayDunya (Senegal-native, deepest local rails incl. Free Money) · InTouch (large Senegal network) · Flutterwave (30+ African countries — switch if expanding beyond WAEMU) · Paystack (Senegal newer) · Stripe (❌ no Senegal). Local depth > breadth for a Dakar audience.
 
 ### Flow
 1. Buyer fills the public ticket form → app calls Edge Function **`payment-init`**.
