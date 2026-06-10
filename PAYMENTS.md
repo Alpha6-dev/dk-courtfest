@@ -2,13 +2,19 @@
 
 DK CourtFest collects entry fees (and could collect sponsorship) in **XOF / FCFA**. In Senegal, card penetration is low and **Wave + Orange Money dominate**, so the gateway must support mobile money.
 
+## ✅ STATUS: WORKING — PayDunya sandbox verified end-to-end (11 Jun 2026)
+Live test completed: `/buy` → `payment-init` → PayDunya hosted checkout → test client paid 200 XOF → redirect to the ticket QR page on courtfest.com → IPN → `paydunya-webhook` re-verified via confirm API → payment `paid` in DB.
+- Provider: **PayDunya** (app "DK CourtFest", account BSN3143573827, **mode test**; channels: Wave, Orange Money, Free Money, Expresso, Card)
+- Secrets in Supabase: `PAYDUNYA_MASTER_KEY`, `PAYDUNYA_PRIVATE_KEY` (test), `PAYDUNYA_TOKEN` (test), `PAYDUNYA_MODE=test`
+- Sandbox test client "Client Test DKCF" lives in PayDunya → Clients fictifs
+- **To go LIVE** (no code changes): complete business KYC in PayDunya (RCCM, NINEA, CNI — the "informations de votre entreprise" banner) → switch the app out of Mode test → replace the 3 secrets with live keys and set `PAYDUNYA_MODE=live`.
+
 ## What works today
+- **Online checkout (sandbox)** — see status above.
 - **Cash / manual issuance** — admins issue tickets in `/admin/tickets`; a `payments` row (`provider='cash'`, `status='paid'`) is recorded for each priced ticket. This feeds reporting and the SYSCOHADA ledger now, with **no third-party account required**.
 
-## What's DEPLOYED (just add your key)
-Online **Wave + Orange Money + card** checkout via **CinetPay** is fully built and the Edge Functions are **deployed and ACTIVE** on the project (`payment-init`, `payment-webhook`). The public buy page (`/buy`) calls them. It returns `configured:false` until the CinetPay merchant key is set — then it returns a live checkout URL. Verified end-to-end (ticket + pending payment created on call).
-
-Prefer **PayDunya** or **direct Wave/Orange Money** instead? The provider lives in one adapter (`openCheckout()` in `payment-init/index.ts`) — say so and it's a small swap.
+## Provider adapters
+`payment-init` auto-selects by configured secrets: **PayDunya** first, **CinetPay** as fallback (kept in code; their onboarding went sales-led and the prospect form 405'd). Adding/swapping a provider only touches `openCheckout()` — the workflow (init → hosted checkout → webhook → verify → paid) never changes.
 
 ## Academy cotisations (same checkout)
 `payment-init` also accepts `{ membership_id }`: it resolves the cotisation, creates/reuses the pending payment, and opens the same Wave/OM checkout. The webhook flips both the payment **and the membership** to `paid`.
