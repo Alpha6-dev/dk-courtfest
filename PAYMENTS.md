@@ -19,6 +19,15 @@ Prefer **PayDunya** or **direct Wave/Orange Money** instead? The provider lives 
 ## Provider landscape (for future reference)
 CinetPay (current, ~10 Francophone countries) · PayDunya (Senegal-native, deepest local rails incl. Free Money) · InTouch (large Senegal network) · Flutterwave (30+ African countries — switch if expanding beyond WAEMU) · Paystack (Senegal newer) · Stripe (❌ no Senegal). Local depth > breadth for a Dakar audience.
 
+## Expansion architecture (workflow never changes)
+Every serious African PSP uses the same flow this system already implements:
+**init → hosted checkout → webhook → server-side verify → mark paid.**
+Providers are adapters behind that socket; the socket is permanent.
+
+- `openCheckout()` in `payment-init` is the adapter seam. Entering Anglophone Africa = add a `flutterwaveCheckout()` adapter and route by edition country/currency. No workflow, schema, or front-end change.
+- `payments.currency` exists (default `'XOF'`; migration 0008) — NGN/GHS/KES editions are data, not rework. (`amount_xof` is read as "amount in `currency`"; renaming the column is optional cosmetics later.)
+- `editions.city/country/city_code` (migration 0008) — "ABJ CourtFest 2027" is a new row, not a new app.
+
 ### Flow
 1. Buyer fills the public ticket form → app calls Edge Function **`payment-init`**.
 2. `payment-init` creates a `tickets` row (valid) + a pending `payments` row, then asks the aggregator for a hosted checkout URL and redirects the buyer.
