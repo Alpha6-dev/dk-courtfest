@@ -14,7 +14,7 @@ export default function Sports() {
         <span className="font-display text-3xl tracking-tight text-bone">
           ALPHA <span className="text-flame">6</span> SPORTS
         </span>
-        <a href="mailto:hello@dkcourtfest.com" className="label text-white/40 hover:text-flame">Partenariat →</a>
+        <a href="mailto:hello@courtfest.com" className="label text-white/40 hover:text-flame">Partenariat →</a>
       </header>
 
       <section className="py-16">
@@ -45,7 +45,7 @@ export default function Sports() {
           Une audience jeune, urbaine, engagée — sur le terrain et en ligne.
         </h2>
         <a
-          href="mailto:hello@dkcourtfest.com?subject=Partenariat%20Alpha%206%20Sports"
+          href="mailto:hello@courtfest.com?subject=Partenariat%20Alpha%206%20Sports"
           className="mt-6 inline-block bg-flame px-8 py-4 font-display text-2xl uppercase tracking-wide text-onyx transition hover:bg-sun"
         >
           Devenir partenaire →
@@ -54,7 +54,7 @@ export default function Sports() {
 
       <footer className="label mt-16 flex flex-wrap justify-between gap-3 text-white/30">
         <span>Alpha 6 · RCCM 2026 M 7847 · Dakar, Sénégal</span>
-        <span>hello@dkcourtfest.com</span>
+        <span>hello@courtfest.com</span>
       </footer>
     </main>
   )

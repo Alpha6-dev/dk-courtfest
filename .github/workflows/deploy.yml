@@ -1,16 +1,22 @@
-name: Build & Deploy to Hostinger
+name: Build & Deploy to GitHub Pages (courtfest.com)
 
 on:
   push:
     branches: [main]
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-    env:
-      # Deploy step is skipped until these FTP secrets are set (see DEPLOY.md).
-      FTP_HOST: ${{ secrets.FTP_HOST }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,16 +34,21 @@ jobs:
           VITE_SUPABASE_URL: https://rvgzydyrsnwcygfshryi.supabase.co
           VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2Z3p5ZHlyc253Y3lnZnNocnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NTkxNjYsImV4cCI6MjA5NjIzNTE2Nn0.whbH-QWm08vuA7FDZgj8sxQjJW5ov-EtzrBl36v3uLk
 
-      - name: Deploy dist/ to Hostinger via FTP
-        if: ${{ env.FTP_HOST != '' }}
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Custom domain + SPA fallback
+        run: |
+          echo "courtfest.com" > dist/CNAME
+          cp dist/index.html dist/404.html
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/
-          # Web root for the primary domain on Hostinger. If dkcourtfest.com is a
-          # secondary/addon domain, change to /domains/dkcourtfest.com/public_html/
-          server-dir: /public_html/
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,43 +1,28 @@
-# Deploy — Hostinger (GitHub auto-deploy)
+# Deploy — GitHub Pages + courtfest.com
 
-On every push to `main`, GitHub Actions builds the app and uploads `dist/` to Hostinger via FTP (`.github/workflows/deploy.yml`). The Supabase URL + anon key are baked in at build time (both public). You do the 3 one-time steps below.
+On every push to `main`, GitHub Actions builds the app and publishes `dist/` to **GitHub Pages**, served at **https://courtfest.com** (`.github/workflows/deploy.yml`). No FTP, no hosting bill.
 
-## 1. Get FTP credentials (Hostinger hPanel)
-hPanel → **Websites → dkcourtfest.com → Files → FTP Accounts**:
-- **FTP host** (e.g. `ftp.dkcourtfest.com` or the server IP / `*.hostinger.com` hostname)
-- **FTP username**
-- **FTP password** — use the existing one or "Change password" to set a known one
+## Architecture
+- **DNS (Hostinger)**: `courtfest.com` apex → 4 × A records to GitHub Pages (185.199.108–111.153) — *done, live*
+- **CNAME file**: the workflow writes `dist/CNAME = courtfest.com`
+- **SPA routing**: `dist/404.html` is a copy of `index.html` (GitHub Pages fallback)
+- **SSL**: GitHub provisions Let's Encrypt automatically once the custom domain verifies
 
-> Note the **web root path**. Primary domain = `/public_html/` (already set in the workflow). If dkcourtfest.com shows a different folder (e.g. `domains/dkcourtfest.com/public_html`), edit `server-dir:` in `.github/workflows/deploy.yml`.
+## One-time setup status
+| Step | Status |
+|------|--------|
+| DNS A records → GitHub Pages | ✅ done (via hPanel) |
+| Workflow (build → upload-pages-artifact → deploy-pages) | ✅ in repo |
+| Repo visibility → **public** (required for free Pages) | ⬜ **owner action: repo Settings → General → Danger Zone → Change visibility** |
+| Enable Pages (Source: GitHub Actions) | ⬜ after repo is public: `gh api repos/Alpha6-dev/dk-courtfest/pages -X POST -f build_type=workflow` |
+| Custom domain + HTTPS enforce | ⬜ `gh api -X PUT repos/Alpha6-dev/dk-courtfest/pages -f cname=courtfest.com` then enable "Enforce HTTPS" |
 
-## 2. Add the FTP secrets to GitHub
-Repo → **Settings → Secrets and variables → Actions → New repository secret**. Add three:
-| Name | Value |
-|------|-------|
-| `FTP_HOST` | your FTP host |
-| `FTP_USERNAME` | your FTP username |
-| `FTP_PASSWORD` | your FTP password |
+## Verify
+- https://courtfest.com → landing page
+- `/register`, `/buy`, `/academy`, `/sports` routes survive refresh (404 fallback)
+- PWA installs from the live site (HTTPS ✓)
 
-(The Supabase values are already in the workflow — nothing to add there.)
-
-## 3. Run the deploy
-- **Actions** tab → **Build & Deploy to Hostinger** → **Run workflow** (or just push any commit to `main`).
-- First run with secrets present uploads the whole site; later runs are incremental.
-
-## 4. Domain + HTTPS (hPanel)
-Since dkcourtfest.com is registered at Hostinger and is the site's primary domain, it already points at `public_html`. Then:
-- hPanel → **Security → SSL** → ensure an SSL certificate is **active** for dkcourtfest.com (Hostinger auto-issues Let's Encrypt; click Install if needed).
-- hPanel → **Performance / Advanced → Force HTTPS** → **On**.
-
-> HTTPS is required for the check-in **PWA to install** on staff phones and for the camera scanner to work.
-
-## 5. Verify
-- Visit **https://dkcourtfest.com** → landing page.
-- `/register` → submit a test team.
-- `/admin` → log in (add yourself first under Supabase → Authentication → Users).
-- On a phone: open the site → browser menu → **Add to Home Screen** → the check-in app installs.
-
-## Troubleshooting
-- **FTPS connection fails** → in `deploy.yml` change `protocol: ftps` to `protocol: ftp` (or confirm port 21 is open in hPanel).
-- **Routes 404 on refresh** → confirm `.htaccess` reached `public_html` (it's in `dist/`, so it deploys automatically).
-- **Blank page** → check the Actions build log; usually a wrong `server-dir`.
+## Notes
+- `public/.htaccess` is unused on GitHub Pages (kept in case of a move back to Apache hosting).
+- Old FTP/Hostinger-hosting flow was replaced 10 Jun 2026 — this account has no hosting plan; only DNS lives at Hostinger.
+- Future cities: `abj.courtfest.com` → CNAME to `alpha6-dev.github.io` (or separate Pages projects).

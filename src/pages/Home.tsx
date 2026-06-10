@@ -63,7 +63,7 @@ export default function Home() {
       </section>
 
       <footer className="label flex items-center justify-between text-white/30">
-        <span>hello@dkcourtfest.com</span>
+        <span>hello@courtfest.com</span>
         <span>14.69°N · 17.45°W</span>
       </footer>
     </main>

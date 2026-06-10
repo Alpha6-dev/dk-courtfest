@@ -40,7 +40,7 @@ export default function AdminLayout() {
           <input
             type="email"
             required
-            placeholder="email@dkcourtfest.com"
+            placeholder="email@courtfest.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full border border-white/15 bg-white/5 px-4 py-3 text-bone placeholder:text-white/30 focus:border-flame focus:outline-none"

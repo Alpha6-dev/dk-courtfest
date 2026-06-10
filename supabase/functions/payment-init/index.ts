@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
     const body = await req.json()
     const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
     const supabase = createClient(SUPABASE_URL, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
-    const siteUrl = Deno.env.get('SITE_URL') ?? 'https://dkcourtfest.com'
+    const siteUrl = Deno.env.get('SITE_URL') ?? 'https://courtfest.com'
     const notifyUrl = `${SUPABASE_URL}/functions/v1/payment-webhook`
 
     const { data: edition } = await supabase
