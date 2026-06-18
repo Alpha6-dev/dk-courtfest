@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { supabase } from '../lib/supabase'
 import { Wordmark } from '../components/Wordmark'
+import { useBrand } from '../lib/brand'
 import type { TicketType } from '../types/db'
 
 const OPTIONS: { type: TicketType; label: string; price: number }[] = [
@@ -11,6 +12,7 @@ const OPTIONS: { type: TicketType; label: string; price: number }[] = [
 ]
 
 export default function Buy() {
+  const { eventName } = useBrand()
   const [type, setType] = useState<TicketType>('general')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -51,7 +53,7 @@ export default function Buy() {
       </Link>
       <Wordmark className="mt-6 block text-4xl" />
       <h1 className="mt-6 font-display text-5xl uppercase text-bone">
-        Billet <span className="text-flame">DK CourtFest</span>
+        Billet <span className="text-flame">{eventName}</span>
       </h1>
 
       <form onSubmit={pay} className="mt-8 space-y-5">

@@ -1,19 +1,14 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Wordmark } from '../components/Wordmark'
-import { getActiveEdition, type Edition } from '../lib/edition'
+import { useBrand } from '../lib/brand'
 
 export default function Home() {
-  const [edition, setEdition] = useState<Edition | null>(null)
-
-  useEffect(() => {
-    getActiveEdition().then(setEdition)
-  }, [])
+  const { city, tagline, edition } = useBrand()
 
   return (
     <main className="relative mx-auto flex min-h-screen max-w-5xl flex-col justify-between px-6 py-10">
       <header className="flex items-center justify-between">
-        <span className="label text-flame">● Dakar · Basket · Culture</span>
+        <span className="label text-flame">● {tagline}</span>
         <span className="label text-white/40">Vol. 01</span>
       </header>
 
@@ -24,7 +19,7 @@ export default function Home() {
           <span className="text-flame">structure</span> do not.
         </h1>
         <p className="mt-6 max-w-xl text-lg text-white/70">
-          The premier street basketball event in Dakar. 3×3 and 5×5. Live DJ. Elite players.
+          The premier street basketball event in {city}. 3×3 and 5×5. Live DJ. Elite players.
           {edition?.event_date && (
             <>
               {' '}

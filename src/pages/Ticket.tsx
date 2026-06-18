@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { QR } from '../components/QR'
 import { Wordmark } from '../components/Wordmark'
+import { useBrand } from '../lib/brand'
 
 interface TicketView {
   holder_name: string
@@ -14,6 +15,7 @@ interface TicketView {
 }
 
 export default function Ticket() {
+  const { tagline } = useBrand()
   const { token = '' } = useParams()
   const [ticket, setTicket] = useState<TicketView | null>(null)
   const [loading, setLoading] = useState(true)
@@ -68,7 +70,7 @@ export default function Ticket() {
           </div>
         </div>
         <div className="label border-t border-white/10 px-6 py-3 text-center text-white/30">
-          Dakar · Basket · Culture
+          {tagline}
         </div>
       </div>
     </main>

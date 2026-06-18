@@ -2,20 +2,22 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { supabase } from '../../lib/supabase'
 import { getActiveEdition } from '../../lib/edition'
+import { useBrand } from '../../lib/brand'
 import { QR } from '../../components/QR'
 import type { Ticket, TicketType } from '../../types/db'
 
 const TYPES: TicketType[] = ['general', 'vip', 'player', 'staff']
 const DEFAULT_PRICE: Record<TicketType, number> = { general: 2000, vip: 10000, player: 0, staff: 0 }
 
-function waLink(phone: string | null, token: string) {
+function waLink(phone: string | null, token: string, eventName: string) {
   const digits = (phone ?? '').replace(/[^\d]/g, '')
   const url = `${window.location.origin}/ticket/${token}`
-  const msg = `DK CourtFest — votre billet est prêt ! Présentez ce QR à l'entrée : ${url}`
+  const msg = `${eventName} — votre billet est prêt ! Présentez ce QR à l'entrée : ${url}`
   return `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`
 }
 
 export default function Tickets() {
+  const { eventName } = useBrand()
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [loading, setLoading] = useState(true)
   const [holder, setHolder] = useState('')
@@ -132,7 +134,7 @@ export default function Tickets() {
                     Voir
                   </a>
                   {t.phone && (
-                    <a href={waLink(t.phone, t.qr_token)} target="_blank" className="text-lion hover:underline">
+                    <a href={waLink(t.phone, t.qr_token, eventName)} target="_blank" className="text-lion hover:underline">
                       WhatsApp
                     </a>
                   )}

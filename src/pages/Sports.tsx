@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom'
-
-// Alpha 6 Sports — umbrella / B2B hub tying the brands together.
-const PRODUCTS = [
-  { to: '/', tag: 'Événement', title: 'DK CourtFest', desc: 'Le festival street-basket de Dakar. 3×3 · 5×5 · culture.', accent: 'text-flame' },
-  { to: '/academy', tag: 'Formation', title: 'DK Academy', desc: 'Entraînement encadré toute l\'année, du mini-basket aux seniors.', accent: 'text-sun' },
-  { to: '/sports', tag: 'Bientôt', title: 'DK League', desc: 'Championnat inter-quartiers — la suite logique du pipeline.', accent: 'text-lion' },
-]
+import { useBrand } from '../lib/brand'
 
 export default function Sports() {
+  const { eventName, city } = useBrand()
+
+  // Alpha 6 Sports — umbrella / B2B hub tying the brands together. The CourtFest
+  // event travels with its host city; Academy & League are Dakar-rooted.
+  const PRODUCTS = [
+    { to: '/', tag: 'Événement', title: eventName, desc: `Le festival street-basket de ${city}. 3×3 · 5×5 · culture.`, accent: 'text-flame' },
+    { to: '/academy', tag: 'Formation', title: 'DK Academy', desc: 'Entraînement encadré toute l\'année, du mini-basket aux seniors.', accent: 'text-sun' },
+    { to: '/sports', tag: 'Bientôt', title: 'DK League', desc: 'Championnat inter-quartiers — la suite logique du pipeline.', accent: 'text-lion' },
+  ]
+
   return (
     <main className="mx-auto max-w-5xl px-6 py-12">
       <header className="flex items-center justify-between">

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
+import { useBrand } from '../../lib/brand'
 import type { Category } from '../../types/db'
 
 // DK Academy — public landing. Training for all categories, year-round.
 export default function AcademyHome() {
+  const { eventName } = useBrand()
   const [cats, setCats] = useState<Category[]>([])
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function AcademyHome() {
         </h1>
         <p className="mt-6 max-w-xl text-lg text-white/70">
           Entraînement encadré toute l'année — du mini-basket aux seniors. Coachs certifiés, vraie
-          progression, esprit DK CourtFest.
+          progression, esprit {eventName}.
         </p>
         <Link
           to="/academy/enroll"
@@ -63,7 +65,7 @@ export default function AcademyHome() {
       </section>
 
       <footer className="label mt-16 flex justify-between text-white/30">
-        <Link to="/" className="hover:text-flame">DK CourtFest</Link>
+        <Link to="/" className="hover:text-flame">{eventName}</Link>
         <span>Dakar · Sénégal</span>
       </footer>
     </main>
