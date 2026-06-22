@@ -1,66 +1,53 @@
-import { Link } from 'react-router-dom'
-import { Wordmark } from '../components/Wordmark'
-import { useBrand } from '../lib/brand'
+import { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import landingHtml from './courtfest-landing.html?raw'
+import landingCss from './courtfest-landing.css?raw'
 
+/**
+ * CourtFest landing page — "Le terrain appartient à la ville."
+ *
+ * The markup and styles are the exact Courtfest basketball redesign
+ * (imported as raw strings). This wrapper injects the page-scoped CSS,
+ * renders the design, and intercepts internal links / the join form so
+ * navigation stays within the SPA (react-router) instead of full reloads.
+ */
 export default function Home() {
-  const { city, tagline, edition } = useBrand()
+  const navigate = useNavigate()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const onClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest('a')
+      if (!anchor) return
+      const href = anchor.getAttribute('href') || ''
+      // Internal app routes -> SPA navigation. Leave #hash + external as-is.
+      if (href.startsWith('/') && !href.startsWith('//')) {
+        e.preventDefault()
+        navigate(href)
+      }
+    }
+
+    // The "Rejoindre" email field is a teaser — send people to registration.
+    const onSubmit = (e: Event) => {
+      e.preventDefault()
+      navigate('/register')
+    }
+
+    el.addEventListener('click', onClick)
+    el.addEventListener('submit', onSubmit)
+    return () => {
+      el.removeEventListener('click', onClick)
+      el.removeEventListener('submit', onSubmit)
+    }
+  }, [navigate])
 
   return (
-    <main className="relative mx-auto flex min-h-screen max-w-5xl flex-col justify-between px-6 py-10">
-      <header className="flex items-center justify-between">
-        <span className="label text-flame">● {tagline}</span>
-        <span className="label text-white/40">Vol. 01</span>
-      </header>
-
-      <section className="py-16">
-        <Wordmark className="text-7xl sm:text-8xl" />
-        <h1 className="mt-8 max-w-2xl font-display text-5xl uppercase leading-[0.95] text-bone sm:text-6xl">
-          Talent exists. <span className="text-sun">Exposure</span> and{' '}
-          <span className="text-flame">structure</span> do not.
-        </h1>
-        <p className="mt-6 max-w-xl text-lg text-white/70">
-          The premier street basketball event in {city}. 3×3 and 5×5. Live DJ. Elite players.
-          {edition?.event_date && (
-            <>
-              {' '}
-              <span className="text-bone">
-                {new Date(edition.event_date).toLocaleDateString('fr-FR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </span>
-              {edition.venue && <> · {edition.venue}</>}.
-            </>
-          )}
-        </p>
-
-        <div className="mt-10 flex flex-wrap gap-4">
-          <Link
-            to="/register"
-            className="bg-flame px-8 py-4 font-display text-2xl uppercase tracking-wide text-onyx transition hover:bg-sun"
-          >
-            Are you ready? →
-          </Link>
-          <Link
-            to="/buy"
-            className="border border-sun/60 px-8 py-4 font-display text-2xl uppercase tracking-wide text-sun transition hover:bg-sun hover:text-onyx"
-          >
-            Billetterie
-          </Link>
-          <Link
-            to="/admin"
-            className="border border-white/20 px-8 py-4 font-display text-2xl uppercase tracking-wide text-bone transition hover:border-flame"
-          >
-            Admin
-          </Link>
-        </div>
-      </section>
-
-      <footer className="label flex items-center justify-between text-white/30">
-        <span>hello@courtfest.com</span>
-        <span>14.69°N · 17.45°W</span>
-      </footer>
-    </main>
+    <>
+      <style>{landingCss}</style>
+      <div ref={ref} dangerouslySetInnerHTML={{ __html: landingHtml }} />
+    </>
   )
 }
