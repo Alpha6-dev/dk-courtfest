@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 import { supabase } from '../../lib/supabase'
 import type { Contact, ContactType } from '../../types/db'
 
-const TYPES: ContactType[] = ['sponsor', 'partner', 'media', 'volunteer', 'vip']
+const TYPES: ContactType[] = ['lead', 'sponsor', 'partner', 'media', 'volunteer', 'vip']
 
 const blank = { type: 'sponsor' as ContactType, full_name: '', org_name: '', email: '', phone: '' }
 

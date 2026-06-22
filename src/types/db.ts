@@ -1,7 +1,7 @@
 // Shared types mirroring the Supabase schema (0001_init.sql).
 
 export type Division = '3x3' | '5x5'
-export type ContactType = 'sponsor' | 'partner' | 'media' | 'volunteer' | 'vip'
+export type ContactType = 'sponsor' | 'partner' | 'media' | 'volunteer' | 'vip' | 'lead'
 export type TeamStatus = 'pending' | 'confirmed' | 'waitlist' | 'withdrawn'
 export type TicketType = 'general' | 'vip' | 'player' | 'staff'
 export type TicketStatus = 'valid' | 'used' | 'void'
