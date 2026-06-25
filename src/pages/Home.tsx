@@ -21,9 +21,32 @@ export default function Home() {
     const el = ref.current
     if (!el) return
 
+    const setMenu = (open: boolean) => {
+      const menu = el.querySelector('[data-nav="mobile"]')
+      const toggle = el.querySelector('[data-nav="toggle"]')
+      menu?.classList.toggle('cf-open', open)
+      menu?.setAttribute('aria-hidden', String(!open))
+      toggle?.setAttribute('aria-expanded', String(open))
+    }
+
     const onClick = (e: MouseEvent) => {
-      const anchor = (e.target as HTMLElement).closest('a')
+      const target = e.target as HTMLElement
+      // Mobile menu open/close controls.
+      if (target.closest('[data-nav="toggle"]')) {
+        e.preventDefault()
+        setMenu(true)
+        return
+      }
+      if (target.closest('[data-nav="close"]')) {
+        e.preventDefault()
+        setMenu(false)
+        return
+      }
+
+      const anchor = target.closest('a')
       if (!anchor) return
+      // Any link inside the mobile menu dismisses it (hash scroll or route nav).
+      if (anchor.closest('[data-nav="mobile"]')) setMenu(false)
       const href = anchor.getAttribute('href') || ''
       // Internal app routes -> SPA navigation. Leave #hash + external as-is.
       if (href.startsWith('/') && !href.startsWith('//')) {

@@ -8,5 +8,7 @@
   @keyframes cf-grain{0%{transform:translate(0,0)}10%{transform:translate(-3%,-2%)}20%{transform:translate(2%,3%)}30%{transform:translate(-2%,2%)}40%{transform:translate(3%,-3%)}50%{transform:translate(-3%,2%)}60%{transform:translate(2%,-2%)}70%{transform:translate(-2%,-3%)}80%{transform:translate(3%,2%)}90%{transform:translate(-2%,3%)}100%{transform:translate(0,0)}}
   @keyframes cf-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
   [data-nav="desk"]{display:flex !important}
-  @media(max-width:880px){[data-nav="desk"]{display:none !important}}
+  [data-nav="mobile"].cf-open{transform:translateX(0) !important;box-shadow:-20px 0 60px rgba(0,0,0,0.5)}
+  @media(min-width:881px){[data-nav="mobile"]{display:none !important}}
+  @media(max-width:880px){[data-nav="desk"]{display:none !important}[data-nav="toggle"]{display:flex !important}}
   @media(max-width:780px){[data-mg]{grid-template-columns:1fr !important}}
