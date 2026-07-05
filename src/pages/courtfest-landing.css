@@ -15,3 +15,5 @@
   @media(min-width:881px){[data-nav="mobile"]{display:none !important}}
   @media(max-width:880px){[data-nav="desk"]{display:none !important}[data-nav="toggle"]{display:flex !important}}
   @media(max-width:780px){[data-mg]{grid-template-columns:1fr !important}}
+  /* Hero clip: the video sits over the poster still; on reduced-motion we drop the video and keep the photo. */
+  @media(prefers-reduced-motion:reduce){[data-hero-video]{display:none !important}}

@@ -86,6 +86,19 @@ export default function Home() {
       }
     }
 
+    // Hero background clip. Media injected via innerHTML doesn't run source
+    // selection, so kick it off manually. Skip entirely under reduced-motion —
+    // CSS hides the <video> and the poster still shows, and we avoid the fetch.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const heroVideo = el.querySelector<HTMLVideoElement>('video[data-hero-video]')
+    if (heroVideo && !reduceMotion) {
+      heroVideo.muted = true // iOS Safari requires the property (not just the attr) for autoplay
+      heroVideo.load()
+      const play = () => heroVideo.play().catch(() => {})
+      if (heroVideo.readyState >= 2) play()
+      else heroVideo.addEventListener('canplay', play, { once: true })
+    }
+
     el.addEventListener('click', onClick)
     el.addEventListener('submit', onSubmit)
     return () => {
