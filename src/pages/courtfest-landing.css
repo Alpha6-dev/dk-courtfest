@@ -17,3 +17,5 @@
   @media(max-width:780px){[data-mg]{grid-template-columns:1fr !important}}
   /* Hero clip: the video sits over the poster still; on reduced-motion we drop the video and keep the photo. */
   @media(prefers-reduced-motion:reduce){[data-hero-video]{display:none !important}}
+  /* Nav: clear glass over the hero, solid frosted bar once scrolled (class toggled in Home.tsx). */
+  [data-nav="bar"].cf-solid{background:linear-gradient(180deg,rgba(11,11,12,0.88),rgba(11,11,12,0.78)) !important;border-bottom-color:rgba(255,255,255,0.08) !important;box-shadow:0 10px 34px rgba(0,0,0,0.35) !important}

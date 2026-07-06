@@ -99,9 +99,16 @@ export default function Home() {
       else heroVideo.addEventListener('canplay', play, { once: true })
     }
 
+    // Nav: clear glass over the hero, solid frosted bar once scrolled past it.
+    const navBar = el.querySelector('[data-nav="bar"]')
+    const onScroll = () => navBar?.classList.toggle('cf-solid', window.scrollY > 60)
+    onScroll() // apply immediately (e.g. reload mid-page)
+    window.addEventListener('scroll', onScroll, { passive: true })
+
     el.addEventListener('click', onClick)
     el.addEventListener('submit', onSubmit)
     return () => {
+      window.removeEventListener('scroll', onScroll)
       el.removeEventListener('click', onClick)
       el.removeEventListener('submit', onSubmit)
     }
