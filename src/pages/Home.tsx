@@ -86,17 +86,18 @@ export default function Home() {
       }
     }
 
-    // Hero background clip. Media injected via innerHTML doesn't run source
-    // selection, so kick it off manually. Skip entirely under reduced-motion —
+    // Background clips (hero + CTA). Media injected via innerHTML doesn't run
+    // source selection, so kick each off manually. Skip under reduced-motion —
     // CSS hides the <video> and the poster still shows, and we avoid the fetch.
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const heroVideo = el.querySelector<HTMLVideoElement>('video[data-hero-video]')
-    if (heroVideo && !reduceMotion) {
-      heroVideo.muted = true // iOS Safari requires the property (not just the attr) for autoplay
-      heroVideo.load()
-      const play = () => heroVideo.play().catch(() => {})
-      if (heroVideo.readyState >= 2) play()
-      else heroVideo.addEventListener('canplay', play, { once: true })
+    if (!reduceMotion) {
+      el.querySelectorAll<HTMLVideoElement>('video[data-hero-video], video[data-cta-video]').forEach((v) => {
+        v.muted = true // iOS Safari requires the property (not just the attr) for autoplay
+        v.load()
+        const play = () => v.play().catch(() => {})
+        if (v.readyState >= 2) play()
+        else v.addEventListener('canplay', play, { once: true })
+      })
     }
 
     // Nav: clear glass over the hero, solid frosted bar once scrolled past it.
