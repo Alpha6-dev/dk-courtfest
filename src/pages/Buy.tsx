@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { supabase } from '../lib/supabase'
 import { Wordmark } from '../components/Wordmark'
 import { useBrand } from '../lib/brand'
 import type { TicketType } from '../types/db'
@@ -11,36 +10,35 @@ const OPTIONS: { type: TicketType; label: string; price: number }[] = [
   { type: 'vip', label: 'VIP', price: 10000 },
 ]
 
+const PAYMENT_EMAIL = 'hello@courtfest.com'
+
 export default function Buy() {
   const { eventName } = useBrand()
   const [type, setType] = useState<TicketType>('general')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [busy, setBusy] = useState(false)
 
-  const price = OPTIONS.find((o) => o.type === type)!.price
+  const option = OPTIONS.find((o) => o.type === type)!
+  const price = option.price
 
-  async function pay(e: React.FormEvent) {
+  // The ticket order arrives by email as a payment request from the client;
+  // the team then sends back a Wave/OM payment link (see PAYMENTS.md).
+  function pay(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim() || !phone.trim()) return toast.error('Nom et téléphone requis.')
-    setBusy(true)
-    try {
-      const { data, error } = await supabase.functions.invoke('payment-init', {
-        body: { holder_name: name.trim(), phone: phone.trim(), type, amount_xof: price },
-      })
-      if (error) throw error
-      if (data?.url) {
-        window.location.href = data.url // CinetPay hosted checkout (Wave / Orange Money / card)
-      } else if (data?.configured === false) {
-        toast.message('Paiement en ligne bientôt disponible. Contactez-nous pour un billet.')
-      } else {
-        throw new Error(data?.error ?? 'Réponse inattendue.')
-      }
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Échec du paiement.')
-    } finally {
-      setBusy(false)
-    }
+    const subject = `Demande de paiement — Billet ${option.label} ${eventName}`
+    const body = [
+      'Bonjour,',
+      '',
+      `Je souhaite acheter un billet ${option.label} (${price.toLocaleString('fr-FR')} XOF) pour ${eventName}.`,
+      '',
+      `Nom : ${name.trim()}`,
+      `Téléphone : ${phone.trim()}`,
+      '',
+      "Merci de m'envoyer la demande de paiement.",
+    ].join('\n')
+    window.location.href = `mailto:${PAYMENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    toast.success('Votre demande est prête — envoyez l\'email pour finaliser. 🏀')
   }
 
   const field =
@@ -74,15 +72,11 @@ export default function Buy() {
         </div>
 
         <input className={field} placeholder="Nom complet" value={name} onChange={(e) => setName(e.target.value)} />
-        <input className={field} placeholder="Téléphone (Wave / Orange Money)" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <input className={field} placeholder="Téléphone" value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-        <button
-          disabled={busy}
-          className="w-full bg-flame px-8 py-4 font-display text-3xl uppercase tracking-wide text-onyx transition hover:bg-sun disabled:opacity-50"
-        >
-          {busy ? 'Redirection…' : `Payer ${price.toLocaleString('fr-FR')} XOF →`}
+        <button className="w-full bg-flame px-8 py-4 font-display text-3xl uppercase tracking-wide text-onyx transition hover:bg-sun">
+          {`Payer ${price.toLocaleString('fr-FR')} XOF →`}
         </button>
-        <p className="label text-center text-white/30">Wave · Orange Money · Free Money · Carte — paiement sécurisé PayDunya</p>
       </form>
     </main>
   )
