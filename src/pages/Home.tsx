@@ -55,12 +55,13 @@ export default function Home() {
       }
     }
 
-    // The "Rejoindre" email field captures a lead into the CRM (contacts).
-    const onSubmit = async (e: Event) => {
+    // The "Rejoindre" form opens an email to the team (same address as the
+    // billetterie payment requests); the CRM capture still runs best-effort
+    // in the background so no lead is lost.
+    const onSubmit = (e: Event) => {
       e.preventDefault()
       const form = e.target as HTMLFormElement
       const input = form.querySelector<HTMLInputElement>('input[type="email"]')
-      const button = form.querySelector<HTMLButtonElement>('button')
       const email = input?.value.trim() ?? ''
 
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -69,21 +70,15 @@ export default function Home() {
         return
       }
 
-      if (button) button.disabled = true
-      try {
-        const { error } = await supabase.rpc('capture_lead', {
-          p_email: email,
-          p_source: 'landing',
-        })
-        if (error) throw error
-        toast.success('Merci ! On revient vers toi. 🏀')
-        if (input) input.value = ''
-      } catch (err) {
-        console.error('capture_lead failed', err)
-        toast.error('Oups, réessaie dans un instant.')
-      } finally {
-        if (button) button.disabled = false
-      }
+      supabase.rpc('capture_lead', { p_email: email, p_source: 'landing' }).then(({ error }) => {
+        if (error) console.error('capture_lead failed', error)
+      })
+
+      const subject = 'Rejoindre le mouvement Courtfest'
+      const body = `Bonjour,\n\nJe veux rejoindre le mouvement Courtfest (jouer, coacher, organiser ou devenir partenaire).\n\nMon email : ${email}\n\nMerci !`
+      window.location.href = `mailto:alpha.vientreprise@courtfest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      toast.success('Ton message est prêt — envoie l\'email et on revient vers toi. 🏀')
+      if (input) input.value = ''
     }
 
     // Background clips (hero + CTA). Media injected via innerHTML doesn't run
