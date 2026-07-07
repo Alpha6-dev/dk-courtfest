@@ -10,7 +10,7 @@ const OPTIONS: { type: TicketType; label: string; price: number }[] = [
   { type: 'vip', label: 'VIP', price: 10000 },
 ]
 
-const PAYMENT_EMAIL = 'hello@courtfest.com'
+const PAYMENT_EMAIL = 'alpha.vientreprise@courtfest.com'
 
 export default function Buy() {
   const { eventName } = useBrand()
