@@ -204,7 +204,12 @@
   <div style="position:relative;z-index:3;max-width:880px;margin:0 auto;padding:120px 40px;text-align:center">
     <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,7vw,104px);line-height:0.9;margin:0;text-transform:uppercase">Le terrain<br>t'attend.</h2>
     <p style="max-width:520px;margin:24px auto 0;font-size:16px;line-height:1.7;color:#D7D1C8">Joue, coache, organise, ou amène Courtfest dans ton quartier. Laisse ton contact — on revient vers toi.</p>
-    <div style="display:flex;gap:24px;justify-content:center;margin-top:34px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9C3BA">
+    <form onsubmit="return false" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:34px">
+      <label for="cf-email" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Ton adresse email</label>
+      <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="ton@email.com" style="flex:1;min-width:240px;max-width:340px;padding:16px 18px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#F4EFE7;font-size:15px;font-family:'Archivo',sans-serif;outline:none" onfocus="this.style.borderColor='#FF6A1A'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+      <button style="padding:16px 28px;border:none;border-radius:6px;background:#FF6A1A;color:#0B0B0C;font-weight:800;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Rejoindre →</button>
+    </form>
+    <div style="display:flex;gap:24px;justify-content:center;margin-top:28px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9C3BA">
       <a href="https://www.instagram.com/thecourtfest/" target="_blank" rel="noopener noreferrer" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">Instagram</a>
       <a href="https://wa.me/221772842650" target="_blank" rel="noopener noreferrer" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">WhatsApp</a>
     </div>
