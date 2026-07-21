@@ -1,17 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
-import { supabase } from '../lib/supabase'
 import landingHtml from './courtfest-landing.html?raw'
 import landingCss from './courtfest-landing.css?raw'
 
 /**
- * CourtFest landing page — "Le terrain appartient à la ville."
+ * CourtFest landing page — "Le basket qui rassemble la ville."
  *
  * The markup and styles are the exact Courtfest basketball redesign
  * (imported as raw strings). This wrapper injects the page-scoped CSS,
- * renders the design, routes internal links through the SPA, and captures
- * the "Rejoindre" email as a lead (contacts table via the capture_lead RPC).
+ * renders the design, and routes internal links through the SPA.
  */
 export default function Home() {
   const navigate = useNavigate()
@@ -55,32 +52,6 @@ export default function Home() {
       }
     }
 
-    // The "Rejoindre" form opens an email to the team (same address as the
-    // billetterie payment requests); the CRM capture still runs best-effort
-    // in the background so no lead is lost.
-    const onSubmit = (e: Event) => {
-      e.preventDefault()
-      const form = e.target as HTMLFormElement
-      const input = form.querySelector<HTMLInputElement>('input[type="email"]')
-      const email = input?.value.trim() ?? ''
-
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        toast.error('Entre une adresse email valide.')
-        input?.focus()
-        return
-      }
-
-      supabase.rpc('capture_lead', { p_email: email, p_source: 'landing' }).then(({ error }) => {
-        if (error) console.error('capture_lead failed', error)
-      })
-
-      const subject = 'Rejoindre le mouvement Courtfest'
-      const body = `Bonjour,\n\nJe veux rejoindre le mouvement Courtfest (jouer, coacher, organiser ou devenir partenaire).\n\nMon email : ${email}\n\nMerci !`
-      window.location.href = `mailto:alpha.vientreprise@courtfest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-      toast.success('Ton message est prêt — envoie l\'email et on revient vers toi. 🏀')
-      if (input) input.value = ''
-    }
-
     // Background clips (hero + CTA). Media injected via innerHTML doesn't run
     // source selection, so kick each off manually. Skip under reduced-motion —
     // CSS hides the <video> and the poster still shows, and we avoid the fetch.
@@ -102,11 +73,9 @@ export default function Home() {
     window.addEventListener('scroll', onScroll, { passive: true })
 
     el.addEventListener('click', onClick)
-    el.addEventListener('submit', onSubmit)
     return () => {
       window.removeEventListener('scroll', onScroll)
       el.removeEventListener('click', onClick)
-      el.removeEventListener('submit', onSubmit)
     }
   }, [navigate])
 
