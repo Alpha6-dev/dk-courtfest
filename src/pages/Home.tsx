@@ -55,9 +55,11 @@ export default function Home() {
       }
     }
 
-    // The "Rejoindre" form opens an email to the team (same address as the
+    // Both landing forms open an email to the team (same address as the
     // billetterie payment requests); the CRM capture still runs best-effort
     // in the background so no lead is lost.
+    //  - "Rejoindre" (CTA): email only, source 'landing'
+    //  - "Devenir partenaire" (#evenement): organisation + email, source 'partner'
     const onSubmit = (e: Event) => {
       e.preventDefault()
       const form = e.target as HTMLFormElement
@@ -70,14 +72,20 @@ export default function Home() {
         return
       }
 
-      supabase.rpc('capture_lead', { p_email: email, p_source: 'landing' }).then(({ error }) => {
+      const isPartner = form.matches('[data-partner-form]')
+      supabase.rpc('capture_lead', { p_email: email, p_source: isPartner ? 'partner' : 'landing' }).then(({ error }) => {
         if (error) console.error('capture_lead failed', error)
       })
 
-      const subject = 'Rejoindre le mouvement Courtfest'
-      const body = `Bonjour,\n\nJe veux rejoindre le mouvement Courtfest (jouer, coacher, organiser ou devenir partenaire).\n\nMon email : ${email}\n\nMerci !`
+      let subject = 'Rejoindre le mouvement Courtfest'
+      let body = `Bonjour,\n\nJe veux rejoindre le mouvement Courtfest (jouer, coacher, organiser ou devenir partenaire).\n\nMon email : ${email}\n\nMerci !`
+      if (isPartner) {
+        const org = form.querySelector<HTMLInputElement>('input[name="org"]')?.value.trim() ?? ''
+        subject = `Partenariat Courtfest Vol. 02${org ? ` — ${org}` : ''}`
+        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest Vol. 02 (Dakar, samedi 22 août 2026, Djily Mbaye).\n\nOrganisation : ${org || '—'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
+      }
       window.location.href = `mailto:alpha.vientreprise@courtfest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-      toast.success('Ton message est prêt — envoie l\'email et on revient vers toi. 🏀')
+      toast.success(isPartner ? 'Votre demande de partenariat est prête — envoyez l\'email. 🤝' : 'Ton message est prêt — envoie l\'email et on revient vers toi. 🏀')
       if (input) input.value = ''
     }
 

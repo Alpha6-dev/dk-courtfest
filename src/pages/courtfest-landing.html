@@ -82,7 +82,13 @@
           <img src="/uploads/sponsor-ville-de-dakar.png" alt="Ville de Dakar" loading="lazy" style="max-width:100%;max-height:100%;object-fit:contain">
         </span>
       </div>
-      <a href="mailto:hello@courtfest.com?subject=Partenariat%20Courtfest%20Vol.%2002" style="display:inline-block;margin-top:16px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#F6B43C" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#F6B43C'">Devenir partenaire →</a>
+      <form data-partner-form onsubmit="return false" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px">
+        <label for="cf-partner-org" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Nom de l'organisation</label>
+        <input type="text" id="cf-partner-org" name="org" autocomplete="organization" placeholder="Votre organisation" style="flex:1;min-width:200px;max-width:260px;padding:14px 16px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#F4EFE7;font-size:14px;font-family:'Archivo',sans-serif;outline:none" onfocus="this.style.borderColor='#FF6A1A'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+        <label for="cf-partner-email" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Email professionnel</label>
+        <input type="email" id="cf-partner-email" name="email" autocomplete="email" placeholder="email@organisation.com" style="flex:1;min-width:200px;max-width:260px;padding:14px 16px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#F4EFE7;font-size:14px;font-family:'Archivo',sans-serif;outline:none" onfocus="this.style.borderColor='#FF6A1A'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+        <button style="padding:14px 24px;border:none;border-radius:6px;background:#FF6A1A;color:#0B0B0C;font-weight:800;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Devenir partenaire →</button>
+      </form>
     </div>
   </div>
 </section>
