@@ -1,10 +1,15 @@
-import { useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { supabase } from '../lib/supabase'
 import { track } from '../lib/analytics'
+import { use3DTier } from '../three/use3DTier'
 import landingHtml from './courtfest-landing.html?raw'
 import landingCss from './courtfest-landing.css?raw'
+
+// 3D stage (blueprint P0) — lazy chunk, loaded only when the tier gate opens
+// (?v3d=1 + capability checks). The flat tier never downloads three.js.
+const Stage = lazy(() => import('../three/Stage'))
 
 /**
  * CourtFest landing page — "Le terrain appartient à la ville."
@@ -17,6 +22,7 @@ import landingCss from './courtfest-landing.css?raw'
 export default function Home() {
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
+  const tier3d = use3DTier()
 
   useEffect(() => {
     const el = ref.current
@@ -142,6 +148,11 @@ export default function Home() {
   return (
     <>
       <style>{landingCss}</style>
+      {tier3d && (
+        <Suspense fallback={null}>
+          <Stage />
+        </Suspense>
+      )}
       <div ref={ref} dangerouslySetInnerHTML={{ __html: landingHtml }} />
     </>
   )
