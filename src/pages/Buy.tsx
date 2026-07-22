@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { Wordmark } from '../components/Wordmark'
 import { useBrand } from '../lib/brand'
+import { track } from '../lib/analytics'
 import type { TicketType } from '../types/db'
 
 const OPTIONS: { type: TicketType; label: string; price: number }[] = [
@@ -26,6 +27,7 @@ export default function Buy() {
   function pay(e: React.FormEvent) {
     e.preventDefault()
     if (!name.trim() || !phone.trim()) return toast.error('Nom et téléphone requis.')
+    track('buy_mailto', { type })
     const subject = `Demande de paiement — Billet ${option.label} ${eventName}`
     const body = [
       'Bonjour,',

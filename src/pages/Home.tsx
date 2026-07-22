@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { supabase } from '../lib/supabase'
+import { track } from '../lib/analytics'
 import landingHtml from './courtfest-landing.html?raw'
 import landingCss from './courtfest-landing.css?raw'
 
@@ -48,6 +49,9 @@ export default function Home() {
       // Any link inside the mobile menu dismisses it (hash scroll or route nav).
       if (anchor.closest('[data-nav="mobile"]')) setMenu(false)
       const href = anchor.getAttribute('href') || ''
+      // Funnel beacons (fire-and-forget; never block navigation).
+      if (href.includes('wa.me')) track('wa_click')
+      if (href === '/register' && anchor.closest('#top')) track('hero_cta_click')
       // Internal app routes -> SPA navigation. Leave #hash + external as-is.
       if (href.startsWith('/') && !href.startsWith('//')) {
         e.preventDefault()
@@ -73,6 +77,7 @@ export default function Home() {
       }
 
       const isPartner = form.matches('[data-partner-form]')
+      track(isPartner ? 'partner_form_submit' : 'rejoindre_submit')
       supabase.rpc('capture_lead', { p_email: email, p_source: isPartner ? 'partner' : 'landing' }).then(({ error }) => {
         if (error) console.error('capture_lead failed', error)
       })
@@ -109,9 +114,25 @@ export default function Home() {
     onScroll() // apply immediately (e.g. reload mid-page)
     window.addEventListener('scroll', onScroll, { passive: true })
 
+    // Funnel: one visit beacon + one section_view per section per page load.
+    track('visit', undefined, 'visit')
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return
+          const id = (en.target as HTMLElement).id
+          track('section_view', { section: id }, `sv:${id}`)
+          io.unobserve(en.target)
+        })
+      },
+      { threshold: 0.25 },
+    )
+    el.querySelectorAll('section[id]').forEach((s) => io.observe(s))
+
     el.addEventListener('click', onClick)
     el.addEventListener('submit', onSubmit)
     return () => {
+      io.disconnect()
       window.removeEventListener('scroll', onScroll)
       el.removeEventListener('click', onClick)
       el.removeEventListener('submit', onSubmit)
