@@ -19,3 +19,7 @@
   @media(prefers-reduced-motion:reduce){[data-hero-video],[data-cta-video]{display:none !important}}
   /* Nav: clear glass over the hero, solid frosted bar once scrolled (class toggled in Home.tsx). */
   [data-nav="bar"].cf-solid{background:linear-gradient(180deg,rgba(11,11,12,0.88),rgba(11,11,12,0.78)) !important;border-bottom-color:rgba(255,255,255,0.08) !important;box-shadow:0 10px 34px rgba(0,0,0,0.35) !important}
+  /* 3D tier (html.cf-3d while the Stage is mounted): the canvas becomes the hero
+     background — hide the flat-tier clip/poster and let the wrapper go clear. */
+  .cf-3d [data-hero-poster],.cf-3d [data-hero-video]{display:none !important}
+  .cf-3d [data-cf-wrap]{background:transparent !important}
