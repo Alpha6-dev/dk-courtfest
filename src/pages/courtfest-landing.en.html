@@ -1,0 +1,241 @@
+<a href="#top" class="cf-skip">Skip to content</a>
+<div data-cf-wrap style="position:relative;width:100%;min-height:100vh;background:#0B0B0C">
+
+  <div aria-hidden="true" style="position:fixed;inset:0;z-index:80;pointer-events:none;opacity:0.05;mix-blend-mode:screen;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22/></filter><rect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/></svg>');background-size:180px 180px;animation:cf-grain 1.2s steps(6) infinite"></div>
+
+  <nav data-nav="bar" style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 40px;-webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);background:linear-gradient(180deg,rgba(11,11,12,0.22),rgba(11,11,12,0.04));border-bottom:1px solid rgba(255,255,255,0.10);box-shadow:0 8px 30px rgba(0,0,0,0.10);transition:background .35s ease,border-color .35s ease,box-shadow .35s ease">
+    <a href="#top" style="display:flex;align-items:baseline;gap:10px">
+      <span style="font-family:'Anton',sans-serif;font-size:24px;letter-spacing:0.04em;line-height:1">COURTFEST</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.22em;color:#0B0B0C;background:#FF6A1A;padding:3px 8px;border-radius:3px">BASKETBALL</span>
+    </a>
+    <div style="display:none;gap:30px;font-size:13px;font-weight:600;letter-spacing:0.04em;color:#C9C3BA" data-nav="desk">
+      <a href="#mouvement" style="padding:6px 0" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">The movement</a>
+      <a href="#programmes" style="padding:6px 0" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">Programs</a>
+      <a href="#visuel" style="padding:6px 0" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">Gallery</a>
+      <a href="#galerie" style="padding:6px 0" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">Photos</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button type="button" data-lang-toggle aria-label="Passer en français" style="padding:9px 14px;border:1px solid rgba(255,255,255,0.2);border-radius:100px;background:rgba(255,255,255,0.05);color:#F4EFE7;font-size:12px;font-weight:800;letter-spacing:0.14em;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='#FF6A1A'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'">FR</button>
+      <button type="button" data-nav="toggle" aria-label="Open menu" aria-expanded="false" aria-controls="cf-mobile-menu" style="display:none;flex-direction:column;justify-content:center;gap:4px;width:42px;height:42px;padding:0;border:1px solid rgba(255,255,255,0.16);border-radius:8px;background:rgba(255,255,255,0.05);cursor:pointer">
+        <span style="display:block;width:18px;height:2px;background:#F4EFE7;margin:0 auto"></span>
+        <span style="display:block;width:18px;height:2px;background:#F4EFE7;margin:0 auto"></span>
+        <span style="display:block;width:18px;height:2px;background:#F4EFE7;margin:0 auto"></span>
+      </button>
+    </div>
+  </nav>
+  <div id="cf-mobile-menu" data-nav="mobile" aria-hidden="true" style="position:fixed;top:0;right:0;bottom:0;z-index:70;width:min(82vw,320px);transform:translateX(100%);transition:transform .28s ease;background:#0E0E10;border-left:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;gap:4px;padding:88px 24px 28px">
+    <button type="button" data-nav="close" aria-label="Close menu" style="position:absolute;top:22px;right:22px;width:38px;height:38px;border:1px solid rgba(255,255,255,0.16);border-radius:8px;background:rgba(255,255,255,0.05);color:#F4EFE7;font-size:18px;line-height:1;cursor:pointer">✕</button>
+    <a href="#mouvement" data-nav="mlink" style="padding:15px 6px;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#F4EFE7;border-bottom:1px solid rgba(255,255,255,0.07)">The movement</a>
+    <a href="#programmes" data-nav="mlink" style="padding:15px 6px;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#F4EFE7;border-bottom:1px solid rgba(255,255,255,0.07)">Programs</a>
+    <a href="#visuel" data-nav="mlink" style="padding:15px 6px;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#F4EFE7;border-bottom:1px solid rgba(255,255,255,0.07)">Gallery</a>
+    <a href="#galerie" data-nav="mlink" style="padding:15px 6px;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:0.02em;text-transform:uppercase;color:#F4EFE7;border-bottom:1px solid rgba(255,255,255,0.07)">Photos</a>
+    <a href="/register" data-nav="mlink" style="margin-top:18px;padding:16px;text-align:center;background:#FF6A1A;color:#0B0B0C;font-weight:800;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;border-radius:6px">Join the movement →</a>
+    <button type="button" data-lang-toggle style="margin-top:10px;padding:14px;text-align:center;border:1px solid rgba(255,255,255,0.16);border-radius:6px;background:rgba(255,255,255,0.05);color:#F4EFE7;font-weight:800;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer">Version française →</button>
+  </div>
+
+  <section id="top" style="position:relative;width:100%;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden;padding-top:118px">
+    <img data-hero-poster src="/uploads/Chart_MoodPlate_GoldenHourCourt.webp" alt="Street basketball at sunset" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;filter:saturate(1.05) contrast(1.04)">
+    <video data-hero-video autoplay muted loop playsinline preload="auto" poster="/uploads/Chart_MoodPlate_GoldenHourCourt.webp" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;filter:saturate(1.05) contrast(1.04)">
+      <source src="/uploads/hero-golden.webm" type="video/webm">
+      <source src="/uploads/hero-golden.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,0.55) 0%,rgba(11,11,12,0.05) 32%,rgba(11,11,12,0.45) 66%,rgba(11,11,12,0.96) 100%)"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 120%,rgba(255,106,26,0.22),transparent 55%)"></div>
+
+    <div style="position:relative;z-index:3;width:100%;max-width:1200px;margin:0 auto;padding:0 40px 76px">
+      <div style="margin-bottom:22px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">Year-round basketball</span>
+      </div>
+      <h1 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(54px,9vw,138px);line-height:0.88;letter-spacing:0.005em;margin:0;text-transform:uppercase;text-shadow:0 8px 60px rgba(0,0,0,0.5)">
+        Basketball<br>that unites<br><span style="color:#FF6A1A">the city.</span>
+      </h1>
+      <p style="max-width:560px;margin:26px 0 0;font-size:clamp(15px,1.4vw,18px);line-height:1.6;color:#D7D1C8">
+        Courtfest is not an event — it's a movement. Open runs, 5×5 tournaments, music and culture: we turn every court into a stage. All year long, all across the city.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px">
+        <a href="/register" style="display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0B0B0C;background:#FF6A1A;padding:16px 26px;border-radius:5px;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Join the movement →</a>      </div>
+    </div>
+
+    <div style="position:absolute;bottom:30px;right:40px;z-index:3;display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.18em;color:rgba(244,239,231,0.6);animation:cf-floaty 2.4s ease-in-out infinite">
+      <span>SCROLL</span><span style="font-size:14px">↓</span>
+    </div>
+  </section>
+
+
+</div>
+
+
+<section id="mouvement" style="position:relative;z-index:4;background:#0B0B0C;max-width:1200px;margin:0 auto;padding:120px 40px 90px;scroll-margin-top:80px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:34px">
+    <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">The movement · Le mouvement</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1.15fr 0.85fr;gap:60px;align-items:end">
+    <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(36px,5.2vw,76px);line-height:0.94;margin:0;text-transform:uppercase">
+      Not an event.<br><span style="color:#FF6A1A">A movement.</span>
+    </h2>
+    <p style="margin:0;font-size:17px;line-height:1.7;color:#C9C3BA">
+      The game first. Courtfest keeps neighborhood basketball alive all year long: we open the courts, we bring the city together, we give talent a stage. Born in Dakar — and the same spirit travels, city after city.
+      <span style="display:block;margin-top:14px;color:#8C867E;font-size:14px">Un programme de quartier — terrains ouverts, formation, culture.</span>
+    </p>
+  </div>
+</section>
+
+<section id="evenement" style="position:relative;z-index:4;background:#0B0B0C;border-bottom:1px solid rgba(255,255,255,0.08);scroll-margin-top:80px">
+  <div style="max-width:1200px;margin:0 auto;padding:96px 40px;text-align:center">
+    <div style="margin-bottom:18px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">Alpha 6 presents · Vol. 02</span>
+    </div>
+    <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(44px,6.5vw,96px);line-height:0.92;margin:0;text-transform:uppercase;color:#F4EFE7">Dakar 2026</h2>
+    <p style="margin:16px 0 0;font-size:clamp(14px,1.6vw,19px);font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#FF6A1A">Saturday, August 22, 2026 · Djily Mbaye · 3 – 9 pm</p>
+    <p style="margin:12px 0 0;font-size:clamp(12px,1.3vw,15px);font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,239,231,0.85)">Open runs 5×5 &nbsp;•&nbsp; Music &nbsp;•&nbsp; Streetwear &nbsp;•&nbsp; Youth</p>
+    <div style="display:flex;justify-content:center;margin-top:30px">
+      <a href="https://www.instagram.com/thecourtfest/" target="_blank" rel="noopener noreferrer" style="font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9C3BA" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">@thecourtfest</a>
+    </div>
+    <div style="margin-top:56px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:rgba(244,239,231,0.6)">Sponsors &amp; partners</div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:16px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:140px;height:72px;border-radius:8px;background:#F4EFE7;border:1px solid rgba(255,255,255,0.25);padding:8px" title="Ville de Dakar">
+          <img src="/uploads/sponsor-ville-de-dakar.png" alt="Ville de Dakar" loading="lazy" style="max-width:100%;max-height:100%;object-fit:contain">
+        </span>
+      </div>
+      <form data-partner-form onsubmit="return false" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px">
+        <label for="cf-partner-org" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Organisation name</label>
+        <input type="text" id="cf-partner-org" name="org" autocomplete="organization" placeholder="Your organisation" style="flex:1;min-width:200px;max-width:260px;padding:14px 16px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#F4EFE7;font-size:14px;font-family:'Archivo',sans-serif;outline:none" onfocus="this.style.borderColor='#FF6A1A'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+        <label for="cf-partner-email" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Work email</label>
+        <input type="email" id="cf-partner-email" name="email" autocomplete="email" placeholder="email@organisation.com" style="flex:1;min-width:200px;max-width:260px;padding:14px 16px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#F4EFE7;font-size:14px;font-family:'Archivo',sans-serif;outline:none" onfocus="this.style.borderColor='#FF6A1A'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+        <button style="padding:14px 24px;border:none;border-radius:6px;background:#FF6A1A;color:#0B0B0C;font-weight:800;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Become a partner →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="programmes" style="position:relative;z-index:4;background:#0B0B0C;max-width:1200px;margin:0 auto;padding:50px 40px 100px;scroll-margin-top:80px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:34px">
+    <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">What we run · Programmes</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px">
+    <div style="position:relative;border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:34px;background:#0E0E10;transition:transform .25s,border-color .25s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(255,106,26,0.5)'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(255,255,255,0.1)'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start"><span style="font-family:'Anton',sans-serif;font-size:15px;color:#FF6A1A">01</span><span style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#7C766E">Open courts</span></div>
+      <h3 style="font-family:'Anton',sans-serif;font-weight:400;font-size:32px;line-height:1;margin:54px 0 0;text-transform:uppercase">The Courts</h3>
+      <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:#9A948C">Open courts, balls provided. You show up, you play. The game belongs to everyone.</p>
+    </div>
+    <div style="position:relative;border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:34px;background:#0E0E10;transition:transform .25s,border-color .25s" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(255,106,26,0.5)'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='rgba(255,255,255,0.1)'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start"><span style="font-family:'Anton',sans-serif;font-size:15px;color:#FF6A1A">02</span><span style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#7C766E">Tournaments</span></div>
+      <h3 style="font-family:'Anton',sans-serif;font-weight:400;font-size:32px;line-height:1;margin:54px 0 0;text-transform:uppercase">The Tournaments</h3>
+      <p style="margin:12px 0 0;font-size:15px;line-height:1.6;color:#9A948C">From the neighborhood run to the podium. 5×5 seasons that give the city's talents a stage.</p>
+    </div>
+  </div>
+</section>
+
+<section id="visuel" style="position:relative;z-index:4;background:linear-gradient(180deg,#0B0B0C,#100D0A 60%,#0B0B0C);border-top:1px solid rgba(255,255,255,0.08);scroll-margin-top:80px">
+  <div style="max-width:1200px;margin:0 auto;padding:100px 40px">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px">
+      <div style="max-width:640px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+                <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">Open runs · Dakar</span>
+        </div>
+        <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(34px,4.8vw,68px);line-height:0.94;margin:0;text-transform:uppercase">The community,<br><span style="color:#FF6A1A">united.</span></h2>
+        <p style="margin:22px 0 0;font-size:16px;line-height:1.7;color:#C9C3BA">
+          At every open run, the court is open to everyone — from the youngest to the elders, one court, one community. That's Courtfest.
+          <span style="display:block;margin-top:12px;color:#8C867E;font-size:14px">Des open runs — tous âges, une communauté, un seul terrain.</span>
+        </p>
+      </div>
+      <span style="font-family:'Anton',sans-serif;font-size:15px;letter-spacing:0.06em;color:#F4EFE7">OPEN RUNS 2026</span>
+    </div>
+
+    <div data-mg style="display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:14px">
+      <figure style="grid-column:span 2;grid-row:span 2;position:relative;margin:0;border-radius:14px;overflow:hidden;background:#0E0E10">
+        <img src="/uploads/courtfest-dunk.webp" alt="Dunk at the rim during a Courtfest open run" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 28%;transition:transform .6s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        <figcaption style="position:absolute;left:16px;bottom:14px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#F4EFE7;text-shadow:0 2px 12px rgba(0,0,0,0.85)">Open run · above the rim</figcaption>
+      </figure>
+      <figure style="grid-column:span 2;grid-row:span 1;position:relative;margin:0;border-radius:14px;overflow:hidden;background:#0E0E10">
+        <img src="/uploads/courtfest-run.webp" alt="5×5 game action during the open run" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 45%;transition:transform .6s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        <figcaption style="position:absolute;left:16px;bottom:14px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#F4EFE7;text-shadow:0 2px 12px rgba(0,0,0,0.85)">The game, full speed</figcaption>
+      </figure>
+      <figure style="grid-column:span 1;grid-row:span 1;position:relative;margin:0;border-radius:14px;overflow:hidden;background:#0E0E10">
+        <img src="/uploads/courtfest-duel.webp" alt="Pre-game face-off at sunset" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .6s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        <figcaption style="position:absolute;left:14px;bottom:12px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#F4EFE7;text-shadow:0 2px 12px rgba(0,0,0,0.85)">Face to face</figcaption>
+      </figure>
+      <figure style="grid-column:span 1;grid-row:span 1;position:relative;margin:0;border-radius:14px;overflow:hidden;background:#0E0E10">
+        <img src="/uploads/courtfest-huddle.webp" alt="The team huddled up before the game" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;transition:transform .6s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        <figcaption style="position:absolute;left:14px;bottom:12px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#F4EFE7;text-shadow:0 2px 12px rgba(0,0,0,0.85)">The huddle</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<section id="questions" style="position:relative;z-index:4;background:#0B0B0C;scroll-margin-top:80px">
+  <div style="max-width:1200px;margin:0 auto;padding:20px 40px 90px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">Quick answers · Questions rapides</span>
+    </div>
+    <div data-mg style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px">
+      <div style="border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:26px;background:#0E0E10">
+        <h3 style="font-family:'Anton',sans-serif;font-weight:400;font-size:22px;line-height:1;margin:0;text-transform:uppercase;color:#F4EFE7">Who is it for?</h3>
+        <p style="margin:10px 0 0;font-size:15px;line-height:1.6;color:#9A948C">All levels, all ages. Open run means open — really.</p>
+      </div>
+      <div style="border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:26px;background:#0E0E10">
+        <h3 style="font-family:'Anton',sans-serif;font-weight:400;font-size:22px;line-height:1;margin:0;text-transform:uppercase;color:#F4EFE7">How much does it cost?</h3>
+        <p style="margin:10px 0 0;font-size:15px;line-height:1.6;color:#9A948C">Open runs are free. The big events are ticketed.</p>
+      </div>
+      <div style="border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:26px;background:#0E0E10">
+        <h3 style="font-family:'Anton',sans-serif;font-weight:400;font-size:22px;line-height:1;margin:0;text-transform:uppercase;color:#F4EFE7">I don't play — can I come?</h3>
+        <p style="margin:10px 0 0;font-size:15px;line-height:1.6;color:#9A948C">Yes. Music, culture, the stands — the festival is for the whole city.</p>
+      </div>
+      <div style="border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:26px;background:#0E0E10">
+        <h3 style="font-family:'Anton',sans-serif;font-weight:400;font-size:22px;line-height:1;margin:0;text-transform:uppercase;color:#F4EFE7">How do I join?</h3>
+        <p style="margin:10px 0 0;font-size:15px;line-height:1.6;color:#9A948C">Leave your contact at the bottom of the page, or message us directly.</p>
+      </div>
+    </div>
+    <a href="https://wa.me/221772842650" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:22px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#F6B43C" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#F6B43C'">Another question? WhatsApp →</a>
+  </div>
+</section>
+
+
+<section id="galerie" style="position:relative;z-index:4;background:#0B0B0C;scroll-margin-top:80px">
+  <div style="max-width:1200px;margin:0 auto;padding:20px 40px 40px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C">Photos · On the court</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:14px">
+      <figure style="position:relative;margin:0;border-radius:14px;overflow:hidden;aspect-ratio:21/9">
+        <img src="/uploads/courtfest-equipe.webp" alt="Team talk on the sideline" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;transition:transform .6s ease" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+        <figcaption style="position:absolute;left:18px;bottom:16px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#F4EFE7;text-shadow:0 2px 12px rgba(0,0,0,0.8)">Team talk · the squad</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="rejoindre" style="position:relative;z-index:4;overflow:hidden;scroll-margin-top:80px">
+  <img src="/uploads/Chart_MoodPlate_BacklitCrowd.webp" alt="" aria-hidden="true" role="presentation" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(0.4) saturate(1.1)">
+  <video data-cta-video autoplay muted loop playsinline preload="metadata" poster="/uploads/Chart_MoodPlate_BacklitCrowd.webp" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(0.4) saturate(1.1)">
+    <source src="/uploads/cta-crowd.webm" type="video/webm">
+    <source src="/uploads/cta-crowd.mp4" type="video/mp4">
+  </video>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,0.7),rgba(11,11,12,0.92))"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 100%,rgba(255,106,26,0.28),transparent 60%)"></div>
+  <div style="position:relative;z-index:3;max-width:880px;margin:0 auto;padding:120px 40px;text-align:center">
+    <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,7vw,104px);line-height:0.9;margin:0;text-transform:uppercase">The court<br>is waiting.</h2>
+    <p style="max-width:520px;margin:24px auto 0;font-size:16px;line-height:1.7;color:#D7D1C8">Play, coach, organize, or bring Courtfest to your neighborhood. Leave your contact — we'll get back to you.</p>
+    <form onsubmit="return false" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:34px">
+      <label for="cf-email" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Your email address</label>
+      <input type="email" id="cf-email" name="email" autocomplete="email" placeholder="your@email.com" style="flex:1;min-width:240px;max-width:340px;padding:16px 18px;border-radius:6px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#F4EFE7;font-size:15px;font-family:'Archivo',sans-serif;outline:none" onfocus="this.style.borderColor='#FF6A1A'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'">
+      <button style="padding:16px 28px;border:none;border-radius:6px;background:#FF6A1A;color:#0B0B0C;font-weight:800;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Join →</button>
+    </form>
+    <div style="display:flex;gap:24px;justify-content:center;margin-top:28px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C9C3BA">
+      <a href="https://www.instagram.com/thecourtfest/" target="_blank" rel="noopener noreferrer" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">Instagram</a>
+      <a href="https://wa.me/221772842650" target="_blank" rel="noopener noreferrer" onmouseover="this.style.color='#FF6A1A'" onmouseout="this.style.color='#C9C3BA'">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer style="position:relative;z-index:4;background:#0B0B0C;border-top:1px solid rgba(255,255,255,0.08)">
+  <div style="max-width:1200px;margin:0 auto;padding:50px 40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span style="font-family:'Anton',sans-serif;font-size:22px;letter-spacing:0.04em">COURTFEST</span>
+      <span style="font-size:11px;font-weight:700;letter-spacing:0.2em;color:#7C766E">BASKETBALL · AFRICA</span>
+    </div>
+    <div style="font-size:12px;color:#7C766E">© 2026 Courtfest — Community basketball program. All year long, all across the city.</div>
+  </div>
+</footer>

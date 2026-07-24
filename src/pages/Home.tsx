@@ -1,11 +1,21 @@
-import { lazy, Suspense, useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { supabase } from '../lib/supabase'
 import { track } from '../lib/analytics'
 import { use3DTier } from '../three/use3DTier'
-import landingHtml from './courtfest-landing.html?raw'
+import landingFr from './courtfest-landing.html?raw'
+import landingEn from './courtfest-landing.en.html?raw'
 import landingCss from './courtfest-landing.css?raw'
+
+type Lang = 'fr' | 'en'
+const readLang = (): Lang => {
+  try {
+    return localStorage.getItem('cf_lang') === 'en' ? 'en' : 'fr'
+  } catch {
+    return 'fr'
+  }
+}
 
 // 3D stage (blueprint P0) — lazy chunk, loaded only when the tier gate opens
 // (?v3d=1 + capability checks). The flat tier never downloads three.js.
@@ -23,10 +33,13 @@ export default function Home() {
   const navigate = useNavigate()
   const ref = useRef<HTMLDivElement>(null)
   const tier3d = use3DTier()
+  const [lang, setLang] = useState<Lang>(readLang)
+  const landingHtml = lang === 'en' ? landingEn : landingFr
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    document.documentElement.lang = lang
 
     const setMenu = (open: boolean) => {
       const menu = el.querySelector('[data-nav="mobile"]')
@@ -38,6 +51,19 @@ export default function Home() {
 
     const onClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
+      // FR/EN switch — swaps which raw landing file is injected, persisted.
+      if (target.closest('[data-lang-toggle]')) {
+        e.preventDefault()
+        const next: Lang = lang === 'fr' ? 'en' : 'fr'
+        try {
+          localStorage.setItem('cf_lang', next)
+        } catch {
+          /* private mode */
+        }
+        track('lang_switch', { to: next })
+        setLang(next)
+        return
+      }
       // Mobile menu open/close controls.
       if (target.closest('[data-nav="toggle"]')) {
         e.preventDefault()
@@ -143,14 +169,15 @@ export default function Home() {
       el.removeEventListener('click', onClick)
       el.removeEventListener('submit', onSubmit)
     }
-  }, [navigate])
+  }, [navigate, lang])
 
   return (
     <>
       <style>{landingCss}</style>
       {tier3d && (
         <Suspense fallback={null}>
-          <Stage />
+          {/* key remounts the stage on language switch so the headline choreography re-runs on the new DOM */}
+          <Stage key={lang} />
         </Suspense>
       )}
       <div ref={ref} dangerouslySetInnerHTML={{ __html: landingHtml }} />
