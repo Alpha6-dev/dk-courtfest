@@ -23,3 +23,34 @@
      background — hide the flat-tier clip/poster and let the wrapper go clear. */
   .cf-3d [data-hero-poster],.cf-3d [data-hero-video]{display:none !important}
   .cf-3d [data-cf-wrap]{background:transparent !important}
+
+  /* ---- Responsive fit (phones / small tablets) ----------------------------
+     The landing markup is inline-styled, so these overrides need !important.
+     Without them the Programmes / Mouvement grids stayed 2-up on phones and
+     pushed the page to ~430px wide, which made mobile browsers zoom out. */
+  /* Once a [data-mg] grid collapses to one column, the mood-grid column spans
+     would create an implicit 2nd column; reset them so each tile is full width. */
+  @media(max-width:780px){[data-mg]>*{grid-column:auto !important}#mouvement [data-mg]{gap:28px !important}}
+  /* Phone gutters: the 40px side padding leaves too little room under ~640px. */
+  @media(max-width:640px){
+    [data-nav="bar"]{padding:14px 20px !important}
+    #top>div[style*="max-width:1200px"]{padding:0 22px 56px !important}
+    #top>div[style*="bottom:30px"]{right:22px !important}
+    #mouvement,#programmes{padding-left:22px !important;padding-right:22px !important}
+    #evenement>div,#visuel>div,#questions>div,#galerie>div,#rejoindre>div[style*="max-width:880px"],footer>div{padding-left:22px !important;padding-right:22px !important}
+    #programmes [data-mg]>div{padding:26px !important}
+  }
+  /* Hero on phones: full-width CTA (keeps the arrow on the same line) and the
+     small viewport height so the CTA clears the browser's bottom toolbar. */
+  @media(max-width:480px){#top a[href="/register"]{width:100%;justify-content:center;padding:16px 18px !important}}
+  @supports(height:100svh){#top{min-height:100svh !important}}
+  /* Nav on narrow phones: wordmark + badge + EN + burger add up to ~374px, so
+     shrink the wordmark and badge under 420px and drop the badge under 340px. */
+  @media(max-width:420px){
+    [data-nav="bar"] a[href="#top"]>span:first-child{font-size:20px !important}
+    [data-nav="bar"] a[href="#top"]>span:last-child{font-size:10px !important;letter-spacing:0.14em !important;padding:3px 6px !important}
+    [data-nav="bar"] [data-lang-toggle]{padding:8px 11px !important}
+  }
+  @media(max-width:340px){[data-nav="bar"] a[href="#top"]>span:last-child{display:none !important}}
+  /* 320px-class phones: keep the French hero CTA on one line. */
+  @media(max-width:340px){#top a[href="/register"]{font-size:12px !important;letter-spacing:0.1em !important}}
