@@ -50,7 +50,7 @@ export default function Dashboard() {
         {stats.map((s) => (
           <div key={s.label} className="border border-white/10 bg-white/5 p-6">
             <span className="label text-white/40">{s.label}</span>
-            <div className={`mt-2 font-display text-6xl ${s.accent}`}>{s.value ?? '—'}</div>
+            <div className={`mt-2 font-display text-6xl ${s.accent}`}>{s.value ?? '-'}</div>
           </div>
         ))}
       </div>

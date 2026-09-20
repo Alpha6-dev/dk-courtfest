@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg'],
       manifest: {
-        name: 'DK CourtFest — Check-in',
+        name: 'DK CourtFest · Check-in',
         short_name: 'DKCF Check-in',
-        description: 'Billetterie & présence — DK CourtFest',
+        description: 'Billetterie & présence · DK CourtFest',
         theme_color: '#FF5C00',
         background_color: '#0A0A0C',
         display: 'standalone',

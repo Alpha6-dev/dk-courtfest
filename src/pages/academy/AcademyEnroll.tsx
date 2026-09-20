@@ -113,7 +113,7 @@ export default function AcademyEnroll() {
 
         <div className="space-y-4">
           <span className="label text-sun">{isMinor ? '04' : '03'} · Santé</span>
-          <textarea className={field} placeholder="Notes médicales (allergies, etc.) — optionnel" value={medical} onChange={(e) => setMedical(e.target.value)} />
+          <textarea className={field} placeholder="Notes médicales (allergies, etc.), optionnel" value={medical} onChange={(e) => setMedical(e.target.value)} />
         </div>
 
         {cat && (

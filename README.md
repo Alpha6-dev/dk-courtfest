@@ -1,4 +1,4 @@
-# DK CourtFest — Event Platform
+# DK CourtFest: Event Platform
 
 > Dakar · Basket · Culture. Registration, CRM, ticketing & check-in for the DK CourtFest street basketball event (Place de l'Indépendance, **08·06·2026**).
 
@@ -15,15 +15,15 @@ Part of the **Alpha 6 / Tech 6** stack: **React 19 + Vite + Tailwind 4 + TypeScr
 | Admin dashboard (live counts incl. attendance) | ✅ `/admin` |
 | Admin teams list + status workflow | ✅ `/admin/teams` |
 | Admin contacts / CRM | ✅ `/admin/contacts` |
-| Ticketing — issue, QR, public ticket page, WhatsApp share | ✅ `/admin/tickets` |
-| Check-in — manual + camera scan, live headcount | ✅ `/admin/checkin` |
+| Ticketing: issue, QR, public ticket page, WhatsApp share | ✅ `/admin/tickets` |
+| Check-in: manual + camera scan, live headcount | ✅ `/admin/checkin` |
 | **Offline-first check-in PWA** (local ticket cache + queued sync, installable) | ✅ |
 | **Tournament + live broadcast overlays** (matches, realtime scoring, OBS overlays) | ✅ `/admin/matches`, `/overlay/*` |
-| **Mobile-money payments** (Wave + Orange Money + card via CinetPay) | ✅ deployed — add merchant key, see [PAYMENTS.md](./PAYMENTS.md) |
+| **Mobile-money payments** (Wave + Orange Money + card via CinetPay) | ✅ deployed, add merchant key, see [PAYMENTS.md](./PAYMENTS.md) |
 | **Analytics + SYSCOHADA ledger export** | ✅ `/admin/analytics` |
-| Hosting — GitHub Actions → Hostinger FTP auto-deploy | ✅ see [DEPLOY.md](./DEPLOY.md) |
-| **DK Academy** — training categories, public enrollment, athletes/sessions/attendance | ✅ `/academy`, `/admin/athletes`, `/admin/sessions` |
-| **Alpha 6 Sports umbrella** — portfolio + sponsor hub | ✅ `/sports` |
+| Hosting: GitHub Actions → Hostinger FTP auto-deploy | ✅ see [DEPLOY.md](./DEPLOY.md) |
+| **DK Academy**: training categories, public enrollment, athletes/sessions/attendance | ✅ `/academy`, `/admin/athletes`, `/admin/sessions` |
+| **Alpha 6 Sports umbrella**: portfolio + sponsor hub | ✅ `/sports` |
 
 **All planned phases (0–5) + Academy + umbrella built.** Remaining = your accounts: CinetPay key, FTP secrets, first admin user.
 
@@ -37,9 +37,9 @@ One codebase + one Supabase backend now powers three surfaces, sharing the desig
 Public buy page `/buy` → `payment-init` Edge Function → CinetPay hosted checkout (Wave + Orange Money + card) → `payment-webhook` verifies & marks paid. Functions are deployed; add `CINETPAY_API_KEY` + `CINETPAY_SITE_ID` secrets to activate.
 
 ### Broadcast overlays (OBS)
-Add as **Browser Sources** in OBS — transparent background, update live via Supabase Realtime as the admin scores in `/admin/matches`:
-- `/overlay/scoreboard?match=<id>` — scoreboard bug (or omit `match` to track the live game)
-- `/overlay/lower-third?name=Momar%20Diop&sub=Point%20Guard` — lower third
+Add as **Browser Sources** in OBS: transparent background, update live via Supabase Realtime as the admin scores in `/admin/matches`:
+- `/overlay/scoreboard?match=<id>`: scoreboard bug (or omit `match` to track the live game)
+- `/overlay/lower-third?name=Momar%20Diop&sub=Point%20Guard`: lower third
 
 ### Offline check-in (PWA)
 Installable web app (Add to Home Screen). Staff **sync the ticket manifest once online**, then the scanner validates QR codes **entirely on-device** (IndexedDB) and queues each scan; queued check-ins flush to Supabase via the idempotent `sync_check_ins` RPC when the connection returns. Built for the patchy signal at Place de l'Indépendance.
@@ -54,11 +54,11 @@ npm run dev               # http://localhost:5173
 
 ### Database
 Run the migrations in order in the Supabase SQL editor (or `supabase db push`), then the seed:
-1. `0001_init.sql` — tables, enums, indexes
-2. `0002_rls.sql` — Row-Level Security
-3. `0003_register_rpc.sql` — public registration function
-4. `0004_tickets_rpc.sql` — ticket view + check-in functions
-5. `seed.sql` — Vol. 01 edition
+1. `0001_init.sql`: tables, enums, indexes
+2. `0002_rls.sql`: Row-Level Security
+3. `0003_register_rpc.sql`: public registration function
+4. `0004_tickets_rpc.sql`: ticket view + check-in functions
+5. `seed.sql`: Vol. 01 edition
 
 > Admin login: magic link via Supabase Auth (Email provider). Add yourself under **Authentication → Users** for the first sign-in.
 

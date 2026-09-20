@@ -1,4 +1,4 @@
--- DK CourtFest — Phase 3: offline check-in sync.
+-- DK CourtFest - Phase 3: offline check-in sync.
 -- The check-in PWA records scans on-device while offline and flushes them here
 -- when the connection returns. `client_id` makes the flush idempotent so a
 -- retried sync never double-counts a scan.

@@ -58,7 +58,7 @@ export default function CheckIn() {
 
   // Download the ticket manifest to this device (requires login + network).
   async function syncTickets() {
-    if (!navigator.onLine) return toast.error('Hors-ligne — connexion requise pour synchroniser.')
+    if (!navigator.onLine) return toast.error('Hors-ligne : connexion requise pour synchroniser.')
     const { data, error } = await supabase.from('tickets').select('qr_token, holder_name, type, status')
     if (error) return toast.error(error.message)
     const rows: CachedTicket[] = (data ?? []).map((t) => ({
@@ -101,7 +101,7 @@ export default function CheckIn() {
     if (local) {
       if (local.status === 'used') {
         setLast({ ok: true, already: true, holder: local.holder, type: local.type })
-        toast.warning(`Déjà scanné — ${local.holder}`)
+        toast.warning(`Déjà scanné : ${local.holder}`)
         return
       }
       // Accept locally, record to queue, optimistic mark used.
@@ -116,7 +116,7 @@ export default function CheckIn() {
       await refreshCounts()
       setSession((c) => c + 1)
       setLast({ ok: true, holder: local.holder, type: local.type })
-      toast.success(`Entrée — ${local.holder}`)
+      toast.success(`Entrée : ${local.holder}`)
       if (navigator.onLine) flushQueue()
       return
     }
@@ -129,18 +129,18 @@ export default function CheckIn() {
       setLast(v)
       if (v.ok && !v.already) {
         setSession((c) => c + 1)
-        toast.success(`Entrée — ${v.holder}`)
-      } else if (v.ok) toast.warning(`Déjà scanné — ${v.holder}`)
-      else toast.error(v.reason === 'not_found' ? 'Billet inconnu' : `Refusé — ${v.reason}`)
+        toast.success(`Entrée : ${v.holder}`)
+      } else if (v.ok) toast.warning(`Déjà scanné : ${v.holder}`)
+      else toast.error(v.reason === 'not_found' ? 'Billet inconnu' : `Refusé : ${v.reason}`)
     } else {
       setLast({ ok: false, reason: 'non-synchronisé' })
-      toast.error('Billet inconnu hors-ligne — synchronisez d’abord.')
+      toast.error('Billet inconnu hors-ligne, synchronisez d’abord.')
     }
   }
 
   async function startScan() {
     const Detector = (window as unknown as { BarcodeDetector?: any }).BarcodeDetector
-    if (!Detector) return toast.error('Scanner non supporté — saisissez le code manuellement.')
+    if (!Detector) return toast.error('Scanner non supporté, saisissez le code manuellement.')
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
       streamRef.current = stream

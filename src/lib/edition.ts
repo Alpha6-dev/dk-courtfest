@@ -7,7 +7,7 @@ export interface Edition {
   event_date: string | null
   venue: string | null
   status: string
-  // Host-city brand fields (migration 0008 — NOT NULL with Dakar defaults).
+  // Host-city brand fields (migration 0008 - NOT NULL with Dakar defaults).
   city: string
   country: string
   city_code: string

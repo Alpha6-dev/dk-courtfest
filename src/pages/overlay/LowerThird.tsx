@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useBrand } from '../../lib/brand'
 
-// OBS lower-third — transparent background, driven by query params so the
+// OBS lower-third - transparent background, driven by query params so the
 // operator can show any name without a DB round-trip.
 // Usage: /overlay/lower-third?name=Momar%20Diop&sub=Point%20Guard%20·%20Lions
 export default function LowerThird() {

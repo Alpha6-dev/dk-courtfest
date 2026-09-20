@@ -1,4 +1,4 @@
-// Alpha 6 Sports — payment initialization (Supabase Edge Function, Deno).
+// Alpha 6 Sports - payment initialization (Supabase Edge Function, Deno).
 //
 // Two flows, one hosted checkout (Wave + Orange Money + Free Money + card, XOF):
 //   1. Event ticket:        { holder_name, phone, type, amount_xof }
@@ -163,7 +163,7 @@ Deno.serve(async (req) => {
       const checkout = await openCheckout({
         transactionId: paymentId!,
         amountXof: ms.amount_xof,
-        description: `DK Academy — cotisation ${ms.period}`,
+        description: `DK Academy - cotisation ${ms.period}`,
         customerName: `${athlete.first_name} ${athlete.last_name}`,
         customerPhone: athlete.guardian_phone ?? '',
         returnUrl: `${siteUrl}/academy`,
@@ -194,7 +194,7 @@ Deno.serve(async (req) => {
     const checkout = await openCheckout({
       transactionId: payment.id,
       amountXof: amount_xof,
-      description: `DK CourtFest — billet ${type}`,
+      description: `DK CourtFest - billet ${type}`,
       customerName: holder_name,
       customerPhone: phone ?? '',
       returnUrl: `${siteUrl}/ticket/${ticket.qr_token}`,

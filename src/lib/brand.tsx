@@ -19,7 +19,7 @@ export interface Brand {
   loading: boolean
 }
 
-// The founding Dakar edition — used before the active edition loads and as a
+// The founding Dakar edition - used before the active edition loads and as a
 // fallback if Supabase is unreachable, so the brand never renders blank.
 const DEFAULTS = { cityCode: 'DK', city: 'Dakar', country: 'SN' }
 
@@ -49,7 +49,7 @@ export function BrandProvider({ children }: { children: ReactNode }) {
 
   // Keep the browser tab in sync with the active host city.
   useEffect(() => {
-    document.title = `${eventName} — ${tagline}`
+    document.title = `${eventName} · ${tagline}`
   }, [eventName, tagline])
 
   return (

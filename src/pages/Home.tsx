@@ -17,12 +17,12 @@ const readLang = (): Lang => {
   }
 }
 
-// 3D stage (blueprint P0) — lazy chunk, loaded only when the tier gate opens
+// 3D stage (blueprint P0) - lazy chunk, loaded only when the tier gate opens
 // (?v3d=1 + capability checks). The flat tier never downloads three.js.
 const Stage = lazy(() => import('../three/Stage'))
 
 /**
- * CourtFest landing page — "Le terrain appartient à la ville."
+ * CourtFest landing page - "Le terrain appartient à la ville."
  *
  * The markup and styles are the exact Courtfest basketball redesign
  * (imported as raw strings). This wrapper injects the page-scoped CSS,
@@ -51,7 +51,7 @@ export default function Home() {
 
     const onClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      // FR/EN switch — swaps which raw landing file is injected, persisted.
+      // FR/EN switch - swaps which raw landing file is injected, persisted.
       if (target.closest('[data-lang-toggle]')) {
         e.preventDefault()
         const next: Lang = lang === 'fr' ? 'en' : 'fr'
@@ -118,16 +118,16 @@ export default function Home() {
       let body = `Bonjour,\n\nJe veux rejoindre le mouvement Courtfest (jouer, coacher, organiser ou devenir partenaire).\n\nMon email : ${email}\n\nMerci !`
       if (isPartner) {
         const org = form.querySelector<HTMLInputElement>('input[name="org"]')?.value.trim() ?? ''
-        subject = `Partenariat Courtfest Vol. 02${org ? ` — ${org}` : ''}`
-        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest Vol. 02 (Dakar, samedi 22 août 2026, Djily Mbaye).\n\nOrganisation : ${org || '—'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
+        subject = `Partenariat Courtfest Vol. 02${org ? ` - ${org}` : ''}`
+        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest Vol. 02 (Dakar, samedi 22 août 2026, Djily Mbaye).\n\nOrganisation : ${org || '-'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
       }
       window.location.href = `mailto:alpha.vientreprise@courtfest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-      toast.success(isPartner ? 'Votre demande de partenariat est prête — envoyez l\'email. 🤝' : 'Ton message est prêt — envoie l\'email et on revient vers toi. 🏀')
+      toast.success(isPartner ? 'Votre demande de partenariat est prête, envoyez l\'email. 🤝' : 'Ton message est prêt, envoie l\'email et on revient vers toi. 🏀')
       if (input) input.value = ''
     }
 
     // Background clips (hero + CTA). Media injected via innerHTML doesn't run
-    // source selection, so kick each off manually. Skip under reduced-motion —
+    // source selection, so kick each off manually. Skip under reduced-motion -
     // CSS hides the <video> and the poster still shows, and we avoid the fetch.
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (!reduceMotion) {

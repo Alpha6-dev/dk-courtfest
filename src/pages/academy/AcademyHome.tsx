@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabase'
 import { useBrand } from '../../lib/brand'
 import type { Category } from '../../types/db'
 
-// DK Academy — public landing. Training for all categories, year-round.
+// DK Academy - public landing. Training for all categories, year-round.
 export default function AcademyHome() {
   const { eventName } = useBrand()
   const [cats, setCats] = useState<Category[]>([])
@@ -34,7 +34,7 @@ export default function AcademyHome() {
           Forme la prochaine <span className="text-flame">génération</span> du basket dakarois.
         </h1>
         <p className="mt-6 max-w-xl text-lg text-white/70">
-          Entraînement encadré toute l'année — du mini-basket aux seniors. Coachs certifiés, vraie
+          Entraînement encadré toute l'année, du mini-basket aux seniors. Coachs certifiés, vraie
           progression, esprit {eventName}.
         </p>
         <Link

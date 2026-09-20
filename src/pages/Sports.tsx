@@ -4,12 +4,12 @@ import { useBrand } from '../lib/brand'
 export default function Sports() {
   const { eventName, city } = useBrand()
 
-  // Alpha 6 Sports — umbrella / B2B hub tying the brands together. The CourtFest
+  // Alpha 6 Sports - umbrella / B2B hub tying the brands together. The CourtFest
   // event travels with its host city; Academy & League are Dakar-rooted.
   const PRODUCTS = [
     { to: '/', tag: 'Événement', title: eventName, desc: `Le festival street-basket de ${city}. 3×3 · 5×5 · culture.`, accent: 'text-flame' },
     { to: '/academy', tag: 'Formation', title: 'DK Academy', desc: 'Entraînement encadré toute l\'année, du mini-basket aux seniors.', accent: 'text-sun' },
-    { to: '/sports', tag: 'Bientôt', title: 'DK League', desc: 'Championnat inter-quartiers — la suite logique du pipeline.', accent: 'text-lion' },
+    { to: '/sports', tag: 'Bientôt', title: 'DK League', desc: 'Championnat inter-quartiers, la suite logique du pipeline.', accent: 'text-lion' },
   ]
 
   return (
@@ -23,11 +23,11 @@ export default function Sports() {
 
       <section className="py-16">
         <h1 className="max-w-3xl font-display text-6xl uppercase leading-[0.95] text-bone sm:text-7xl">
-          On construit la culture basket à Dakar — de la <span className="text-flame">rue</span> à
+          On construit la culture basket à Dakar, de la <span className="text-flame">rue</span> à
           l'<span className="text-sun">académie</span> à la <span className="text-lion">scène</span>.
         </h1>
         <p className="mt-6 max-w-xl text-lg text-white/70">
-          Alpha 6 Sports opère un événement phare, une filière de formation et un vivier de talents —
+          Alpha 6 Sports opère un événement phare, une filière de formation et un vivier de talents :
           un seul écosystème, une seule ambition.
         </p>
       </section>
@@ -46,7 +46,7 @@ export default function Sports() {
       <section className="mt-16 border-t border-white/10 pt-10">
         <span className="label text-sun">Pour les sponsors</span>
         <h2 className="mt-2 max-w-2xl font-display text-4xl uppercase text-bone">
-          Une audience jeune, urbaine, engagée — sur le terrain et en ligne.
+          Une audience jeune, urbaine, engagée, sur le terrain et en ligne.
         </h2>
         <a
           href="mailto:hello@courtfest.com?subject=Partenariat%20Alpha%206%20Sports"

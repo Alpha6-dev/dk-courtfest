@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import type { Match } from '../../types/db'
 
-// OBS Browser Source overlay — transparent background, updates live via
+// OBS Browser Source overlay - transparent background, updates live via
 // Supabase Realtime when the admin changes the score in /admin/matches.
 // Usage: /overlay/scoreboard?match=<id>   (or omit to track the live match)
 export default function Scoreboard() {

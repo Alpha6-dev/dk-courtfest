@@ -1,4 +1,4 @@
--- DK CourtFest — core schema (Phase 0)
+-- DK CourtFest - core schema (Phase 0)
 -- Run in the Supabase SQL editor, or via `supabase db push` with the CLI.
 -- Money is stored in whole XOF (FCFA has no minor unit).
 

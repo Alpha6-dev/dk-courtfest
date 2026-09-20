@@ -3,7 +3,7 @@ import { supabase } from './supabase'
 /**
  * First-party, cookie-less analytics. Beacons go to the site_events table via
  * the capture_event security-definer RPC (insert-only for anon; no reads).
- * Session id lives in sessionStorage only — no cookies, no PII, no banner.
+ * Session id lives in sessionStorage only - no cookies, no PII, no banner.
  */
 const SID_KEY = 'cf_sid'
 

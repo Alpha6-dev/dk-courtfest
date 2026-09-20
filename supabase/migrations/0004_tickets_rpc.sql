@@ -1,4 +1,4 @@
--- DK CourtFest — Phase 2: ticketing & check-in functions.
+-- DK CourtFest - Phase 2: ticketing & check-in functions.
 -- Admins (authenticated) issue/list tickets directly via the "admin all" RLS
 -- policies. These two SECURITY DEFINER functions cover the public + staff paths.
 

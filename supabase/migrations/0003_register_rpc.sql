@@ -1,4 +1,4 @@
--- DK CourtFest — public registration via a SECURITY DEFINER function.
+-- DK CourtFest - public registration via a SECURITY DEFINER function.
 -- Lets anonymous visitors register a team + players atomically WITHOUT granting
 -- them table-level read/insert access. The function runs as its owner (bypasses
 -- RLS), so anon only needs EXECUTE on this one function.

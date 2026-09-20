@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 /**
- * « Le Terrain » — procedural Dakar street court (blueprint P1).
+ * « Le Terrain » - procedural Dakar street court (blueprint P1).
  * Everything is generated at runtime (canvas textures, primitive geometry):
  * zero asset downloads, and per-city re-skins are palette changes, not remodels.
  * Palette sampled from the Juneteenth court photos: worn teal paint, pink key,

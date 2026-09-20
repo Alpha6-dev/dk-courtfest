@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Supabase anon key is a public/publishable key — safe to inline.
+          # Supabase anon key is a public/publishable key - safe to inline.
           VITE_SUPABASE_URL: https://rvgzydyrsnwcygfshryi.supabase.co
           VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2Z3p5ZHlyc253Y3lnZnNocnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NTkxNjYsImV4cCI6MjA5NjIzNTE2Nn0.whbH-QWm08vuA7FDZgj8sxQjJW5ov-EtzrBl36v3uLk
 

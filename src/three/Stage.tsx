@@ -10,11 +10,11 @@ import CameraRig from './CameraRig'
 gsap.registerPlugin(ScrollTrigger)
 
 /**
- * « Le Terrain » — 3D stage (blueprint P1: hero station).
+ * « Le Terrain » - 3D stage (blueprint P1: hero station).
  * Mounts fixed behind the DOM sections; while mounted the <html> element
  * carries .cf-3d so CSS can hide the flat-tier hero video and let the canvas
  * be the hero background. Also owns the DOM hero choreography (Hero Engine):
- * headline lines rise, CTA pops, hero content parallaxes out on scroll —
+ * headline lines rise, CTA pops, hero content parallaxes out on scroll -
  * and Lenis smooth scrolling for the 3D tier only.
  */
 

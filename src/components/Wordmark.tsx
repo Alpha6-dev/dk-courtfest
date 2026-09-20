@@ -1,8 +1,8 @@
 import { useBrand } from '../lib/brand'
 
 // The locked CourtFest wordmark. "CourtFest" is the fixed brand (COURT in Bone,
-// FEST in Sun). A host-city monogram prefixes it — the last letter of the code
-// is always Flame (#FF5C00), the rest Bone — so DK becomes ABJ, DKR, … as the
+// FEST in Sun). A host-city monogram prefixes it - the last letter of the code
+// is always Flame (#FF5C00), the rest Bone - so DK becomes ABJ, DKR, … as the
 // event travels (see chart p.06). Pass `cityCode` to override the active city.
 export function Wordmark({ className = '', cityCode }: { className?: string; cityCode?: string }) {
   const brand = useBrand()

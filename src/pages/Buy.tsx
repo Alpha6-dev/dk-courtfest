@@ -28,7 +28,7 @@ export default function Buy() {
     e.preventDefault()
     if (!name.trim() || !phone.trim()) return toast.error('Nom et téléphone requis.')
     track('buy_mailto', { type })
-    const subject = `Demande de paiement — Billet ${option.label} ${eventName}`
+    const subject = `Demande de paiement : Billet ${option.label} ${eventName}`
     const body = [
       'Bonjour,',
       '',
@@ -40,7 +40,7 @@ export default function Buy() {
       "Merci de m'envoyer la demande de paiement.",
     ].join('\n')
     window.location.href = `mailto:${PAYMENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    toast.success('Votre demande est prête — envoyez l\'email pour finaliser. 🏀')
+    toast.success('Votre demande est prête, envoyez l\'email pour finaliser. 🏀')
   }
 
   const field =

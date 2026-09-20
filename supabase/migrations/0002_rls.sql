@@ -1,4 +1,4 @@
--- DK CourtFest — Row Level Security (Phase 1)
+-- DK CourtFest - Row Level Security (Phase 1)
 -- Model: the public can READ the event + matches and SUBMIT a registration.
 -- Everything else requires an authenticated admin (a Supabase Auth user).
 

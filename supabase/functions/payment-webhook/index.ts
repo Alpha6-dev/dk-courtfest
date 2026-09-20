@@ -1,7 +1,7 @@
-// DK CourtFest — payment webhook (Supabase Edge Function, Deno).
+// DK CourtFest - payment webhook (Supabase Edge Function, Deno).
 //
 // CinetPay calls this when a payment settles. We DON'T trust the notification
-// body — we re-query CinetPay's /check endpoint with our transaction_id and only
+// body - we re-query CinetPay's /check endpoint with our transaction_id and only
 // then mark the payment paid. Deploy with verify_jwt = false (public endpoint).
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'

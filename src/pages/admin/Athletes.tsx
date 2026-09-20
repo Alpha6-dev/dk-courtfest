@@ -63,7 +63,7 @@ export default function Athletes() {
     await navigator.clipboard?.writeText(link).catch(() => {})
     const wa = r.guardian_phone
       ? `https://wa.me/${r.guardian_phone.replace(/[^\d]/g, '')}?text=${encodeURIComponent(
-          `DK Academy — cotisation ${thisPeriod()} de ${r.first_name} (${fee.toLocaleString('fr-FR')} XOF). Payer par Wave/Orange Money : ${link}`,
+          `DK Academy : cotisation ${thisPeriod()} de ${r.first_name} (${fee.toLocaleString('fr-FR')} XOF). Payer par Wave/Orange Money : ${link}`,
         )}`
       : null
     toast.success(`Cotisation ${thisPeriod()} créée · lien de paiement copié.`, {
@@ -101,8 +101,8 @@ export default function Athletes() {
                   <td className="border-b border-white/5 py-3 font-display text-2xl">
                     {r.first_name} {r.last_name}
                   </td>
-                  <td className="border-b border-white/5 py-3 text-sun">{r.categories?.name ?? '—'}</td>
-                  <td className="border-b border-white/5 py-3 text-sm text-white/50">{r.guardian_phone ?? '—'}</td>
+                  <td className="border-b border-white/5 py-3 text-sun">{r.categories?.name ?? '-'}</td>
+                  <td className="border-b border-white/5 py-3 text-sm text-white/50">{r.guardian_phone ?? '-'}</td>
                   <td className="border-b border-white/5 py-3">
                     {enr ? (
                       <select
@@ -115,7 +115,7 @@ export default function Athletes() {
                         ))}
                       </select>
                     ) : (
-                      '—'
+                      '-'
                     )}
                   </td>
                   <td className="border-b border-white/5 py-3">

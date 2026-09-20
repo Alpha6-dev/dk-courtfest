@@ -1,4 +1,4 @@
--- DK CourtFest — public lead capture from the landing "Rejoindre" email form.
+-- DK CourtFest - public lead capture from the landing "Rejoindre" email form.
 --
 -- Adds a 'lead' contact type and a SECURITY DEFINER RPC so anonymous visitors
 -- can drop their email WITHOUT table-level insert access (mirrors register_team
@@ -29,7 +29,7 @@ begin
 
   insert into contacts (type, full_name, email, notes)
   values ('lead', v_email, v_email,
-          'Landing — ' || coalesce(nullif(trim(p_source), ''), 'rejoindre'));
+          'Landing: ' || coalesce(nullif(trim(p_source), ''), 'rejoindre'));
 end;
 $$;
 

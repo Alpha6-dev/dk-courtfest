@@ -1,4 +1,4 @@
--- Alpha 6 Sports — DK Academy vertical (training for categories U10…Open/Femmes).
+-- Alpha 6 Sports - DK Academy vertical (training for categories U10…Open/Femmes).
 -- Shares the same Supabase backend as DK CourtFest. Ongoing (not edition-bound).
 
 create type program_type      as enum ('academy_term', 'camp', 'clinic');

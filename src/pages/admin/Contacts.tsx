@@ -81,7 +81,7 @@ export default function Contacts() {
                   <span className="label text-sun">{c.type}</span>
                 </td>
                 <td className="border-b border-white/5 py-3 font-display text-xl">{c.full_name}</td>
-                <td className="border-b border-white/5 py-3 text-white/60">{c.org_name ?? '—'}</td>
+                <td className="border-b border-white/5 py-3 text-white/60">{c.org_name ?? '-'}</td>
                 <td className="border-b border-white/5 py-3 text-sm text-white/50">
                   {c.email ?? ''} {c.phone ? `· ${c.phone}` : ''}
                 </td>

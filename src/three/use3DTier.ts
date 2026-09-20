@@ -3,11 +3,11 @@ import { getGPUTier } from 'detect-gpu'
 
 /**
  * Tier gate for the 3D layer (blueprint P0).
- * P0 policy: OPT-IN ONLY — the canvas mounts exclusively with ?v3d=1.
+ * P0 policy: OPT-IN ONLY - the canvas mounts exclusively with ?v3d=1.
  * Even then we refuse on reduced-motion, tiny viewports or missing WebGL.
  * GPU tiering: detect-gpu when its benchmark data loads fast enough
  * (it fetches from a CDN), else a 2 s timeout falls back to a WebGL2
- * heuristic — the gate must never hang on a network dependency.
+ * heuristic - the gate must never hang on a network dependency.
  * When the 3D tier ships for real (P1+), the default flips to
  * capability-based with the same guards.
  */

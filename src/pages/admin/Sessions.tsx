@@ -102,7 +102,7 @@ export default function Sessions() {
               onClick={() => openAttendance(s)}
               className={`block w-full border p-4 text-left transition ${open?.id === s.id ? 'border-flame' : 'border-white/10 hover:border-white/30'}`}
             >
-              <div className="font-display text-2xl uppercase text-bone">{s.categories?.name ?? '—'}</div>
+              <div className="font-display text-2xl uppercase text-bone">{s.categories?.name ?? '-'}</div>
               <div className="label text-white/40">
                 {s.starts_at ? new Date(s.starts_at).toLocaleString('fr-FR') : 'date à définir'} {s.location ? `· ${s.location}` : ''}
               </div>

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "DK CourtFest — event platform (registration, CRM, ticketing, offline check-in). Dakar · Basket · Culture.",
+  "description": "DK CourtFest: event platform (registration, CRM, ticketing, offline check-in). Dakar · Basket · Culture.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

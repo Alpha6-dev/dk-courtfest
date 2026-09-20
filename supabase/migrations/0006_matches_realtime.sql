@@ -1,4 +1,4 @@
--- DK CourtFest — Phase 4: enable Supabase Realtime on matches so the broadcast
+-- DK CourtFest - Phase 4: enable Supabase Realtime on matches so the broadcast
 -- overlays update live when an admin changes the score.
 
 do $$

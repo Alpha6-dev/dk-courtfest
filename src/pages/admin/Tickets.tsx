@@ -12,7 +12,7 @@ const DEFAULT_PRICE: Record<TicketType, number> = { general: 2000, vip: 10000, p
 function waLink(phone: string | null, token: string, eventName: string) {
   const digits = (phone ?? '').replace(/[^\d]/g, '')
   const url = `${window.location.origin}/ticket/${token}`
-  const msg = `${eventName} — votre billet est prêt ! Présentez ce QR à l'entrée : ${url}`
+  const msg = `${eventName} : votre billet est prêt ! Présentez ce QR à l'entrée : ${url}`
   return `https://wa.me/${digits}?text=${encodeURIComponent(msg)}`
 }
 

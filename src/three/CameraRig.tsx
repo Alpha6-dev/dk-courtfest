@@ -89,7 +89,7 @@ export default function CameraRig({ sun }: { sun: React.RefObject<THREE.Directio
   useFrame(() => {
     const cam = camera as THREE.PerspectiveCamera
     if (!settled.current) {
-      // entrance: the timeline drives position/look — just aim the camera
+      // entrance: the timeline drives position/look - just aim the camera
       cam.lookAt(look.current)
       return
     }

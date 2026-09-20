@@ -1,4 +1,4 @@
-// Alpha 6 Sports — PayDunya IPN webhook (Supabase Edge Function, Deno).
+// Alpha 6 Sports - PayDunya IPN webhook (Supabase Edge Function, Deno).
 //
 // PayDunya POSTs form-encoded `data[...]` when an invoice settles. We never
 // trust the notification body: we re-query PayDunya's confirm endpoint with the
