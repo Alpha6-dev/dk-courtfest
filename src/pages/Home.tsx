@@ -118,8 +118,8 @@ export default function Home() {
       let body = `Bonjour,\n\nJe veux rejoindre le mouvement Courtfest (jouer, coacher, organiser ou devenir partenaire).\n\nMon email : ${email}\n\nMerci !`
       if (isPartner) {
         const org = form.querySelector<HTMLInputElement>('input[name="org"]')?.value.trim() ?? ''
-        subject = `Partenariat Courtfest Vol. 02${org ? ` - ${org}` : ''}`
-        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest Vol. 02 (Dakar, samedi 22 août 2026, Djily Mbaye).\n\nOrganisation : ${org || '-'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
+        subject = `Partenariat Courtfest${org ? ` - ${org}` : ''}`
+        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest (Dakar).\n\nOrganisation : ${org || '-'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
       }
       window.location.href = `mailto:alpha.vientreprise@courtfest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
       toast.success(isPartner ? 'Votre demande de partenariat est prête, envoyez l\'email. 🤝' : 'Ton message est prêt, envoie l\'email et on revient vers toi. 🏀')
