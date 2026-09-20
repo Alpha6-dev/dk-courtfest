@@ -4,7 +4,6 @@
   ::selection{background:#FF6A1A;color:#0B0B0C}
   a{color:inherit;text-decoration:none}
   @keyframes cf-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @keyframes cf-floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
   @keyframes cf-grain{0%{transform:translate(0,0)}10%{transform:translate(-3%,-2%)}20%{transform:translate(2%,3%)}30%{transform:translate(-2%,2%)}40%{transform:translate(3%,-3%)}50%{transform:translate(-3%,2%)}60%{transform:translate(2%,-2%)}70%{transform:translate(-2%,-3%)}80%{transform:translate(3%,2%)}90%{transform:translate(-2%,3%)}100%{transform:translate(0,0)}}
   @keyframes cf-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
   .cf-skip{position:fixed;top:8px;left:8px;z-index:200;transform:translateY(-150%);background:#FF6A1A;color:#0B0B0C;font-weight:800;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:12px 18px;border-radius:6px;transition:transform .2s}
@@ -35,7 +34,6 @@
   @media(max-width:640px){
     [data-nav="bar"]{padding:14px 20px !important}
     #top>div[style*="max-width:1200px"]{padding:0 22px 56px !important}
-    #top>div[style*="bottom:30px"]{right:22px !important}
     #mouvement,#programmes{padding-left:22px !important;padding-right:22px !important}
     #evenement>div,#visuel>div,#questions>div,#galerie>div,#rejoindre>div[style*="max-width:880px"],footer>div{padding-left:22px !important;padding-right:22px !important}
     #programmes [data-mg]>div{padding:26px !important}
