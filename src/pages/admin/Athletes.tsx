@@ -67,7 +67,7 @@ export default function Athletes() {
         )}`
       : null
     toast.success(`Cotisation ${thisPeriod()} créée · lien de paiement copié.`, {
-      action: wa ? { label: 'WhatsApp →', onClick: () => window.open(wa, '_blank') } : undefined,
+      action: wa ? { label: 'WhatsApp', onClick: () => window.open(wa, '_blank') } : undefined,
       duration: 8000,
     })
   }

@@ -77,7 +77,7 @@ export default function Buy() {
         <input className={field} placeholder="Téléphone" value={phone} onChange={(e) => setPhone(e.target.value)} />
 
         <button className="w-full bg-flame px-8 py-4 font-display text-3xl uppercase tracking-wide text-onyx transition hover:bg-sun">
-          {`Payer ${price.toLocaleString('fr-FR')} XOF →`}
+          {`Payer ${price.toLocaleString('fr-FR')} XOF`}
         </button>
       </form>
     </main>

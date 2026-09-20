@@ -44,7 +44,7 @@ export default function Pay() {
           <>
             <p className="font-display text-3xl uppercase text-bone">Redirection vers le paiement…</p>
             <a href={state.url} className="label mt-4 inline-block text-flame">
-              Cliquer ici si rien ne se passe →
+              Cliquer ici si rien ne se passe
             </a>
           </>
         )}

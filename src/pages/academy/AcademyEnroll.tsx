@@ -126,7 +126,7 @@ export default function AcademyEnroll() {
           disabled={busy}
           className="w-full bg-flame px-8 py-4 font-display text-3xl uppercase tracking-wide text-onyx transition hover:bg-sun disabled:opacity-50"
         >
-          {busy ? 'Envoi…' : 'Envoyer l\'inscription →'}
+          {busy ? 'Envoi…' : 'Envoyer l\'inscription'}
         </button>
       </form>
     </main>

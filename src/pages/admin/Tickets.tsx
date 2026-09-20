@@ -112,7 +112,7 @@ export default function Tickets() {
           {busy ? '…' : '+ Émettre'}
         </button>
       </form>
-      <p className="label mt-3 text-white/30">Paiement cash/manuel · passerelle Wave/Orange Money → voir PAYMENTS.md</p>
+      <p className="label mt-3 text-white/30">Paiement cash/manuel · passerelle Wave/Orange Money : voir PAYMENTS.md</p>
 
       {loading ? (
         <p className="label mt-8 text-white/40">Chargement…</p>

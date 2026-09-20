@@ -18,7 +18,7 @@ export default function Sports() {
         <span className="font-display text-3xl tracking-tight text-bone">
           ALPHA <span className="text-flame">6</span> SPORTS
         </span>
-        <a href="mailto:hello@courtfest.com" className="label text-white/40 hover:text-flame">Partenariat →</a>
+        <a href="mailto:hello@courtfest.com" className="label text-white/40 hover:text-flame">Partenariat</a>
       </header>
 
       <section className="py-16">
@@ -38,7 +38,7 @@ export default function Sports() {
             <span className="label text-white/40">{p.tag}</span>
             <div className={`mt-2 font-display text-4xl uppercase text-bone group-hover:${p.accent}`}>{p.title}</div>
             <p className="mt-2 text-white/60">{p.desc}</p>
-            <span className={`label mt-4 inline-block ${p.accent}`}>Découvrir →</span>
+            <span className={`label mt-4 inline-block ${p.accent}`}>Découvrir</span>
           </Link>
         ))}
       </section>
@@ -52,7 +52,7 @@ export default function Sports() {
           href="mailto:hello@courtfest.com?subject=Partenariat%20Alpha%206%20Sports"
           className="mt-6 inline-block bg-flame px-8 py-4 font-display text-2xl uppercase tracking-wide text-onyx transition hover:bg-sun"
         >
-          Devenir partenaire →
+          Devenir partenaire
         </a>
       </section>
 

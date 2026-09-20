@@ -132,7 +132,7 @@ export default function Register() {
           disabled={submitting}
           className="w-full bg-flame px-8 py-4 font-display text-3xl uppercase tracking-wide text-onyx transition hover:bg-sun disabled:opacity-50"
         >
-          {submitting ? 'Envoi…' : 'Inscrire l’équipe →'}
+          {submitting ? 'Envoi…' : 'Inscrire l’équipe'}
         </button>
       </form>
     </main>

@@ -165,7 +165,7 @@ export default function Analytics() {
         </button>
       </div>
       <p className="label mt-3 text-white/30">
-        Journal : recettes payées → débit 5xx (caisse/banque mobile) · crédit 7061 billetterie / 7068 sponsoring · business=Y. Comptes ajustables.
+        Journal : recettes payées, débit 5xx (caisse/banque mobile) · crédit 7061 billetterie / 7068 sponsoring · business=Y. Comptes ajustables.
       </p>
     </section>
   )

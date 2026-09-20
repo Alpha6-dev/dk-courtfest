@@ -25,7 +25,7 @@ export default function AcademyHome() {
           <span className="text-bone">DK</span> <span className="text-flame">ACADEMY</span>
         </span>
         <Link to="/sports" className="label text-white/40 hover:text-flame">
-          Alpha 6 Sports →
+          Alpha 6 Sports
         </Link>
       </header>
 
@@ -41,7 +41,7 @@ export default function AcademyHome() {
           to="/academy/enroll"
           className="mt-8 inline-block bg-flame px-8 py-4 font-display text-2xl uppercase tracking-wide text-onyx transition hover:bg-sun"
         >
-          Inscrire un joueur →
+          Inscrire un joueur
         </Link>
       </section>
 
