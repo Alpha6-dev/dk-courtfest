@@ -27,6 +27,13 @@ jobs:
 
       - run: npm ci
 
+      - name: House style check (no em dash in source)
+        run: |
+          if grep -rnP '\xE2\x80\x94' index.html src supabase README.md DEPLOY.md PAYMENTS.md; then
+            echo "::error::Em dash (U+2014) found in the files listed above. Replace it with a comma, period, colon or hyphen."
+            exit 1
+          fi
+
       - name: Build
         run: npm run build
         env:
