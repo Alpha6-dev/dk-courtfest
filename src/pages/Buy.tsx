@@ -49,7 +49,7 @@ export default function Buy() {
   return (
     <main className="mx-auto max-w-md px-6 py-12">
       <Link to="/" className="label text-white/40 hover:text-flame">
-        ← Retour
+        Retour
       </Link>
       <Wordmark className="mt-6 block text-4xl" />
       <h1 className="mt-6 font-display text-5xl uppercase text-bone">

@@ -72,7 +72,7 @@ export default function AcademyEnroll() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-10">
       <Link to="/academy" className="label text-white/40 hover:text-flame">
-        ← DK Academy
+        DK Academy
       </Link>
       <h1 className="mt-6 font-display text-5xl uppercase text-bone">
         Inscription <span className="text-flame">académie</span>

@@ -50,7 +50,7 @@ export default function AdminLayout() {
           </button>
         </form>
         <Link to="/" className="label mt-6 inline-block text-white/40 hover:text-flame">
-          ← Site
+          Site
         </Link>
       </main>
     )

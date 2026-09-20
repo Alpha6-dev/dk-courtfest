@@ -38,7 +38,7 @@ export default function Ticket() {
         <Wordmark className="block text-4xl" />
         <p className="mt-8 text-white/60">Billet introuvable.</p>
         <Link to="/" className="label mt-6 inline-block text-flame">
-          ← Accueil
+          Accueil
         </Link>
       </main>
     )

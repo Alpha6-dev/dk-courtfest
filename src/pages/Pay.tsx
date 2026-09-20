@@ -63,7 +63,7 @@ export default function Pay() {
         {state.phase === 'error' && <p className="text-flame">{state.message}</p>}
       </div>
       <Link to="/academy" className="label mt-12 inline-block text-white/40 hover:text-flame">
-        ← DK Academy
+        DK Academy
       </Link>
     </main>
   )
