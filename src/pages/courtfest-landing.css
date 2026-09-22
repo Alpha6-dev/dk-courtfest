@@ -52,3 +52,56 @@
   @media(max-width:340px){[data-nav="bar"] a[href="#top"]>span:last-child{display:none !important}}
   /* 320px-class phones: keep the French hero CTA on one line. */
   @media(max-width:340px){#top a[href="/register"]{font-size:12px !important;letter-spacing:0.1em !important}}
+
+  /* ---- Icon language (interface pass, 2026-09-22) ------------------------
+     Inline Lucide-style SVGs inserted in both landing files: section labels,
+     Programmes badges, Questions cards, mobile menu, forms, social links,
+     footer row and a floating WhatsApp button. Strokes inherit currentColor so
+     the palette stays the graphic chart's. */
+  .cf-ic{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .cf-ic.cf-fill{fill:currentColor;stroke:none}
+  /* Section labels */
+  span[style*="letter-spacing:0.28em;text-transform:uppercase;color:#F6B43C"]{display:inline-flex;align-items:center;gap:9px}
+  .cf-ic.cf-eyebrow{width:15px;height:15px}
+  /* Programmes: icon badge above the title */
+  .cf-badge{width:46px;height:46px;margin-top:26px;border-radius:12px;display:grid;place-items:center;background:rgba(255,106,26,0.12);color:#FF6A1A}
+  .cf-ic.cf-b{width:22px;height:22px}
+  #programmes [data-mg]>div h3{margin-top:18px !important}
+  /* Questions: icon in front of the question */
+  #questions [data-mg]>div h3{display:flex;align-items:center;gap:10px}
+  .cf-ic.cf-q{width:20px;height:20px;color:#FF6A1A}
+  /* Mobile menu */
+  [data-nav="mlink"],[data-nav="mobile"] [data-lang-toggle]{display:flex;align-items:center;gap:12px}
+  [data-nav="mobile"] a[href="/register"],[data-nav="mobile"] [data-lang-toggle]{justify-content:center}
+  .cf-ic.cf-m{color:#F6B43C}
+  [data-nav="mobile"] a[href="/register"] .cf-ic{color:inherit}
+  [data-nav="mobile"] a[href="/register"]{font-size:12px !important;letter-spacing:0.08em !important;padding-left:12px !important;padding-right:12px !important}
+  [data-nav="close"]{display:grid;place-items:center}
+  /* Nav language pill */
+  [data-nav="bar"] [data-lang-toggle]{display:inline-flex;align-items:center;gap:7px}
+  .cf-ic.cf-globe{width:14px;height:14px}
+  @media(max-width:350px){.cf-ic.cf-globe{display:none}}
+  /* Inline text links and labels */
+  .cf-ic.cf-inline{width:16px;height:16px}
+  #evenement a[href*="instagram"],#questions a[href*="wa.me"],#rejoindre div>a{display:inline-flex !important;align-items:center;gap:8px}
+  #evenement div[style*="letter-spacing:0.3em"]{display:inline-flex;align-items:center;gap:8px}
+  /* Inputs with a leading icon: the wrapper takes over the flex sizing the inputs carried inline */
+  .cf-field{position:relative;display:block;flex:1;min-width:200px;max-width:260px}
+  .cf-field.cf-wide{min-width:240px;max-width:340px}
+  .cf-field .cf-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:#8C867E;pointer-events:none}
+  .cf-field input{display:block;width:100%;padding-left:40px !important;min-width:0 !important;max-width:none !important}
+  .cf-field input:focus+.cf-ic,.cf-field:focus-within .cf-ic{color:#FF6A1A}
+  /* Footer social row */
+  .cf-social{display:flex;gap:10px}
+  .cf-social a{width:40px;height:40px;border:1px solid rgba(255,255,255,0.12);border-radius:10px;display:grid;place-items:center;color:#C9C3BA;transition:color .2s,border-color .2s,transform .2s}
+  .cf-social a:hover{color:#FF6A1A;border-color:rgba(255,106,26,0.5);transform:translateY(-2px)}
+  .cf-ic.cf-s{width:18px;height:18px}
+  /* Floating WhatsApp button (Lion Green from the chart, white glyph). It appears once the hero is
+     scrolled past (class toggled in Home.tsx) so it never covers the hero CTA on phones. */
+  .cf-wa{position:fixed;right:22px;bottom:22px;z-index:65;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#00C853;color:#fff;box-shadow:0 14px 34px rgba(0,0,0,0.45),0 0 0 1px rgba(255,255,255,0.08);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s,box-shadow .2s}
+  .cf-wa.cf-show{opacity:1;transform:none;pointer-events:auto}
+  .cf-wa.cf-show:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 18px 40px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.12)}
+  .cf-wa:focus-visible{outline:2px solid #FFB800;outline-offset:3px}
+  .cf-ic.cf-w{width:28px;height:28px}
+  @media(max-width:640px){.cf-wa{right:16px;bottom:16px;width:52px;height:52px}.cf-ic.cf-w{width:26px;height:26px}}
+  @media print{.cf-wa{display:none}}

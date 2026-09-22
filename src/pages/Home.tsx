@@ -141,8 +141,14 @@ export default function Home() {
     }
 
     // Nav: clear glass over the hero, solid frosted bar once scrolled past it.
+    // The floating WhatsApp button only appears once the hero is scrolled past,
+    // so it never sits on top of the hero CTA on phones.
     const navBar = el.querySelector('[data-nav="bar"]')
-    const onScroll = () => navBar?.classList.toggle('cf-solid', window.scrollY > 60)
+    const waFab = el.querySelector('.cf-wa')
+    const onScroll = () => {
+      navBar?.classList.toggle('cf-solid', window.scrollY > 60)
+      waFab?.classList.toggle('cf-show', window.scrollY > window.innerHeight * 0.6)
+    }
     onScroll() // apply immediately (e.g. reload mid-page)
     window.addEventListener('scroll', onScroll, { passive: true })
 
