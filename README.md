@@ -1,6 +1,6 @@
 # DK CourtFest: Event Platform
 
-> Dakar · Basket · Culture. Registration, CRM, ticketing & check-in for the DK CourtFest street basketball event (Place de l'Indépendance, **08·06·2026**).
+> Dakar · Basket · Culture. Registration, CRM, ticketing & check-in for the Courtfest street basketball events in Dakar. Next main event: **Courtfest Dakar 2026, Sunday 01·11·2026** (venue and hours to be fixed). Founding edition: Place de l'Indépendance, 08·06·2026.
 
 Part of the **Alpha 6 / Tech 6** stack: **React 19 + Vite + Tailwind 4 + TypeScript**, with **Supabase** (Postgres) as the database backbone. Built to the [DK CourtFest Graphic Chart V1.0](https://dkcourtfest.com).
 

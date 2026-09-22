@@ -83,6 +83,8 @@
   @media(max-width:350px){.cf-ic.cf-globe{display:none}}
   /* Inline text links and labels */
   .cf-ic.cf-inline{width:16px;height:16px}
+  /* Date lines (event block, home Events card): the Tailwind preflight makes svg display:block, so keep the calendar glyph inline with its text */
+  .cf-ic.cf-date{display:inline-block;vertical-align:-0.15em;margin-right:8px}
   #evenement a[href*="instagram"],#questions a[href*="wa.me"],#rejoindre div>a{display:inline-flex !important;align-items:center;gap:8px}
   #evenement div[style*="letter-spacing:0.3em"]{display:inline-flex;align-items:center;gap:8px}
   /* Inputs with a leading icon: the wrapper takes over the flex sizing the inputs carried inline */

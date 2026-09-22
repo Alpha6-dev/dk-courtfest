@@ -32,26 +32,30 @@
       href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
-    <!-- Vol. 02 event rich snippet -->
+    <!-- Main event rich snippet: Courtfest Dakar 2026, Sunday 1 November 2026. Add the hours and the venue once they are fixed; prices mirror src/pages/Buy.tsx. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SportsEvent",
-      "name": "Courtfest Vol. 02 · Dakar 2026",
+      "name": "Courtfest Dakar 2026",
       "sport": "Basketball",
-      "startDate": "2026-08-22T15:00:00+00:00",
-      "endDate": "2026-08-22T21:00:00+00:00",
+      "startDate": "2026-11-01",
+      "endDate": "2026-11-01",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "location": {
         "@type": "Place",
-        "name": "Djily Mbaye",
+        "name": "Dakar",
         "address": { "@type": "PostalAddress", "addressLocality": "Dakar", "addressCountry": "SN" }
       },
       "organizer": { "@type": "Organization", "name": "Alpha 6 Sports", "url": "https://courtfest.com" },
       "image": "https://courtfest.com/og-cover.jpg",
-      "description": "Courtfest Vol. 02 à Dakar : open runs 5×5, musique, streetwear, jeunesse.",
-      "isAccessibleForFree": true
+      "description": "Courtfest à Dakar, dimanche 1er novembre 2026 : open runs 5×5, musique, streetwear, jeunesse.",
+      "isAccessibleForFree": false,
+      "offers": [
+        { "@type": "Offer", "name": "Général", "price": "2000", "priceCurrency": "XOF", "url": "https://courtfest.com/buy", "availability": "https://schema.org/InStock" },
+        { "@type": "Offer", "name": "VIP", "price": "10000", "priceCurrency": "XOF", "url": "https://courtfest.com/buy", "availability": "https://schema.org/InStock" }
+      ]
     }
     </script>
     <!-- Static fallback; BrandProvider updates this to "{City} CourtFest · …" once the active edition loads. -->
