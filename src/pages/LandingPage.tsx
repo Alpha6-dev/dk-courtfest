@@ -284,7 +284,7 @@ export default function LandingPage({ page }: { page: LandingPageId }) {
       if (isPartner) {
         const org = form.querySelector<HTMLInputElement>('input[name="org"]')?.value.trim() ?? ''
         subject = `Partenariat Courtfest Dakar 2026${org ? ` - ${org}` : ''}`
-        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest Dakar 2026 (dimanche 1er novembre 2026, Dakar).\n\nOrganisation : ${org || '-'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
+        body = `Bonjour,\n\nNous souhaitons devenir partenaire de Courtfest Dakar 2026 (dimanche 1er novembre 2026, toute la journée, Dakar).\n\nOrganisation : ${org || '-'}\nEmail : ${email}\n\nMerci de revenir vers nous.`
       }
       window.location.href = `mailto:alpha.vientreprise@courtfest.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
       toast.success(isPartner ? 'Votre demande de partenariat est prête, envoyez l\'email. 🤝' : 'Ton message est prêt, envoie l\'email et on revient vers toi. 🏀')
