@@ -105,3 +105,27 @@
   .cf-ic.cf-w{width:28px;height:28px}
   @media(max-width:640px){.cf-wa{right:16px;bottom:16px;width:52px;height:52px}.cf-ic.cf-w{width:26px;height:26px}}
   @media print{.cf-wa{display:none}}
+
+  /* ---- Photo lightbox (built by Home.tsx) ---------------------------------
+     Click, Enter or Space on a mood-grid or gallery photo opens it full screen
+     with its caption; previous/next buttons, arrow keys and swipe move between
+     photos; Escape, the close button or the backdrop close it. */
+  #visuel figure,#galerie figure{cursor:zoom-in}
+  #visuel figure:focus-visible,#galerie figure:focus-visible{outline:2px solid #FFB800;outline-offset:3px}
+  .cf-lightbox{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:24px 76px;background:rgba(11,11,12,0.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transition:opacity .22s}
+  .cf-lightbox.cf-open{opacity:1}
+  .cf-lightbox figure{margin:0;max-width:min(1200px,100%);text-align:center}
+  .cf-lightbox img{display:block;max-width:100%;max-height:80vh;margin:0 auto;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,0.6);transform:scale(.97);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+  .cf-lightbox.cf-open img{transform:none}
+  .cf-lightbox figcaption{margin-top:14px;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#C9C3BA}
+  .cf-lightbox [data-cf-count]{display:block;margin-top:6px;font-size:11px;letter-spacing:0.16em;color:#7C766E}
+  .cf-lightbox button{position:absolute;display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.06);color:#F4EFE7;cursor:pointer;transition:background .2s,border-color .2s}
+  .cf-lightbox button:hover{background:rgba(255,106,26,0.18);border-color:rgba(255,106,26,0.5)}
+  .cf-lightbox button:focus-visible{outline:2px solid #FFB800;outline-offset:3px}
+  .cf-lightbox button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .cf-lb-close{top:20px;right:20px}
+  .cf-lb-nav{top:50%;transform:translateY(-50%)}
+  .cf-lb-prev{left:16px}
+  .cf-lb-next{right:16px}
+  @media(max-width:640px){.cf-lightbox{padding:64px 12px 72px}.cf-lightbox img{max-height:66vh}.cf-lb-nav{top:auto;bottom:14px;transform:none}}
+  @media(prefers-reduced-motion:reduce){.cf-lightbox,.cf-lightbox img{transition:none}}

@@ -21,6 +21,126 @@ const readLang = (): Lang => {
 // (?v3d=1 + capability checks). The flat tier never downloads three.js.
 const Stage = lazy(() => import('../three/Stage'))
 
+const ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>'
+const ICON_PREV = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg>'
+const ICON_NEXT = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg>'
+
+/**
+ * Photo lightbox for the mood grid and the gallery. Click, Enter or Space on a
+ * photo opens it full screen with its caption; previous/next buttons, arrow
+ * keys and swipe move between photos; Escape, the close button or the backdrop
+ * close it. The overlay is built on demand and removed on teardown (language
+ * switch or unmount). Styles: the lightbox block in courtfest-landing.css.
+ */
+function setupLightbox(el: HTMLElement, lang: Lang): () => void {
+  const figures = Array.from(el.querySelectorAll<HTMLElement>('#visuel figure, #galerie figure')).filter((f) => f.querySelector('img'))
+  if (figures.length === 0) return () => {}
+  const t =
+    lang === 'en'
+      ? { open: 'Enlarge photo', close: 'Close', prev: 'Previous photo', next: 'Next photo', dialog: 'Photo' }
+      : { open: 'Agrandir la photo', close: 'Fermer', prev: 'Photo précédente', next: 'Photo suivante', dialog: 'Photo' }
+  let box: HTMLElement | null = null
+  let index = 0
+  let opener: HTMLElement | null = null
+  let touchX = 0
+
+  const render = () => {
+    if (!box) return
+    const fig = figures[index]
+    const img = fig.querySelector('img')
+    const shown = box.querySelector('img')
+    if (!img || !shown) return
+    shown.src = img.currentSrc || img.src
+    shown.alt = img.alt
+    const caption = box.querySelector('figcaption')
+    if (caption) caption.textContent = fig.querySelector('figcaption')?.textContent ?? ''
+    const count = box.querySelector('[data-cf-count]')
+    if (count) count.textContent = `${index + 1} / ${figures.length}`
+  }
+  const step = (d: number) => {
+    index = (index + d + figures.length) % figures.length
+    render()
+  }
+  const close = () => {
+    if (!box) return
+    const b = box
+    box = null
+    b.classList.remove('cf-open')
+    window.setTimeout(() => b.remove(), 220)
+    document.body.style.overflow = ''
+    document.removeEventListener('keydown', onKey)
+    opener?.focus()
+  }
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') close()
+    else if (e.key === 'ArrowRight') step(1)
+    else if (e.key === 'ArrowLeft') step(-1)
+  }
+  const open = (i: number, from: HTMLElement) => {
+    index = i
+    opener = from
+    if (!box) {
+      box = document.createElement('div')
+      box.className = 'cf-lightbox'
+      box.setAttribute('role', 'dialog')
+      box.setAttribute('aria-modal', 'true')
+      box.setAttribute('aria-label', t.dialog)
+      box.innerHTML =
+        `<button type="button" class="cf-lb-close" aria-label="${t.close}">${ICON_X}</button>` +
+        `<button type="button" class="cf-lb-nav cf-lb-prev" aria-label="${t.prev}">${ICON_PREV}</button>` +
+        `<figure><img alt=""><figcaption></figcaption><span data-cf-count></span></figure>` +
+        `<button type="button" class="cf-lb-nav cf-lb-next" aria-label="${t.next}">${ICON_NEXT}</button>`
+      box.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement
+        if (target === box || target.closest('.cf-lb-close')) close()
+        else if (target.closest('.cf-lb-prev')) step(-1)
+        else if (target.closest('.cf-lb-next')) step(1)
+      })
+      box.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX }, { passive: true })
+      box.addEventListener(
+        'touchend',
+        (e) => {
+          const dx = e.changedTouches[0].clientX - touchX
+          if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1)
+        },
+        { passive: true },
+      )
+      document.body.appendChild(box)
+      document.body.style.overflow = 'hidden'
+      document.addEventListener('keydown', onKey)
+      requestAnimationFrame(() => box?.classList.add('cf-open'))
+      box.querySelector<HTMLElement>('.cf-lb-close')?.focus()
+    }
+    render()
+    track('gallery_open', { photo: index + 1 })
+  }
+
+  const cleanups: Array<() => void> = []
+  figures.forEach((fig, i) => {
+    const caption = fig.querySelector('figcaption')?.textContent?.trim()
+    fig.setAttribute('role', 'button')
+    fig.setAttribute('tabindex', '0')
+    fig.setAttribute('aria-label', caption ? `${t.open}: ${caption}` : t.open)
+    const onClick = () => open(i, fig)
+    const onKeyFig = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        open(i, fig)
+      }
+    }
+    fig.addEventListener('click', onClick)
+    fig.addEventListener('keydown', onKeyFig)
+    cleanups.push(() => {
+      fig.removeEventListener('click', onClick)
+      fig.removeEventListener('keydown', onKeyFig)
+    })
+  })
+  return () => {
+    close()
+    cleanups.forEach((fn) => fn())
+  }
+}
+
 /**
  * CourtFest landing page - "Le terrain appartient à la ville."
  *
@@ -167,9 +287,13 @@ export default function Home() {
     )
     el.querySelectorAll('section[id]').forEach((s) => io.observe(s))
 
+    // Photos open in a lightbox (prev/next, keyboard, swipe).
+    const teardownLightbox = setupLightbox(el, lang)
+
     el.addEventListener('click', onClick)
     el.addEventListener('submit', onSubmit)
     return () => {
+      teardownLightbox()
       io.disconnect()
       window.removeEventListener('scroll', onScroll)
       el.removeEventListener('click', onClick)
