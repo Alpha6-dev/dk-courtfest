@@ -34,24 +34,24 @@
   @media(max-width:640px){
     [data-nav="bar"]{padding:14px 20px !important}
     #top>div[style*="max-width:1200px"]{padding:0 22px 56px !important}
-    #mouvement,#programmes{padding-left:22px !important;padding-right:22px !important}
+    #mouvement,#programmes,.cf-sec{padding-left:22px !important;padding-right:22px !important}
     #evenement>div,#visuel>div,#questions>div,#galerie>div,#rejoindre>div[style*="max-width:880px"],footer>div{padding-left:22px !important;padding-right:22px !important}
     #programmes [data-mg]>div{padding:26px !important}
   }
   /* Hero on phones: full-width CTA (keeps the arrow on the same line) and the
      small viewport height so the CTA clears the browser's bottom toolbar. */
-  @media(max-width:480px){#top a[href="/register"]{width:100%;justify-content:center;padding:16px 18px !important}}
-  @supports(height:100svh){#top{min-height:100svh !important}}
+  @media(max-width:480px){#top a[href="/rejoindre"]{width:100%;justify-content:center;padding:16px 18px !important}}
+  @supports(height:100svh){#top:not(.cf-pagehead){min-height:100svh !important}}
   /* Nav on narrow phones: wordmark + badge + EN + burger add up to ~374px, so
      shrink the wordmark and badge under 420px and drop the badge under 340px. */
   @media(max-width:420px){
-    [data-nav="bar"] a[href="#top"]>span:first-child{font-size:20px !important}
-    [data-nav="bar"] a[href="#top"]>span:last-child{font-size:10px !important;letter-spacing:0.14em !important;padding:3px 6px !important}
+    [data-nav="bar"] a[href="/"]>span:first-child{font-size:20px !important}
+    [data-nav="bar"] a[href="/"]>span:last-child{font-size:10px !important;letter-spacing:0.14em !important;padding:3px 6px !important}
     [data-nav="bar"] [data-lang-toggle]{padding:8px 11px !important}
   }
-  @media(max-width:340px){[data-nav="bar"] a[href="#top"]>span:last-child{display:none !important}}
+  @media(max-width:340px){[data-nav="bar"] a[href="/"]>span:last-child{display:none !important}}
   /* 320px-class phones: keep the French hero CTA on one line. */
-  @media(max-width:340px){#top a[href="/register"]{font-size:12px !important;letter-spacing:0.1em !important}}
+  @media(max-width:340px){#top a[href="/rejoindre"]{font-size:12px !important;letter-spacing:0.1em !important}}
 
   /* ---- Icon language (interface pass, 2026-09-22) ------------------------
      Inline Lucide-style SVGs inserted in both landing files: section labels,
@@ -72,10 +72,10 @@
   .cf-ic.cf-q{width:20px;height:20px;color:#FF6A1A}
   /* Mobile menu */
   [data-nav="mlink"],[data-nav="mobile"] [data-lang-toggle]{display:flex;align-items:center;gap:12px}
-  [data-nav="mobile"] a[href="/register"],[data-nav="mobile"] [data-lang-toggle]{justify-content:center}
+  [data-nav="mobile"] a[href="/rejoindre"],[data-nav="mobile"] [data-lang-toggle]{justify-content:center}
   .cf-ic.cf-m{color:#F6B43C}
-  [data-nav="mobile"] a[href="/register"] .cf-ic{color:inherit}
-  [data-nav="mobile"] a[href="/register"]{font-size:12px !important;letter-spacing:0.08em !important;padding-left:12px !important;padding-right:12px !important}
+  [data-nav="mobile"] a[href="/rejoindre"] .cf-ic{color:inherit}
+  [data-nav="mobile"] a[href="/rejoindre"]{font-size:12px !important;letter-spacing:0.08em !important;padding-left:12px !important;padding-right:12px !important}
   [data-nav="close"]{display:grid;place-items:center}
   /* Nav language pill */
   [data-nav="bar"] [data-lang-toggle]{display:inline-flex;align-items:center;gap:7px}
@@ -110,8 +110,8 @@
      Click, Enter or Space on a mood-grid or gallery photo opens it full screen
      with its caption; previous/next buttons, arrow keys and swipe move between
      photos; Escape, the close button or the backdrop close it. */
-  #visuel figure,#galerie figure{cursor:zoom-in}
-  #visuel figure:focus-visible,#galerie figure:focus-visible{outline:2px solid #FFB800;outline-offset:3px}
+  [data-cf-photos] figure{cursor:zoom-in}
+  [data-cf-photos] figure:focus-visible{outline:2px solid #FFB800;outline-offset:3px}
   .cf-lightbox{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;padding:24px 76px;background:rgba(11,11,12,0.94);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transition:opacity .22s}
   .cf-lightbox.cf-open{opacity:1}
   .cf-lightbox figure{margin:0;max-width:min(1200px,100%);text-align:center}
@@ -129,3 +129,19 @@
   .cf-lb-next{right:16px}
   @media(max-width:640px){.cf-lightbox{padding:64px 12px 72px}.cf-lightbox img{max-height:66vh}.cf-lb-nav{top:auto;bottom:14px;transform:none}}
   @media(prefers-reduced-motion:reduce){.cf-lightbox,.cf-lightbox img{transition:none}}
+
+  /* ---- Pages (multi-page landing, 2026-09-22) -----------------------------
+     The site is five pages sharing the nav and footer (src/pages/landing).
+     Inner pages open with a compact header band; buttons, gutters and the
+     active nav link share these rules. */
+  .cf-pagehead{position:relative;z-index:4;background:#0B0B0C;padding:150px 40px 44px;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .cf-pagehead>div{max-width:1200px;margin:0 auto}
+  .cf-pagehead h1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(46px,7.5vw,108px);line-height:0.92;margin:18px 0 0;text-transform:uppercase}
+  .cf-pagehead p{max-width:640px;margin:22px 0 0;font-size:17px;line-height:1.7;color:#C9C3BA}
+  .cf-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+  .cf-btn{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0B0B0C;background:#FF6A1A;padding:16px 26px;border-radius:5px;transition:transform .2s,box-shadow .2s}
+  .cf-btn.cf-ghost{background:rgba(255,255,255,0.06);color:#F4EFE7;border:1px solid rgba(255,255,255,0.16)}
+  .cf-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,106,26,0.25)}
+  [data-nav="desk"] a.cf-active{color:#FF6A1A !important}
+  [data-nav="mlink"].cf-active:not([style*="background:#FF6A1A"]){color:#FF6A1A !important}
+  @media(max-width:640px){.cf-pagehead{padding:118px 22px 34px}.cf-btns{flex-direction:column}.cf-btn{justify-content:center}}

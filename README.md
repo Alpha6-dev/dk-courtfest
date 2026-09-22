@@ -63,7 +63,8 @@ Run the migrations in order in the Supabase SQL editor (or `supabase db push`), 
 > Admin login: magic link via Supabase Auth (Email provider). Add yourself under **Authentication → Users** for the first sign-in.
 
 ## Routes
-- `/` landing · `/register` team registration · `/ticket/:token` public ticket
+- `/` home · `/evenements` main events · `/open-runs` regular open runs · `/galerie` photos · `/rejoindre` join and contact
+- `/register` team registration · `/buy` tickets · `/ticket/:token` public ticket
 - `/admin` dashboard · `/admin/teams` · `/admin/tickets` · `/admin/checkin` · `/admin/contacts`
 
 ## Project layout

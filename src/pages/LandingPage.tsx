@@ -1,14 +1,43 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { supabase } from '../lib/supabase'
 import { track } from '../lib/analytics'
+import { useBrand } from '../lib/brand'
 import { use3DTier } from '../three/use3DTier'
-import landingFr from './courtfest-landing.html?raw'
-import landingEn from './courtfest-landing.en.html?raw'
+import navFr from './landing/nav.fr.html?raw'
+import navEn from './landing/nav.en.html?raw'
+import footerFr from './landing/footer.fr.html?raw'
+import footerEn from './landing/footer.en.html?raw'
+import homeFr from './landing/home.fr.html?raw'
+import homeEn from './landing/home.en.html?raw'
+import evenementsFr from './landing/evenements.fr.html?raw'
+import evenementsEn from './landing/evenements.en.html?raw'
+import openRunsFr from './landing/open-runs.fr.html?raw'
+import openRunsEn from './landing/open-runs.en.html?raw'
+import galerieFr from './landing/galerie.fr.html?raw'
+import galerieEn from './landing/galerie.en.html?raw'
+import rejoindreFr from './landing/rejoindre.fr.html?raw'
+import rejoindreEn from './landing/rejoindre.en.html?raw'
 import landingCss from './courtfest-landing.css?raw'
 
+export type LandingPageId = 'home' | 'evenements' | 'open-runs' | 'galerie' | 'rejoindre'
 type Lang = 'fr' | 'en'
+
+/**
+ * The public site is five pages that share one nav and one footer. Each page
+ * body is a raw HTML fragment per language (src/pages/landing); the nav links
+ * point at routes, so React Router renders this component for every page and
+ * the wrapper wires the behaviour once per page and language.
+ */
+const PAGES: Record<LandingPageId, { path: string; fr: string; en: string; title: { fr: string; en: string } | null }> = {
+  home: { path: '/', fr: homeFr, en: homeEn, title: null },
+  evenements: { path: '/evenements', fr: evenementsFr, en: evenementsEn, title: { fr: 'Événements', en: 'Events' } },
+  'open-runs': { path: '/open-runs', fr: openRunsFr, en: openRunsEn, title: { fr: 'Open runs', en: 'Open runs' } },
+  galerie: { path: '/galerie', fr: galerieFr, en: galerieEn, title: { fr: 'Galerie', en: 'Gallery' } },
+  rejoindre: { path: '/rejoindre', fr: rejoindreFr, en: rejoindreEn, title: { fr: 'Rejoindre', en: 'Join' } },
+}
+
 const readLang = (): Lang => {
   try {
     return localStorage.getItem('cf_lang') === 'en' ? 'en' : 'fr'
@@ -17,8 +46,8 @@ const readLang = (): Lang => {
   }
 }
 
-// 3D stage (blueprint P0) - lazy chunk, loaded only when the tier gate opens
-// (?v3d=1 + capability checks). The flat tier never downloads three.js.
+// 3D stage (blueprint P0) - lazy chunk, loaded only on the home page when the
+// tier gate opens (?v3d=1 + capability checks). The flat tier never downloads three.js.
 const Stage = lazy(() => import('../three/Stage'))
 
 const ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>'
@@ -26,14 +55,13 @@ const ICON_PREV = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"
 const ICON_NEXT = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg>'
 
 /**
- * Photo lightbox for the mood grid and the gallery. Click, Enter or Space on a
- * photo opens it full screen with its caption; previous/next buttons, arrow
- * keys and swipe move between photos; Escape, the close button or the backdrop
- * close it. The overlay is built on demand and removed on teardown (language
- * switch or unmount). Styles: the lightbox block in courtfest-landing.css.
+ * Photo lightbox for every [data-cf-photos] grid on the page. Click, Enter or
+ * Space on a photo opens it full screen with its caption; previous/next
+ * buttons, arrow keys and swipe move between photos; Escape, the close button
+ * or the backdrop close it. Built on demand and removed on teardown.
  */
 function setupLightbox(el: HTMLElement, lang: Lang): () => void {
-  const figures = Array.from(el.querySelectorAll<HTMLElement>('#visuel figure, #galerie figure')).filter((f) => f.querySelector('img'))
+  const figures = Array.from(el.querySelectorAll<HTMLElement>('[data-cf-photos] figure')).filter((f) => f.querySelector('img'))
   if (figures.length === 0) return () => {}
   const t =
     lang === 'en'
@@ -141,25 +169,42 @@ function setupLightbox(el: HTMLElement, lang: Lang): () => void {
   }
 }
 
-/**
- * CourtFest landing page - "Le terrain appartient à la ville."
- *
- * The markup and styles are the exact Courtfest basketball redesign
- * (imported as raw strings). This wrapper injects the page-scoped CSS,
- * renders the design, routes internal links through the SPA, and captures
- * the "Rejoindre" email as a lead (contacts table via the capture_lead RPC).
- */
-export default function Home() {
+export default function LandingPage({ page }: { page: LandingPageId }) {
   const navigate = useNavigate()
+  const { eventName, tagline } = useBrand()
   const ref = useRef<HTMLDivElement>(null)
   const tier3d = use3DTier()
   const [lang, setLang] = useState<Lang>(readLang)
-  const landingHtml = lang === 'en' ? landingEn : landingFr
+  const def = PAGES[page]
+  const html = (lang === 'en' ? navEn : navFr) + (lang === 'en' ? def.en : def.fr) + (lang === 'en' ? footerEn : footerFr)
+  // Stable prop object: React re-injects innerHTML whenever it receives a new
+  // dangerouslySetInnerHTML object, which would throw away the classes and
+  // listeners wired below every time the app re-renders (e.g. edition load).
+  const htmlProp = useMemo(() => ({ __html: html }), [html])
+
+  // Tab title: inner pages announce themselves; BrandProvider reads the same
+  // flag (data-cf-page) when the active edition loads, so the two agree.
+  useEffect(() => {
+    const label = def.title ? def.title[lang] : ''
+    if (label) document.documentElement.dataset.cfPage = label
+    else delete document.documentElement.dataset.cfPage
+    document.title = label ? `${label} · ${eventName}` : `${eventName} · ${tagline}`
+  }, [def, lang, eventName, tagline])
+
+  // React Router keeps the scroll position between routes; a new page starts at the top.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [page])
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
     document.documentElement.lang = lang
+
+    // Nav: mark the link of the page we are on.
+    el.querySelectorAll<HTMLAnchorElement>('[data-nav="desk"] a, [data-nav="mlink"]').forEach((a) => {
+      a.classList.toggle('cf-active', a.getAttribute('href') === def.path)
+    })
 
     const setMenu = (open: boolean) => {
       const menu = el.querySelector('[data-nav="mobile"]')
@@ -171,7 +216,7 @@ export default function Home() {
 
     const onClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      // FR/EN switch - swaps which raw landing file is injected, persisted.
+      // FR/EN switch - swaps which raw fragments are injected, persisted.
       if (target.closest('[data-lang-toggle]')) {
         e.preventDefault()
         const next: Lang = lang === 'fr' ? 'en' : 'fr'
@@ -198,12 +243,12 @@ export default function Home() {
 
       const anchor = target.closest('a')
       if (!anchor) return
-      // Any link inside the mobile menu dismisses it (hash scroll or route nav).
+      // Any link inside the mobile menu dismisses it (route nav or external).
       if (anchor.closest('[data-nav="mobile"]')) setMenu(false)
       const href = anchor.getAttribute('href') || ''
       // Funnel beacons (fire-and-forget; never block navigation).
-      if (href.includes('wa.me')) track('wa_click')
-      if (href === '/register' && anchor.closest('#top')) track('hero_cta_click')
+      if (href.includes('wa.me')) track('wa_click', { page })
+      if (href === '/rejoindre' && anchor.closest('#top')) track('hero_cta_click')
       // Internal app routes -> SPA navigation. Leave #hash + external as-is.
       if (href.startsWith('/') && !href.startsWith('//')) {
         e.preventDefault()
@@ -215,7 +260,7 @@ export default function Home() {
     // billetterie payment requests); the CRM capture still runs best-effort
     // in the background so no lead is lost.
     //  - "Rejoindre" (CTA): email only, source 'landing'
-    //  - "Devenir partenaire" (#evenement): organisation + email, source 'partner'
+    //  - "Devenir partenaire" (events page): organisation + email, source 'partner'
     const onSubmit = (e: Event) => {
       e.preventDefault()
       const form = e.target as HTMLFormElement
@@ -229,7 +274,7 @@ export default function Home() {
       }
 
       const isPartner = form.matches('[data-partner-form]')
-      track(isPartner ? 'partner_form_submit' : 'rejoindre_submit')
+      track(isPartner ? 'partner_form_submit' : 'rejoindre_submit', { page })
       supabase.rpc('capture_lead', { p_email: email, p_source: isPartner ? 'partner' : 'landing' }).then(({ error }) => {
         if (error) console.error('capture_lead failed', error)
       })
@@ -260,26 +305,26 @@ export default function Home() {
       })
     }
 
-    // Nav: clear glass over the hero, solid frosted bar once scrolled past it.
-    // The floating WhatsApp button only appears once the hero is scrolled past,
-    // so it never sits on top of the hero CTA on phones.
+    // Nav: clear glass over the home hero, solid frosted bar once scrolled past
+    // it and on every inner page. The floating WhatsApp button follows the same
+    // rule so it never sits on top of the hero CTA on phones.
     const navBar = el.querySelector('[data-nav="bar"]')
     const waFab = el.querySelector('.cf-wa')
     const onScroll = () => {
-      navBar?.classList.toggle('cf-solid', window.scrollY > 60)
-      waFab?.classList.toggle('cf-show', window.scrollY > window.innerHeight * 0.6)
+      navBar?.classList.toggle('cf-solid', page !== 'home' || window.scrollY > 60)
+      waFab?.classList.toggle('cf-show', page !== 'home' || window.scrollY > window.innerHeight * 0.6)
     }
     onScroll() // apply immediately (e.g. reload mid-page)
     window.addEventListener('scroll', onScroll, { passive: true })
 
-    // Funnel: one visit beacon + one section_view per section per page load.
-    track('visit', undefined, 'visit')
+    // Funnel: one visit beacon + one section_view per section per page.
+    track('visit', { page }, 'visit')
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
           if (!en.isIntersecting) return
           const id = (en.target as HTMLElement).id
-          track('section_view', { section: id }, `sv:${id}`)
+          track('section_view', { section: id, page }, `sv:${page}:${id}`)
           io.unobserve(en.target)
         })
       },
@@ -299,18 +344,18 @@ export default function Home() {
       el.removeEventListener('click', onClick)
       el.removeEventListener('submit', onSubmit)
     }
-  }, [navigate, lang])
+  }, [navigate, lang, page, def.path])
 
   return (
     <>
       <style>{landingCss}</style>
-      {tier3d && (
+      {page === 'home' && tier3d && (
         <Suspense fallback={null}>
           {/* key remounts the stage on language switch so the headline choreography re-runs on the new DOM */}
           <Stage key={lang} />
         </Suspense>
       )}
-      <div ref={ref} dangerouslySetInnerHTML={{ __html: landingHtml }} />
+      <div ref={ref} dangerouslySetInnerHTML={htmlProp} />
     </>
   )
 }

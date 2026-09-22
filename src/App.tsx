@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
+import LandingPage from './pages/LandingPage'
 import Sports from './pages/Sports'
 import Register from './pages/Register'
 import Buy from './pages/Buy'
@@ -27,7 +27,11 @@ export default function App() {
       <Route path="/sports" element={<Sports />} />
 
       {/* DK CourtFest (event) */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<LandingPage page="home" />} />
+      <Route path="/evenements" element={<LandingPage page="evenements" />} />
+      <Route path="/open-runs" element={<LandingPage page="open-runs" />} />
+      <Route path="/galerie" element={<LandingPage page="galerie" />} />
+      <Route path="/rejoindre" element={<LandingPage page="rejoindre" />} />
       <Route path="/register" element={<Register />} />
       <Route path="/buy" element={<Buy />} />
       <Route path="/ticket/:token" element={<Ticket />} />

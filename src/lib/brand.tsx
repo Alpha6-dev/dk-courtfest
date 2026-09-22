@@ -49,7 +49,8 @@ export function BrandProvider({ children }: { children: ReactNode }) {
 
   // Keep the browser tab in sync with the active host city.
   useEffect(() => {
-    document.title = `${eventName} · ${tagline}`
+    const page = document.documentElement.dataset.cfPage
+    document.title = page ? `${page} · ${eventName}` : `${eventName} · ${tagline}`
   }, [eventName, tagline])
 
   return (
