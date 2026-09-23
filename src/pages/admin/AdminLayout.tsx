@@ -91,6 +91,9 @@ export default function AdminLayout() {
           <NavLink to="/admin/contacts" className={tab}>
             Contacts
           </NavLink>
+          <NavLink to="/admin/rosters" className={tab}>
+            Joueurs
+          </NavLink>
         </nav>
         <button onClick={() => supabase.auth.signOut()} className="label text-white/40 hover:text-flame">
           Déconnexion
