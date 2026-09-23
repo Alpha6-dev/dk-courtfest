@@ -19,6 +19,7 @@ import Matches from './pages/admin/Matches'
 import Analytics from './pages/admin/Analytics'
 import Athletes from './pages/admin/Athletes'
 import Sessions from './pages/admin/Sessions'
+import Rosters from './pages/admin/Rosters'
 
 export default function App() {
   return (
@@ -56,6 +57,7 @@ export default function App() {
         <Route path="athletes" element={<Athletes />} />
         <Route path="sessions" element={<Sessions />} />
         <Route path="contacts" element={<Contacts />} />
+        <Route path="rosters" element={<Rosters />} />
       </Route>
     </Routes>
   )

@@ -1,8 +1,28 @@
 // Shared types mirroring the Supabase schema (0001_init.sql).
 
 export type Division = '3x3' | '5x5'
-export type ContactType = 'sponsor' | 'partner' | 'media' | 'volunteer' | 'vip' | 'lead'
+export type ContactType = 'sponsor' | 'partner' | 'media' | 'volunteer' | 'vip' | 'lead' | 'player'
 export type TeamStatus = 'pending' | 'confirmed' | 'waitlist' | 'withdrawn'
+
+// Rosters (migration 0013): players registered by category for an edition,
+// outside the team registration of /register. One row per player and category.
+export type RosterCategory = 'elite_men' | 'elite_women' | 'veterans' | 'youth' | 'open'
+export type RosterSource = 'whatsapp' | 'site' | 'manual'
+export type RosterStatus = 'registered' | 'confirmed' | 'withdrawn'
+export interface Roster {
+  id: string
+  edition_id: string
+  category: RosterCategory
+  full_name: string
+  whatsapp_name: string | null
+  phone: string | null
+  source: RosterSource
+  whatsapp_group: string | null
+  status: RosterStatus
+  contact_id: string | null
+  notes: string | null
+  created_at: string
+}
 export type TicketType = 'general' | 'vip' | 'player' | 'staff'
 export type TicketStatus = 'valid' | 'used' | 'void'
 export type MatchStatus = 'scheduled' | 'live' | 'final' | 'cancelled'
