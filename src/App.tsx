@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import Sports from './pages/Sports'
 import Register from './pages/Register'
-import RegisterTeam from './pages/RegisterTeam'
 import Buy from './pages/Buy'
 import Ticket from './pages/Ticket'
 import Pay from './pages/Pay'
@@ -35,7 +34,6 @@ export default function App() {
       <Route path="/galerie" element={<LandingPage page="galerie" />} />
       <Route path="/rejoindre" element={<LandingPage page="rejoindre" />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/register/equipe" element={<RegisterTeam />} />
       <Route path="/buy" element={<Buy />} />
       <Route path="/ticket/:token" element={<Ticket />} />
       <Route path="/pay/:membershipId" element={<Pay />} />
