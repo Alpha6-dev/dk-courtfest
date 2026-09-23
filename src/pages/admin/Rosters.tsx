@@ -131,6 +131,7 @@ export default function Rosters() {
                       <td className="border-b border-white/5 py-2 text-sm text-white/50">
                         {r.source}
                         {r.whatsapp_group ? ` · ${r.whatsapp_group}` : ''}
+                        {r.notes ? <div className="text-xs text-white/40">{r.notes}</div> : null}
                       </td>
                       <td className="border-b border-white/5 py-2">
                         <select

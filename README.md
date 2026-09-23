@@ -64,7 +64,7 @@ Run the migrations in order in the Supabase SQL editor (or `supabase db push`), 
 
 ## Routes
 - `/` home · `/evenements` main events · `/open-runs` regular open runs · `/galerie` photos · `/rejoindre` join and contact
-- `/register` team registration · `/buy` tickets · `/ticket/:token` public ticket
+- `/register` player registration by category (rosters, `register_player` RPC) · `/register/equipe` team registration · `/buy` tickets · `/ticket/:token` public ticket
 - `/admin` dashboard · `/admin/teams` · `/admin/tickets` · `/admin/checkin` · `/admin/contacts` · `/admin/rosters` (players by category for the active edition, from the WhatsApp community groups or added by hand)
 
 ## Project layout
