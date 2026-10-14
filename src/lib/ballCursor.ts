@@ -1,11 +1,12 @@
 // Live basketball cursor. A fixed element follows the mouse and spins with
 // it: it rolls in the direction of travel, keeps turning for a moment after
-// the mouse stops, grows with its ring over anything clickable and squashes
-// on click. Text fields and iframes keep the native cursor. Touch screens,
-// coarse pointers and people who prefer reduced motion keep the static ball
-// defined in index.css, which also remains the fallback until the first
-// move, over scrollbars and while the window has lost focus (the html
-// element carries the cf-spin class only while the live ball is shown).
+// the mouse stops, grows with its ring over anything clickable and bounces
+// like a dribble on click. Text fields and iframes keep the native cursor.
+// Touch screens, coarse pointers and people who prefer reduced motion keep
+// the static ball defined in index.css, which also remains the fallback
+// until the first move, over scrollbars and while the window has lost focus
+// (the html element carries the cf-spin class only while the live ball is
+// shown).
 
 const CLICKABLE =
   'a,button,[role="button"],label,select,summary,.cursor-pointer,' +
@@ -16,17 +17,30 @@ const NATIVE =
   'textarea,[contenteditable="true"],iframe'
 
 const BALL =
-  '<div class="cf-ballcursor-spin"><svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
+  '<div class="cf-ballcursor-bounce"><div class="cf-ballcursor-spin">' +
+  '<svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
   '<circle class="cf-ring" cx="16" cy="16" r="14" fill="none" stroke="#F4EFE7" stroke-width="2"/>' +
   '<circle cx="16" cy="16" r="12.25" fill="#FF6A1A" stroke="#0B0B0C" stroke-width="1.5"/>' +
   '<g fill="none" stroke="#0B0B0C" stroke-width="1.75" stroke-linecap="round">' +
   '<path d="M16 3.75v24.5"/><path d="M3.75 16h24.5"/>' +
   '<path d="M7.35 7.35c3.6 2.9 3.6 14.4 0 17.3"/><path d="M24.65 7.35c-3.6 2.9-3.6 14.4 0 17.3"/>' +
-  '</g></svg></div>'
+  '</g></svg></div></div>'
 
 const SPIN_PER_PX = 1 // degrees of rotation per pixel of travel
 const MAX_SPIN = 25 // degrees per frame
 const DECAY = 0.92 // share of the spin kept each frame once the mouse stops
+const BOUNCE_MS = 420
+// A dribble: the ball drops below the pointer, flattens on the floor, springs
+// back stretched, settles, and gives one small second bounce. The bounce
+// layer sits outside the spinning one so the drop is always downwards.
+const BOUNCE: Keyframe[] = [
+  { transform: 'translateY(0) scale(1, 1)', easing: 'ease-in', offset: 0 },
+  { transform: 'translateY(22px) scale(1.18, 0.78)', easing: 'ease-out', offset: 0.32 },
+  { transform: 'translateY(8px) scale(0.94, 1.1)', easing: 'ease-in-out', offset: 0.5 },
+  { transform: 'translateY(0) scale(1, 1)', easing: 'ease-in', offset: 0.68 },
+  { transform: 'translateY(8px) scale(1.08, 0.92)', easing: 'ease-out', offset: 0.84 },
+  { transform: 'translateY(0) scale(1, 1)', offset: 1 },
+]
 
 export function setupBallCursor(): void {
   if (typeof window === 'undefined' || typeof matchMedia !== 'function') return
@@ -39,7 +53,8 @@ export function setupBallCursor(): void {
   el.setAttribute('aria-hidden', 'true')
   el.innerHTML = BALL
   document.body.appendChild(el)
-  const spinner = el.firstElementChild as HTMLElement
+  const bouncer = el.firstElementChild as HTMLElement
+  const spinner = bouncer.firstElementChild as HTMLElement
 
   let on = false
   let angle = 0
@@ -50,6 +65,7 @@ export function setupBallCursor(): void {
   let lastY = 0
   let raf = 0
   let lastTarget: Element | null = null
+  let bounceAnim: Animation | null = null
 
   const show = () => {
     if (on) return
@@ -73,6 +89,10 @@ export function setupBallCursor(): void {
     angle = (angle + omega) % 360
     spinner.style.transform = `rotate(${angle}deg)`
     raf = Math.abs(omega) > 0.05 ? requestAnimationFrame(tick) : 0
+  }
+  const bounce = () => {
+    bounceAnim?.cancel()
+    bounceAnim = bouncer.animate(BOUNCE, { duration: BOUNCE_MS })
   }
   const classify = (target: EventTarget | null) => {
     const t = target instanceof Element ? target : null
@@ -112,11 +132,10 @@ export function setupBallCursor(): void {
     'pointerdown',
     (e) => {
       if (e.pointerType !== 'mouse') hide()
-      else el.classList.add('cf-down')
+      else if (e.button === 0) bounce()
     },
     { passive: true },
   )
-  window.addEventListener('pointerup', () => el.classList.remove('cf-down'), { passive: true })
   document.addEventListener('pointerout', (e) => {
     if (!e.relatedTarget) hide()
   })
