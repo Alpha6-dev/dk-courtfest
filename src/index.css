@@ -72,3 +72,61 @@ textarea,
 [aria-disabled="true"] {
   cursor: var(--cf-ball), default !important;
 }
+
+/* ---- Live basketball cursor (src/lib/ballCursor.ts) ---------------------
+   With a mouse and no reduced-motion preference, the script hides the native
+   cursor and moves this element with the pointer, spinning it with the
+   movement. Text fields keep the I-beam. The static ball above remains the
+   fallback: it shows until the first move, over scrollbars and while the
+   window has lost focus. */
+.cf-ballcursor {
+  position: fixed;
+  top: -16px;
+  left: -16px;
+  width: 32px;
+  height: 32px;
+  z-index: 2147483647;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+.cf-ballcursor.cf-on {
+  opacity: 1;
+}
+.cf-ballcursor.cf-off {
+  opacity: 0;
+}
+.cf-ballcursor-spin {
+  width: 32px;
+  height: 32px;
+  will-change: transform;
+}
+.cf-ballcursor svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+  transform: scale(0.92);
+  transition: transform 0.15s ease;
+}
+.cf-ballcursor.cf-hand svg {
+  transform: scale(1);
+}
+.cf-ballcursor.cf-down svg {
+  transform: scale(0.8);
+}
+.cf-ballcursor .cf-ring {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.cf-ballcursor.cf-hand .cf-ring {
+  opacity: 1;
+}
+html.cf-spin,
+html.cf-spin * {
+  cursor: none !important;
+}
+html.cf-spin input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="file"], [type="range"], [type="color"]),
+html.cf-spin textarea,
+html.cf-spin [contenteditable="true"] {
+  cursor: text !important;
+}
