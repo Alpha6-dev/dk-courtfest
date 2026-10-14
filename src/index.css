@@ -34,3 +34,41 @@ body {
   letter-spacing: 0.28em;
   font-size: 0.7rem;
 }
+
+/* ---- Basketball cursor (site-wide, 2026-10-14) -------------------------
+   Two inline SVG balls on a 32x32 canvas with the hotspot at the centre: a
+   24px ball everywhere, and a 30px ball with a light ring over anything
+   clickable so it stays visible on the orange buttons. Text fields keep the
+   I-beam, and touch screens show no cursor at all. Keep the images at or
+   under 32px: browsers drop larger cursors near the edges of the window. */
+:root {
+  --cf-ball: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='11' fill='%23FF6A1A' stroke='%230B0B0C' stroke-width='2'/><g fill='none' stroke='%230B0B0C' stroke-width='1.75' stroke-linecap='round'><path d='M16 5v22'/><path d='M5 16h22'/><path d='M8.2 8.2c3.2 2.6 3.2 13 0 15.6'/><path d='M23.8 8.2c-3.2 2.6-3.2 13 0 15.6'/></g></svg>") 16 16;
+  --cf-ball-hand: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='none' stroke='%23F4EFE7' stroke-width='2'/><circle cx='16' cy='16' r='12.25' fill='%23FF6A1A' stroke='%230B0B0C' stroke-width='1.5'/><g fill='none' stroke='%230B0B0C' stroke-width='1.75' stroke-linecap='round'><path d='M16 3.75v24.5'/><path d='M3.75 16h24.5'/><path d='M7.35 7.35c3.6 2.9 3.6 14.4 0 17.3'/><path d='M24.65 7.35c-3.6 2.9-3.6 14.4 0 17.3'/></g></svg>") 16 16;
+}
+html {
+  cursor: var(--cf-ball), auto;
+}
+a,
+button,
+[role="button"],
+label,
+select,
+summary,
+.cursor-pointer,
+input[type="checkbox"],
+input[type="radio"],
+input[type="submit"],
+input[type="button"],
+input[type="file"],
+[data-cf-photos] figure {
+  cursor: var(--cf-ball-hand), pointer !important;
+}
+input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="file"], [type="range"], [type="color"]),
+textarea,
+[contenteditable="true"] {
+  cursor: text;
+}
+:disabled,
+[aria-disabled="true"] {
+  cursor: var(--cf-ball), default !important;
+}
