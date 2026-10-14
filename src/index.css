@@ -76,9 +76,9 @@ textarea,
 /* ---- Live basketball cursor (src/lib/ballCursor.ts) ---------------------
    With a mouse and no reduced-motion preference, the script hides the native
    cursor and moves this element with the pointer, spinning it with the
-   movement. Text fields keep the I-beam. The static ball above remains the
-   fallback: it shows until the first move, over scrollbars and while the
-   window has lost focus. */
+   movement and bouncing it on click. Text fields keep the I-beam. The
+   static ball above remains the fallback: it shows until the first move,
+   over scrollbars and while the window has lost focus. */
 .cf-ballcursor {
   position: fixed;
   top: -16px;
@@ -96,6 +96,12 @@ textarea,
 .cf-ballcursor.cf-off {
   opacity: 0;
 }
+.cf-ballcursor-bounce {
+  width: 32px;
+  height: 32px;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
 .cf-ballcursor-spin {
   width: 32px;
   height: 32px;
@@ -110,9 +116,6 @@ textarea,
 }
 .cf-ballcursor.cf-hand svg {
   transform: scale(1);
-}
-.cf-ballcursor.cf-down svg {
-  transform: scale(0.8);
 }
 .cf-ballcursor .cf-ring {
   opacity: 0;
