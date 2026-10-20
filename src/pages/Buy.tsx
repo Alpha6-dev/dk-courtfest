@@ -7,8 +7,8 @@ import { track } from '../lib/analytics'
 import type { TicketType } from '../types/db'
 
 const OPTIONS: { type: TicketType; label: string; price: number }[] = [
-  { type: 'general', label: 'Général', price: 2000 },
-  { type: 'vip', label: 'VIP', price: 10000 },
+  { type: 'general', label: 'Général', price: 10000 },
+  { type: 'vip', label: 'VIP', price: 15000 },
 ]
 
 const PAYMENT_EMAIL = 'alpha.vientreprise@courtfest.com'

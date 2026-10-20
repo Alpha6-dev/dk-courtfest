@@ -7,7 +7,7 @@ import { QR } from '../../components/QR'
 import type { Ticket, TicketType } from '../../types/db'
 
 const TYPES: TicketType[] = ['general', 'vip', 'player', 'staff']
-const DEFAULT_PRICE: Record<TicketType, number> = { general: 2000, vip: 10000, player: 0, staff: 0 }
+const DEFAULT_PRICE: Record<TicketType, number> = { general: 10000, vip: 15000, player: 0, staff: 0 }
 
 function waLink(phone: string | null, token: string, eventName: string) {
   const digits = (phone ?? '').replace(/[^\d]/g, '')
