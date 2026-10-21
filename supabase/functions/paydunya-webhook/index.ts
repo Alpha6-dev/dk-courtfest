@@ -14,11 +14,20 @@ function base() {
 
 Deno.serve(async (req) => {
   try {
-    const form = await req.formData().catch(() => null)
-    let token = form?.get('data[invoice][token]')?.toString()
-    let paymentId = form?.get('data[custom_data][payment_id]')?.toString()
+    // Read the body once as text: PayDunya posts form-encoded data, tests may post JSON.
+    // (Reading formData() and then clone().json() on the same request throws "Body is unusable".)
+    const raw = await req.text().catch(() => '')
+    const ctype = req.headers.get('content-type') ?? ''
+    let token: string | undefined
+    let paymentId: string | undefined
+    if (ctype.includes('application/x-www-form-urlencoded')) {
+      const form = new URLSearchParams(raw)
+      token = form.get('data[invoice][token]') ?? undefined
+      paymentId = form.get('data[custom_data][payment_id]') ?? undefined
+    }
     if (!token) {
-      const body = await req.clone().json().catch(() => ({}))
+      let body: any = {}
+      try { body = JSON.parse(raw) } catch { body = {} }
       token = body?.data?.invoice?.token ?? body?.invoice?.token
       paymentId = paymentId ?? body?.data?.custom_data?.payment_id ?? body?.custom_data?.payment_id
     }
