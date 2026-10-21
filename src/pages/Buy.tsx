@@ -1,85 +1,135 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { toast } from 'sonner'
 import { Wordmark } from '../components/Wordmark'
 import { useBrand } from '../lib/brand'
 import { track } from '../lib/analytics'
 import type { TicketType } from '../types/db'
+import { TICKETS, HELLOTIX_URL, QTY_MAX, T, readLang, saveLang, type Lang } from './buy/data'
+import { TicketOptions } from './buy/TicketOptions'
+import { OrderSummary } from './buy/OrderSummary'
+import { PaymentMethods, type Method } from './buy/PaymentMethods'
 
-const OPTIONS: { type: TicketType; label: string; price: number }[] = [
-  { type: 'general', label: 'Général', price: 10000 },
-  { type: 'vip', label: 'VIP', price: 15000 },
-]
-
-const PAYMENT_EMAIL = 'alpha.vientreprise@courtfest.com'
-
+// Ticket checkout: choose, identify, pay. Wave and card go through the
+// Hello-Tix checkout; Orange Money is a transfer confirmed on WhatsApp (PAYMENTS.md).
 export default function Buy() {
   const { eventName } = useBrand()
+  const [lang, setLang] = useState<Lang>(readLang)
   const [type, setType] = useState<TicketType>('general')
+  const [quantity, setQuantity] = useState(1)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [method, setMethod] = useState<Method | null>(null)
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({})
 
-  const option = OPTIONS.find((o) => o.type === type)!
-  const price = option.price
+  const t = T[lang]
+  const ticket = TICKETS.find((o) => o.type === type)!
 
-  // The ticket order arrives by email as a payment request from the client;
-  // the team then sends back a Wave/OM payment link (see PAYMENTS.md).
-  function pay(e: React.FormEvent) {
-    e.preventDefault()
-    if (!name.trim() || !phone.trim()) return toast.error('Nom et téléphone requis.')
-    track('buy_mailto', { type })
-    const subject = `Demande de paiement : Billet ${option.label} ${eventName}`
-    const body = [
-      'Bonjour,',
-      '',
-      `Je souhaite acheter un billet ${option.label} (${price.toLocaleString('fr-FR')} XOF) pour ${eventName}.`,
-      '',
-      `Nom : ${name.trim()}`,
-      `Téléphone : ${phone.trim()}`,
-      '',
-      "Merci de m'envoyer la demande de paiement.",
-    ].join('\n')
-    window.location.href = `mailto:${PAYMENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    toast.success('Votre demande est prête, envoyez l\'email pour finaliser. 🏀')
+  function toggleLang() {
+    const next: Lang = lang === 'fr' ? 'en' : 'fr'
+    setLang(next)
+    saveLang(next)
   }
 
-  const field =
-    'w-full border border-white/15 bg-white/5 px-4 py-3 text-bone placeholder:text-white/30 focus:border-flame focus:outline-none'
+  function pick(m: Method) {
+    const next: typeof errors = {}
+    if (!name.trim()) next.name = t.nameError
+    if (!/\d{7,}/.test(phone.replace(/\s/g, ''))) next.phone = t.phoneError
+    setErrors(next)
+    if (next.name || next.phone) {
+      setMethod(null)
+      document.getElementById(next.name ? 'buyer-name' : 'buyer-phone')?.focus()
+      return
+    }
+    setMethod(m)
+    track(m === 'hellotix' ? 'buy_hellotix' : 'buy_orange_money', { type, quantity })
+    if (m === 'hellotix') window.open(HELLOTIX_URL, '_blank', 'noopener')
+  }
+
+  const field = (bad: boolean) =>
+    `w-full border bg-white/5 px-4 py-3 text-bone placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-sun ${
+      bad ? 'border-flame' : 'border-white/15'
+    }`
 
   return (
-    <main className="mx-auto max-w-md px-6 py-12">
-      <Link to="/" className="label text-white/40 hover:text-flame">
-        Retour
-      </Link>
+    <main className="mx-auto max-w-5xl px-6 py-10">
+      <div className="flex items-center justify-between">
+        <Link to="/" className="label text-white/40 hover:text-flame">
+          {t.back}
+        </Link>
+        <button
+          type="button"
+          onClick={toggleLang}
+          aria-label={t.langAria}
+          className="label border border-white/20 px-3 py-1 text-white/70 transition hover:border-flame hover:text-flame"
+        >
+          {t.langSwitch}
+        </button>
+      </div>
       <Wordmark className="mt-6 block text-4xl" />
-      <h1 className="mt-6 font-display text-5xl uppercase text-bone">
-        Billet <span className="text-flame">{eventName}</span>
+      <p className="label mt-6 text-white/50">{t.eyebrow}</p>
+      <h1 className="mt-2 font-display text-5xl uppercase leading-none text-bone sm:text-6xl">
+        {t.title} <span className="text-flame">{t.titleAccent}</span>
       </h1>
+      <p className="mt-3 max-w-xl text-lg text-white/70">{t.lede}</p>
 
-      <form onSubmit={pay} className="mt-8 space-y-5">
-        <div className="flex gap-3">
-          {OPTIONS.map((o) => (
-            <button
-              key={o.type}
-              type="button"
-              onClick={() => setType(o.type)}
-              className={`flex-1 border px-4 py-4 text-left transition ${
-                type === o.type ? 'border-flame bg-flame/10' : 'border-white/15'
-              }`}
-            >
-              <div className="font-display text-2xl uppercase text-bone">{o.label}</div>
-              <div className="label text-sun">{o.price.toLocaleString('fr-FR')} XOF</div>
-            </button>
-          ))}
+      <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_20rem]">
+        <div className="space-y-10">
+          <TicketOptions
+            lang={lang}
+            value={type}
+            onChange={(v) => { setType(v); setMethod(null) }}
+            quantity={quantity}
+            onQuantity={(q) => { setQuantity(Math.min(QTY_MAX, Math.max(1, q))); setMethod(null) }}
+          />
+
+          <section aria-labelledby="who-title" className="space-y-4">
+            <h2 id="who-title" className="label text-white/50">{t.step2}</h2>
+            <div>
+              <label htmlFor="buyer-name" className="label block text-white/70">{t.name}</label>
+              <input
+                id="buyer-name"
+                className={`mt-2 ${field(!!errors.name)}`}
+                placeholder={t.namePlaceholder}
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? 'buyer-name-err' : undefined}
+              />
+              {errors.name && <p id="buyer-name-err" role="alert" className="mt-1 text-sm text-flame">{errors.name}</p>}
+            </div>
+            <div>
+              <label htmlFor="buyer-phone" className="label block text-white/70">{t.phone}</label>
+              <input
+                id="buyer-phone"
+                type="tel"
+                inputMode="tel"
+                className={`mt-2 ${field(!!errors.phone)}`}
+                placeholder="77 000 00 00"
+                autoComplete="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? 'buyer-phone-err' : undefined}
+              />
+              {errors.phone && <p id="buyer-phone-err" role="alert" className="mt-1 text-sm text-flame">{errors.phone}</p>}
+            </div>
+          </section>
+
+          <PaymentMethods
+            lang={lang}
+            ticket={ticket}
+            quantity={quantity}
+            eventName={eventName}
+            name={name.trim()}
+            phone={phone.trim()}
+            method={method}
+            onPick={pick}
+          />
         </div>
 
-        <input className={field} placeholder="Nom complet" value={name} onChange={(e) => setName(e.target.value)} />
-        <input className={field} placeholder="Téléphone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-
-        <button className="w-full bg-flame px-8 py-4 font-display text-3xl uppercase tracking-wide text-onyx transition hover:bg-sun">
-          {`Payer ${price.toLocaleString('fr-FR')} XOF`}
-        </button>
-      </form>
+        <OrderSummary lang={lang} ticket={ticket} quantity={quantity} />
+      </div>
     </main>
   )
 }
