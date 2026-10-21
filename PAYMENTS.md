@@ -9,6 +9,11 @@ Live test completed: `/buy` → `payment-init` → PayDunya hosted checkout → 
 - Sandbox test client "Client Test DKCF" lives in PayDunya → Clients fictifs
 - **To go LIVE** (no code changes): complete business KYC in PayDunya (RCCM, NINEA, CNI: the "informations de votre entreprise" banner) → switch the app out of Mode test → replace the 3 secrets with live keys and set `PAYDUNYA_MODE=live`.
 
+## Check of 21 Oct 2026
+- Sandbox still works: `payment-init` returned a PayDunya invoice (keys set, `PAYDUNYA_MODE=test`), the hosted checkout rendered, the test rows were deleted afterwards.
+- `paydunya-webhook` v3 deployed: the body is now read once as text (form-encoded from PayDunya, JSON from tests); the previous version threw "Body is unusable" on JSON bodies. Form, JSON and empty bodies all return 200.
+- Still not live: PayDunya KYC not done, mode test. The public `/buy` page sends an email request and does not call `payment-init` (only the academy `/pay/<id>` links do). Courtfest Dakar 2026 tickets are sold on Hello-Tix (Wave, card); Orange Money buyers pay the personal Orange Money account and get a free QR pass on Hello-Tix.
+
 ## What works today
 - **Online checkout (sandbox)**: see status above.
 - **Cash / manual issuance**: admins issue tickets in `/admin/tickets`; a `payments` row (`provider='cash'`, `status='paid'`) is recorded for each priced ticket. This feeds reporting and the SYSCOHADA ledger now, with **no third-party account required**.
