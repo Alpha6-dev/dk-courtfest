@@ -10,4 +10,6 @@ if (!url || !anonKey) {
   )
 }
 
-export const supabase = createClient(url ?? '', anonKey ?? '')
+// Placeholders keep the app rendering (with offline fallbacks) when .env is missing,
+// instead of throwing at import time and leaving a blank page.
+export const supabase = createClient(url || 'https://placeholder.supabase.co', anonKey || 'placeholder-anon-key')
