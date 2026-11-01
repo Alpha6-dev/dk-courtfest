@@ -1,13 +1,25 @@
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { Wordmark } from '../components/Wordmark'
 import { useBrand } from '../lib/brand'
 import { track } from '../lib/analytics'
 import type { TicketType } from '../types/db'
-import { TICKETS, HELLOTIX_URL, QTY_MAX, T, readLang, saveLang, type Lang } from './buy/data'
+import { TICKETS, HELLOTIX_URL, QTY_MAX, T, xof, readLang, saveLang, type Lang } from './buy/data'
 import { TicketOptions } from './buy/TicketOptions'
 import { OrderSummary } from './buy/OrderSummary'
 import { PaymentMethods, type Method } from './buy/PaymentMethods'
+
+// The same type and colours as the landing pages (Anton, Archivo, the landing orange),
+// applied to this page only; the rest of the app keeps its own theme.
+const SCOPE = {
+  fontFamily: 'var(--font-body)',
+  '--font-display': '"Anton", sans-serif',
+  '--font-body': '"Archivo", sans-serif',
+  '--font-mono': '"Archivo", sans-serif',
+  '--color-flame': '#FF6A1A',
+  '--color-sun': '#F6B43C',
+  '--color-onyx': '#0B0B0C',
+  '--color-bone': '#F4EFE7',
+} as CSSProperties
 
 // Ticket checkout: choose, identify, pay. Wave and card go through the
 // Hello-Tix checkout; Orange Money is a transfer confirmed on WhatsApp (PAYMENTS.md).
@@ -23,6 +35,7 @@ export default function Buy() {
 
   const t = T[lang]
   const ticket = TICKETS.find((o) => o.type === type)!
+  const total = ticket.price * quantity
 
   function toggleLang() {
     const next: Lang = lang === 'fr' ? 'en' : 'fr'
@@ -51,7 +64,7 @@ export default function Buy() {
     }`
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-10">
+    <main style={SCOPE} className="mx-auto max-w-5xl px-6 py-10 pb-32 lg:pb-10">
       <div className="flex items-center justify-between">
         <Link to="/" className="label text-white/40 hover:text-flame">
           {t.back}
@@ -65,7 +78,10 @@ export default function Buy() {
           {t.langSwitch}
         </button>
       </div>
-      <Wordmark className="mt-6 block text-4xl" />
+      <Link to="/" aria-label="Courtfest Basketball" className="mt-6 inline-flex items-baseline gap-[10px] text-bone focus:outline-none focus:ring-2 focus:ring-sun">
+        <span className="font-display text-[28px] leading-none tracking-[0.04em]">COURTFEST</span>
+        <span className="rounded-[3px] bg-flame px-2 py-[3px] text-[11px] font-bold leading-none tracking-[0.22em] text-onyx">BASKETBALL</span>
+      </Link>
       <p className="label mt-6 text-white/50">{t.eyebrow}</p>
       <h1 className="mt-2 font-display text-5xl uppercase leading-none text-bone sm:text-6xl">
         {t.title} <span className="text-flame">{t.titleAccent}</span>
@@ -129,6 +145,23 @@ export default function Buy() {
         </div>
 
         <OrderSummary lang={lang} ticket={ticket} quantity={quantity} />
+
+        <div role="region" aria-label={t.summary} className="fixed inset-x-0 bottom-0 z-40 border-t border-white/15 bg-onyx/95 px-6 py-3 backdrop-blur lg:hidden">
+          <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="truncate font-display text-xl uppercase leading-none text-bone">
+                {quantity > 1 ? `${quantity} ${t.tickets} ${ticket.label}` : `${t.ticket} ${ticket.label}`}
+              </p>
+              <p className="mt-1 font-display text-2xl leading-none text-sun">{xof(total)}</p>
+            </div>
+            <a
+              href="#pay-title"
+              className="inline-flex h-11 shrink-0 items-center bg-flame px-5 font-display text-xl uppercase tracking-wide text-onyx transition hover:bg-sun focus:outline-none focus:ring-2 focus:ring-sun"
+            >
+              {t.payNow}
+            </a>
+          </div>
+        </div>
       </div>
     </main>
   )
