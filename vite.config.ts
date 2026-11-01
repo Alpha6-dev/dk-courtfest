@@ -23,7 +23,7 @@ export default defineConfig({
         ],
       },
       // App shell is precached for offline; ticket data is handled by IndexedDB.
-      workbox: { navigateFallback: '/index.html' },
+      workbox: { navigateFallback: '/index.html', navigateFallbackDenylist: [/^\/dakar-2026\//] },
       devOptions: { enabled: false },
     }),
   ],
