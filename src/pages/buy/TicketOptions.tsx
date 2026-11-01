@@ -30,7 +30,7 @@ export function TicketOptions({ lang, value, onChange, quantity, onQuantity }: P
             onClick={() => onQuantity(quantity - 1)}
             disabled={quantity <= 1}
             aria-label={t.fewer}
-            className="h-10 w-10 border border-white/20 font-display text-2xl text-bone transition hover:border-flame disabled:cursor-not-allowed disabled:opacity-40"
+            className="h-11 w-11 border border-white/20 font-display text-2xl text-bone transition hover:border-flame disabled:cursor-not-allowed disabled:opacity-40"
           >
             -
           </button>
@@ -40,7 +40,7 @@ export function TicketOptions({ lang, value, onChange, quantity, onQuantity }: P
             onClick={() => onQuantity(quantity + 1)}
             disabled={quantity >= QTY_MAX}
             aria-label={t.more}
-            className="h-10 w-10 border border-white/20 font-display text-2xl text-bone transition hover:border-flame disabled:cursor-not-allowed disabled:opacity-40"
+            className="h-11 w-11 border border-white/20 font-display text-2xl text-bone transition hover:border-flame disabled:cursor-not-allowed disabled:opacity-40"
           >
             +
           </button>
@@ -59,7 +59,7 @@ function Option({ lang, option, checked, onChange }: { lang: Lang; option: Ticke
     <label
       htmlFor={id}
       className={`relative block cursor-pointer border p-4 transition focus-within:ring-2 focus-within:ring-sun ${
-        checked ? 'border-flame bg-flame/10' : 'border-white/15 hover:border-white/40'
+        checked ? 'border-flame bg-flame/10 ring-1 ring-flame' : 'border-white/15 hover:border-white/40'
       }`}
     >
       <input id={id} type="radio" name="ticket" value={option.type} checked={checked} onChange={() => onChange(option.type)} className="sr-only" />
