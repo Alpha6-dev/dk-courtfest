@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { track } from '../../lib/analytics'
 import { HELLOTIX_URL, ORANGE_MONEY_HOLDER, ORANGE_MONEY_NUMBER, WHATSAPP_DIGITS, T, xof, type Lang, type TicketOption } from './data'
 
@@ -57,7 +57,7 @@ export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone,
           <ol className="space-y-4">
             <Step n={1} title={t.sendTitle}>
               <span className="font-display text-2xl text-sun">{xof(total)}</span> {t.sendBy}{' '}
-              <span className="font-mono text-bone">{ORANGE_MONEY_NUMBER}</span> ({ORANGE_MONEY_HOLDER}). {t.presaleCheck}
+              <span className="font-mono text-bone">{ORANGE_MONEY_NUMBER}</span> <CopyNumber lang={lang} /> ({ORANGE_MONEY_HOLDER}). {t.presaleCheck}
             </Step>
             <Step n={2} title={t.confirmTitle}>
               {t.confirmBody} {name}.
@@ -74,7 +74,47 @@ export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone,
           </a>
         </div>
       )}
+      <p className="mt-6 text-sm text-white/60">
+        {t.help}{' '}
+        <a
+          href={`https://wa.me/${WHATSAPP_DIGITS}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-bone underline underline-offset-4 hover:text-flame focus:outline-none focus:ring-2 focus:ring-sun"
+        >
+          {t.helpLink}
+        </a>
+      </p>
     </section>
+  )
+}
+
+// Copies the Orange Money number without spaces, ready to paste into the payment app.
+function CopyNumber({ lang }: { lang: Lang }) {
+  const t = T[lang]
+  const [copied, setCopied] = useState(false)
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(ORANGE_MONEY_NUMBER.replace(/\s/g, ''))
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* clipboard unavailable: the number stays visible to copy by hand */
+    }
+  }
+  return (
+    <>
+      <button
+        type="button"
+        onClick={copy}
+        className="ml-1 inline-flex h-11 items-center border border-white/25 px-3 text-xs text-bone transition hover:border-flame focus:outline-none focus:ring-2 focus:ring-sun"
+      >
+        {t.copy}
+      </button>
+      <span role="status" aria-live="polite" className="ml-2 text-xs text-sun">
+        {copied ? t.copied : ''}
+      </span>
+    </>
   )
 }
 
