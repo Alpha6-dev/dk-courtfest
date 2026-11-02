@@ -37,6 +37,12 @@ if (routes.length === 0) {
 }
 
 for (const route of routes) {
+  // A route that ships its own static page (public/<route>/index.html, copied to dist/<route>/)
+  // is served by GitHub Pages as that page; writing <route>.html would shadow it with the app shell.
+  if (existsSync(join(dist, route.slice(1), 'index.html'))) {
+    console.log(`[prerender-routes] ${route} has its own static page, skipped`)
+    continue
+  }
   const url = origin + route
   const html = index
     .replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${url}" />`)

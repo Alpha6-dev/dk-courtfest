@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Courtfest · Dakar 2026, dimanche 13 décembre, terrain Djily Mbaye</title>
+<meta name="description" content="Courtfest Dakar 2026 : basket de rue, musique, streetwear et jeunesse. Dimanche 13 décembre 2026, terrain Djily Mbaye, Dakar. Toute la journée.">
+<link rel="canonical" href="https://courtfest.com/dakar-2026/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Courtfest Dakar 2026, dimanche 13 décembre">
+<meta property="og:description" content="Basket de rue, musique, streetwear et jeunesse. Terrain Djily Mbaye, Dakar. Toute la journée.">
+<meta property="og:image" content="https://courtfest.com/og-cover.jpg">
+<meta property="og:url" content="https://courtfest.com/dakar-2026/">
+<meta name="theme-color" content="#0B0B0C">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SportsEvent","name":"Courtfest Dakar 2026","sport":"Basketball","startDate":"2026-12-13","url":"https://courtfest.com/dakar-2026/","image":"https://courtfest.com/og-cover.jpg","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Terrain Djily Mbaye","address":{"@type":"PostalAddress","addressLocality":"Dakar","addressCountry":"SN"}},"organizer":{"@type":"Organization","name":"Alpha 6"}}</script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230B0B0C'/><circle cx='16' cy='16' r='9' fill='%23FF6A1A'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="/dakar-2026/scrollcraft.css">
+<style>
+  /* Hallmark v2.0.0 · theme: custom (Courtfest brand: Anton, Archivo, off-black, one orange) · genre: atmospheric · pass: invisible fixes only */
+  /* Critique: structure, fonts and logo are the owner's and stay; this pass lifts colours into tokens and hardens tracks, wrapping and overflow. */
+  /* Hallmark · waive 24b · the logo lockup keeps courtfest.com's own 10px gap and 3px 8px tag padding · the owner asked for the logo to be kept as on the site */
+  :root {
+    --sc-canvas:     #0B0B0C;
+    --sc-surface:    #14110E;
+    --sc-ink:        #F4EFE7;
+    --sc-ink-soft:   #C9C3BA;
+    --sc-accent:     #FF6A1A;
+    --sc-accent-ink: #0B0B0C;
+    --sc-font-display: "Anton", "Impact", system-ui, sans-serif;
+    --sc-font-text:    "Archivo", system-ui, sans-serif;
+    --cf-bar: 60px;
+    --cf-line: rgba(244,239,231,0.28);
+    --cf-accent-hover: #FF8442;
+    --cf-cream-ink-soft: #3b342d;
+    --cf-plate: #FBF8F3;
+    --cf-cream: #F4EFE7;
+  }
+  html { scroll-padding-top: var(--cf-bar); overflow-x: clip; }
+  h1, h2 { text-wrap: balance; overflow-wrap: break-word; min-width: 0; }
+  body { background: var(--sc-canvas); overflow-x: clip; }
+
+  /* ------------------------------------------------ the loud bar (chrome) */
+  .bar {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--cf-bar);
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    padding-inline: var(--sc-gutter);
+    background: var(--sc-canvas); border-bottom: 2px solid var(--sc-accent);
+  }
+  /* The Courtfest logo, as on courtfest.com: cream wordmark + orange BASKETBALL tag. */
+  .bar__mark { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--sc-ink); white-space: nowrap; }
+  .bar__mark .mk { font-family: var(--sc-font-display); font-size: 24px; letter-spacing: 0.04em; line-height: 1; }
+  .bar__mark .tag { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; color: var(--sc-canvas); background: var(--sc-accent); padding: 3px 8px; border-radius: 3px; }
+  .board { display: flex; align-items: center; gap: 0.75rem; }
+  .board__qs { display: flex; gap: 0.35rem; }
+  .q {
+    font-family: var(--sc-font-text); font-weight: 800; font-size: 0.8rem; letter-spacing: 0.08em;
+    min-width: 2.6rem; min-height: 2.75rem; display: inline-grid; place-items: center;
+    color: var(--sc-ink-soft); text-decoration: none;
+    border: 1px solid var(--cf-line); border-radius: 4px; background: transparent;
+    transition: background-color 140ms var(--sc-ease-out), color 140ms var(--sc-ease-out), transform 120ms var(--sc-ease-out);
+  }
+  .q.is-done { background: var(--sc-ink); color: var(--sc-canvas); border-color: var(--sc-ink); }
+  .q.is-now  { background: var(--sc-accent); color: var(--sc-canvas); border-color: var(--sc-accent); }
+  .q:active { transform: translateY(1px); }
+  .q:focus-visible, .cta:focus-visible, .link:focus-visible, .bar__mark:focus-visible {
+    outline: 3px solid var(--sc-ink); outline-offset: 3px;
+  }
+  .clock {
+    font-family: var(--sc-font-display); font-size: 1.9rem; line-height: 1; letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums; min-width: 4.4ch; text-align: center; color: var(--sc-ink);
+  }
+  .bar__cta { justify-self: end; }
+
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center; white-space: nowrap;
+    min-height: 2.75rem; padding: 0 1.35rem;
+    font-family: var(--sc-font-text); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--sc-accent-ink); background: var(--sc-accent); border-radius: 4px; text-decoration: none;
+    transition: transform 140ms var(--sc-ease-out), background-color 140ms var(--sc-ease-out);
+  }
+  .cta:active { transform: translateY(1px) scale(0.97); }
+  @media (hover: hover) and (pointer: fine) { .cta:hover { background: var(--cf-accent-hover); transform: translateY(-2px); } }
+  .link {
+    font-weight: 800; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sc-ink); text-underline-offset: 0.3em; text-decoration-thickness: 2px;
+    display: inline-flex; align-items: center; min-height: 2.75rem;
+  }
+
+  /* ---------------------------------------------------------- shared bits */
+  .act { position: relative; overflow: hidden; }
+  .eyebrow {
+    font-weight: 800; font-size: 0.78rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--sc-accent);
+    margin: 0;
+  }
+  .big {
+    font-family: var(--sc-font-display); font-weight: 400; text-transform: uppercase;
+    line-height: 0.92; letter-spacing: 0.005em; margin: 0; text-wrap: balance;
+  }
+  .lead { font-size: var(--sc-t-lg); line-height: 1.55; max-width: 34ch; color: var(--sc-ink-soft); margin: 0; text-wrap: pretty; }
+  .fill-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ------------------------------------------------------------ 1 · hero */
+  #top { min-height: 100svh; display: flex; align-items: flex-end; padding-top: var(--cf-bar); }
+  #top .bg, #top .bg img, #top .bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
+  #top .shade {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(0deg, color-mix(in srgb, var(--sc-canvas) 94%, transparent) 0%, color-mix(in srgb, var(--sc-canvas) 55%, transparent) 26%, color-mix(in srgb, var(--sc-canvas) 0%, transparent) 52%);
+  }
+  #top .copy { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin-inline: auto; padding: 0 var(--sc-gutter) clamp(3rem, 9vh, 6rem); }
+  #top h1 { font-size: clamp(4.2rem, 17vw, 14rem); text-shadow: 0 8px 48px color-mix(in srgb, var(--sc-canvas) 50%, transparent); }
+  #top .lead { margin-top: var(--sc-5); color: var(--sc-ink); max-width: 54ch; }
+  .when { margin: var(--sc-4) 0 0; font-size: var(--sc-t-base); font-weight: 800; line-height: 1.4; color: var(--sc-accent); max-width: 64ch; }
+
+  /* ------------------------------------------------------ 2 · open runs */
+  #runs { background: var(--sc-canvas); min-height: 112svh; display: grid; align-items: center; padding-block: clamp(3rem, 6vh, 5rem); }
+  #runs .grid { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+  #runs h2 { font-size: clamp(3.4rem, 9vw, 8rem); }
+  #runs h2 em { font-style: normal; color: var(--sc-accent); display: block; }
+  #runs .lead { margin-top: var(--sc-5); }
+  .tall { margin: 0; aspect-ratio: 2 / 3; width: min(100%, calc(100svh * 2 / 3)); justify-self: end; border-radius: 6px; overflow: hidden; background: var(--sc-surface); box-shadow: 0 24px 48px -16px color-mix(in srgb, var(--sc-canvas) 60%, transparent); }
+  .tall img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ------------------------------------------------------- 3 · tournois */
+  #tournois { min-height: 120svh; display: flex; align-items: flex-end; background: var(--sc-canvas); }
+  #tournois figure { position: absolute; inset: 0; margin: 0; }
+  /* full photos: the whole picture is shown, on a blurred, darkened copy of itself */
+  .full { overflow: hidden; }
+  .full .bg { position: absolute; inset: -6%; width: 112%; height: 112%; max-width: none; object-fit: cover; filter: blur(30px) saturate(1.15) brightness(0.5); }
+  .full .fit { position: absolute; top: var(--cf-bar); height: calc(100% - var(--cf-bar)); width: auto; max-width: 100%; aspect-ratio: 2 / 3; object-fit: contain; }
+  .full--right .fit { right: 6vw; }
+  .full--left .fit { left: 6vw; }
+  #tournois .band { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(0deg, color-mix(in srgb, var(--sc-canvas) 92%, transparent) 0%, color-mix(in srgb, var(--sc-canvas) 60%, transparent) 28%, color-mix(in srgb, var(--sc-canvas) 0%, transparent) 55%); }
+  #tournois .copy { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin-inline: auto; padding: 0 var(--sc-gutter) clamp(2.5rem, 8vh, 5rem); }
+  #tournois h2 { font-size: clamp(3.4rem, 7.4vw, 7.4rem); }
+  #tournois .lead { margin-top: var(--sc-4); color: var(--sc-ink); }
+
+  /* -------------------------------------------------------- 4 · festival */
+  #festival {
+    --sc-ink: var(--sc-canvas); --sc-ink-soft: var(--sc-canvas); color: var(--sc-ink);
+    background: var(--sc-accent); min-height: 84svh; display: grid; align-items: center; padding-block: clamp(3rem, 8vh, 6rem);
+  }
+  #festival ul { list-style: none; margin: 0; padding: 0; }
+  #festival .fest { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, clamp(16rem, 32vw, 30rem)); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
+  #festival .tall { justify-self: end; }
+  #festival li { font-family: var(--sc-font-display); text-transform: uppercase; font-size: clamp(2.6rem, 7.6vw, 7rem); line-height: 0.9; letter-spacing: 0.004em; }
+  #festival li:nth-child(even) { padding-left: clamp(0.75rem, 4.5vw, 4.5rem); }
+  #festival p { margin: var(--sc-6) 0 0; max-width: 36ch; font-size: var(--sc-t-lg); line-height: 1.5; font-weight: 600; color: var(--sc-canvas); }
+
+  /* ---------------------------------------------------------- 5 · equipe */
+  #equipe { min-height: 120svh; background: var(--sc-canvas); display: flex; align-items: flex-end; }
+  #equipe figure { position: absolute; inset: 0; margin: 0; }
+  #equipe .band { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(0deg, color-mix(in srgb, var(--sc-canvas) 85%, transparent) 0%, color-mix(in srgb, var(--sc-canvas) 35%, transparent) 30%, color-mix(in srgb, var(--sc-canvas) 0%, transparent) 50%); }
+  #equipe .copy { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin-inline: auto; padding: 0 var(--sc-gutter) clamp(2.5rem, 7vh, 4.5rem); display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; }
+  #equipe h2 { font-size: clamp(3.4rem, 8.8vw, 8.4rem); }
+  #equipe .top { position: absolute; z-index: 2; bottom: clamp(2.5rem, 7vh, 4.5rem); right: var(--sc-gutter); text-align: right; text-shadow: 0 4px 32px color-mix(in srgb, var(--sc-canvas) 50%, transparent); }
+  @media (max-width: 860px) {
+    #equipe .top { left: var(--sc-gutter); text-align: left; bottom: calc(clamp(2.5rem, 7vh, 4.5rem) + 2.4rem); }
+  }
+  #equipe .cap { font-weight: 800; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sc-ink); text-shadow: 0 2px 12px color-mix(in srgb, var(--sc-canvas) 80%, transparent); margin: 0 0 0.6rem; }
+
+  /* ---------------------------------------------------------- 6 · public */
+  #public { background: var(--sc-surface); min-height: 112svh; display: grid; align-items: center; padding-block: clamp(3rem, 6vh, 5rem); }
+  #public .grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+  #public h2 { font-size: clamp(2.8rem, 7.4vw, 6.4rem); }
+  #public .lead { margin-top: var(--sc-5); color: var(--sc-ink); }
+  #public .tall { justify-self: start; }
+
+  /* ----------------------------------------------------- 7 · partenaires */
+  #partenaires {
+    --sc-ink: var(--sc-surface); --sc-ink-soft: var(--cf-cream-ink-soft); color: var(--sc-ink);
+    background: var(--cf-cream); min-height: 66svh; display: grid; align-items: center; padding-block: clamp(3.5rem, 8vh, 6rem);
+  }
+  #partenaires .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2.5rem; }
+  #partenaires h2 { font-size: clamp(2.6rem, 6.4vw, 5.4rem); }
+  #partenaires .logo { background: var(--cf-plate); border-radius: 8px; padding: 16px 24px; box-shadow: 0 12px 28px -14px color-mix(in srgb, var(--sc-surface) 35%, transparent); display: inline-grid; }
+  #partenaires .logo img { width: clamp(150px, 18vw, 220px); height: auto; display: block; }
+  #partenaires .link { color: var(--sc-ink); margin-top: var(--sc-4); }
+  #partenaires .link:focus-visible { outline-color: var(--sc-surface); }
+
+  /* ------------------------------------------------------------ 8 · close */
+  #close { min-height: 120svh; display: flex; align-items: flex-end; padding-bottom: clamp(2.5rem, 8vh, 5rem); background: var(--sc-canvas); }
+  #close .bg, #close .bg img, #close .bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+  #close .bg { filter: brightness(0.42) saturate(1.1); }
+  #close .shade { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(90% 70% at 50% 100%, color-mix(in srgb, var(--sc-accent) 30%, transparent), transparent 62%); }
+  #close .inner { position: relative; z-index: 2; width: 100%; max-width: 1000px; margin-inline: auto; padding: 0 var(--sc-gutter); text-align: left; }
+  #close h2 { font-size: clamp(4rem, 13vw, 11rem); }
+  #close .lead { margin-top: var(--sc-5); color: var(--sc-ink); }
+  #close .actions { display: flex; flex-wrap: wrap; gap: 0.9rem 1.6rem; align-items: center; margin-top: var(--sc-7); }
+  #close .small { margin: var(--sc-9) 0 0; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sc-ink-soft); }
+  #close .small a { color: var(--sc-ink); text-underline-offset: 0.3em; }
+
+  /* the buzzer (peak, driven from the chrome clock, not from an act) */
+  .flash { position: fixed; inset: 0; z-index: 60; pointer-events: none; background: var(--sc-accent); opacity: 0; }
+  .is-zero .clock { color: var(--sc-accent); }
+  .buzz .flash { animation: cf-flash 420ms var(--sc-ease-out) 1; }
+  .buzz .clock { animation: cf-clock 420ms var(--sc-ease-out) 1; }
+  @keyframes cf-flash { 0% { opacity: 0; } 25% { opacity: 0.4; } 100% { opacity: 0; } }
+  @keyframes cf-clock { 0% { transform: scale(1); } 25% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+  /* ------------------------------------------------------------- phones */
+  @media (max-width: 860px) {
+    #runs .grid, #public .grid { grid-template-columns: minmax(0, 1fr); }
+    #runs .tall { order: -1; width: min(100%, calc(58svh * 2 / 3)); justify-self: center; }
+    #public .tall { width: min(100%, calc(52svh * 2 / 3)); justify-self: center; }
+    .full--right .fit, .full--left .fit { left: 0; right: 0; margin-inline: auto; }
+    #equipe { min-height: 105svh; }
+    #equipe .copy { flex-direction: column; align-items: flex-start; }
+    #festival .fest { grid-template-columns: minmax(0, 1fr); }
+    #festival .tall { width: min(100%, calc(70svh * 2 / 3)); justify-self: center; }
+  }
+  @media (max-width: 560px) {
+    :root { --cf-bar: 56px; }
+    .bar { grid-template-columns: auto 1fr auto; gap: 0.5rem; }
+    .bar__mark { gap: 6px; }
+    .bar__mark .mk { font-size: 19px; }
+    .bar__mark .tag { font-size: 8.5px; letter-spacing: 0.14em; padding: 2px 6px; }
+    .board { justify-content: center; gap: 0; }
+    .board__qs { display: none; }
+    .clock { font-size: 1.25rem; min-width: 0; }
+    .clock::before { content: attr(data-q); font-family: var(--sc-font-text); font-weight: 800; font-size: 0.5em; letter-spacing: 0.08em; margin-right: 0.5em; color: var(--sc-accent); vertical-align: middle; }
+    .cta { padding: 0 0.65rem; font-size: 0.68rem; letter-spacing: 0.05em; }
+    #top h1 { font-size: clamp(3.6rem, 21vw, 6rem); }
+    #festival li:nth-child(even) { padding-left: 1.2rem; }
+  }
+  @media (max-width: 380px) {
+    .bar { padding-inline: 12px; gap: 0.35rem; }
+    .bar__mark .mk { font-size: 17px; }
+    .bar__mark .tag { font-size: 7.5px; padding: 2px 5px; }
+    .clock { font-size: 1.3rem; min-width: 4ch; }
+    .board { gap: 0.35rem; }
+    .q { min-width: 2.4rem; }
+    .cta { padding: 0 0.6rem; font-size: 0.66rem; letter-spacing: 0.04em; }
+    #festival li { font-size: 3.1rem; }
+    #festival li:nth-child(even) { padding-left: 0.9rem; }
+  }
+  @media (max-width: 340px) {
+    .bar__mark .tag { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .buzz .flash, .buzz .clock { animation: none; }
+  }
+</style>
+<noscript><style>[data-sc-in], [data-sc-stagger] > * { opacity: 1 !important; transform: none !important; }</style></noscript>
+</head>
+<body>
+
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+<div class="flash" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="bar__mark" href="#top" aria-label="Courtfest Basketball, haut de page"><span class="mk">COURTFEST</span><span class="tag">BASKETBALL</span></a>
+  <div class="board" id="board" title="Le chrono suit votre défilement, pas le programme de la journée.">
+    <nav class="board__qs" aria-label="Quart-temps">
+      <a class="q is-now" href="#top" data-q="0">Q1</a>
+      <a class="q" href="#tournois" data-q="1">Q2</a>
+      <a class="q" href="#equipe" data-q="2">Q3</a>
+      <a class="q" href="#partenaires" data-q="3">Q4</a>
+    </nav>
+    <span class="clock" id="clock" aria-hidden="true">12:00</span>
+  </div>
+  <a class="cta bar__cta" href="https://courtfest.com/buy">Billetterie</a>
+</header>
+
+<main>
+
+  <!-- 1 · PULSE -->
+  <section class="act" id="top" data-sc-act="flow" aria-labelledby="h-top">
+    <div class="bg" aria-hidden="true">
+      <img src="/uploads/Chart_MoodPlate_GoldenHourCourt.webp" alt="" width="2048" height="1152">
+      <video data-hero-video autoplay muted loop playsinline preload="auto" poster="/uploads/Chart_MoodPlate_GoldenHourCourt.webp">
+        <source src="/uploads/hero-golden.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="shade" aria-hidden="true"></div>
+    <div class="copy sc-stack" data-sc-in data-sc-stagger="60">
+      <p class="eyebrow">Alpha 6 présente</p>
+      <h1 class="big" id="h-top">Dakar 2026.</h1>
+      <p class="lead">Basket de rue, musique, culture. Toute la ville autour du terrain.</p>
+      <p class="when">Dimanche 13 décembre 2026, terrain Djily Mbaye, Dakar. Toute la journée.</p>
+    </div>
+  </section>
+
+  <!-- 2 · OPEN RUNS -->
+  <section class="act" id="runs" data-sc-act="flow" aria-labelledby="h-runs">
+    <div class="sc-wrap grid">
+      <div class="sc-stack" data-sc-in data-sc-stagger="50">
+        <h2 class="big" id="h-runs">Open runs<em>5×5.</em></h2>
+        <p class="lead">Du run de quartier au podium. On ouvre les terrains, tu viens, tu joues.</p>
+      </div>
+      <figure class="tall" data-sc-reveal="left" data-sc-reveal-at="0.04 0.34">
+        <img src="/uploads/courtfest-match.webp" width="1333" height="2000" alt="Un match de 5×5 sous un panier : un joueur en maillot orange, deux autres en chasubles orange." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3 · TOURNOIS -->
+  <section class="act" id="tournois" data-sc-act="flow" aria-labelledby="h-tournois">
+    <figure class="full full--right" data-sc-reveal="up" data-sc-reveal-at="0.04 0.34">
+      <img class="bg" src="/uploads/courtfest-dunk.webp" width="1066" height="1600" alt="" aria-hidden="true" loading="lazy">
+      <img class="fit" src="/uploads/courtfest-dunk.webp" width="1066" height="1600" alt="Une joueuse monte au panier pour un dunk, le ciel bleu au-dessus du cercle." loading="lazy">
+    </figure>
+    <div class="band" aria-hidden="true"></div>
+    <div class="copy sc-stack" data-sc-in data-sc-stagger="50">
+      <h2 class="big" id="h-tournois">Les tournois.</h2>
+      <p class="lead">Le 5×5 donne une scène aux talents de la ville.</p>
+    </div>
+  </section>
+
+  <!-- 4 · FESTIVAL -->
+  <section class="act" id="festival" data-sc-act="flow" aria-labelledby="h-festival">
+    <div class="sc-wrap fest">
+      <div>
+      <h2 id="h-festival" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">Le festival : musique, streetwear, culture, jeunesse</h2>
+      <ul data-sc-in data-sc-stagger="70" aria-hidden="true">
+        <li>Musique</li>
+        <li>Streetwear</li>
+        <li>Culture</li>
+        <li>Jeunesse</li>
+      </ul>
+      <p data-sc-in>Une journée entière autour du terrain. Pas besoin de jouer pour venir.</p>
+      </div>
+      <figure class="tall" data-sc-reveal="up" data-sc-reveal-at="0.04 0.34">
+        <img src="/uploads/courtfest-rack.webp" width="1333" height="2000" alt="Une femme en casquette marche devant un portant de sweats colorés, sur le terrain." loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5 · EQUIPE -->
+  <section class="act" id="equipe" data-sc-act="flow" aria-labelledby="h-equipe">
+    <figure class="full full--left" data-sc-reveal="right" data-sc-reveal-at="0.04 0.34">
+      <img class="bg" src="/uploads/courtfest-equipe.webp" width="1067" height="1600" alt="" aria-hidden="true" loading="lazy">
+      <img class="fit" src="/uploads/courtfest-equipe.webp" width="1067" height="1600" alt="Une équipe assise au bord d'un terrain orange, en train d'écouter la causerie." loading="lazy">
+    </figure>
+    <div class="band" aria-hidden="true"></div>
+    <h2 class="big top" id="h-equipe" data-sc-in>Pour toute<br>la ville.</h2>
+    <div class="copy" data-sc-in>
+      <p class="cap">La causerie · l’équipe</p>
+    </div>
+  </section>
+
+  <!-- 6 · PUBLIC -->
+  <section class="act" id="public" data-sc-act="flow" aria-labelledby="h-public">
+    <div class="sc-wrap grid">
+      <figure class="tall" data-sc-reveal="up" data-sc-reveal-at="0.04 0.34">
+        <img src="/uploads/courtfest-crowd.webp" width="1333" height="2000" alt="Des visiteurs rassemblés autour d'un stand de vêtements, au bord du terrain." loading="lazy">
+      </figure>
+      <div class="sc-stack" data-sc-in data-sc-stagger="50">
+        <h2 class="big" id="h-public">Je ne joue pas, je peux venir&nbsp;?</h2>
+        <p class="lead">Oui. Musique, culture, tribunes&nbsp;: le festival est pour toute la ville.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · PARTENAIRES (authored silence: cream ground, nothing but a logo) -->
+  <section class="act" id="partenaires" data-sc-act="flow" aria-labelledby="h-partenaires">
+    <div class="sc-wrap">
+      <div class="row">
+        <div class="sc-stack" data-sc-in>
+          <h2 class="big" id="h-partenaires">Avec la Ville de Dakar.</h2>
+          <a class="link" href="mailto:alpha.vientreprise@courtfest.com?subject=Partenariat%20Courtfest%20Dakar%202026">Devenir partenaire</a>
+        </div>
+        <span class="logo" data-sc-in><img src="/uploads/sponsor-ville-de-dakar@2x.png" alt="Ville de Dakar" width="440" height="220" loading="lazy"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · CLOSE (peak: the buzzer fires from the scoreboard when the clock hits 0:00) -->
+  <section class="act" id="close" data-sc-act="flow" aria-labelledby="h-close">
+    <div class="bg" aria-hidden="true">
+      <img src="/uploads/Chart_MoodPlate_BacklitCrowd.webp" alt="" width="2048" height="1536" loading="lazy">
+      <video data-cta-video autoplay muted loop playsinline preload="metadata" poster="/uploads/Chart_MoodPlate_BacklitCrowd.webp">
+        <source src="/uploads/cta-crowd.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="shade" aria-hidden="true"></div>
+    <div class="inner">
+      <div class="sc-stack" data-sc-in data-sc-stagger="70">
+        <h2 class="big" id="h-close">Le terrain<br>t’attend.</h2>
+        <p class="lead">Sur le terrain ou en tribune, prends ta place.</p>
+        <p class="when">Dimanche 13 décembre 2026, terrain Djily Mbaye.</p>
+        <div class="actions">
+          <a class="cta" href="https://courtfest.com/buy">Billetterie</a>
+          <a class="link" href="https://courtfest.com/register">Inscrire une équipe</a>
+        </div>
+      </div>
+      <p class="small">Alpha 6 présente · <a href="https://www.instagram.com/thecourtfest/" target="_blank" rel="noopener noreferrer">@thecourtfest</a></p>
+    </div>
+  </section>
+
+</main>
+
+<script src="/dakar-2026/scrollcraft.js"></script>
+<script>ScrollCraft.mount(document.body);</script>
+<script>
+/* Signature move: the scoreboard is the scrollbar. Four quarters map to act
+   groups, the clock counts 12:00 to 0:00 inside each from scroll position,
+   finished quarters stamp solid, and 0:00 on the last quarter fires the buzzer.
+   This is a progress indicator, not a schedule. */
+(function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clock = document.getElementById("clock");
+  var qs = Array.prototype.slice.call(document.querySelectorAll(".q"));
+  var ids = ["top", "tournois", "equipe", "partenaires", "close"];
+  var starts = [], vh = 0, ticking = false, fired = false, lastText = "";
+
+  function measure() {
+    vh = window.innerHeight;
+    starts = ids.map(function (id, i) {
+      if (i === 0) return 0;
+      return document.getElementById(id).getBoundingClientRect().top + window.scrollY;
+    });
+  }
+  function fmt(s) {
+    s = Math.max(0, Math.ceil(s));
+    var m = Math.floor(s / 60), r = s % 60;
+    return m + ":" + (r < 10 ? "0" : "") + r;
+  }
+  function update() {
+    ticking = false;
+    var y = window.scrollY + vh * 0.35;   /* reading line */
+    var q = 0;
+    for (var i = 0; i < 4; i++) { if (y >= starts[i]) q = i; }
+    var a = starts[q], b = starts[q + 1];
+    var t = Math.min(1, Math.max(0, (y - a) / (b - a)));
+    var over = y >= starts[4];            /* last quarter finished */
+    clock.dataset.q = over ? "Q4" : "Q" + (q + 1);
+    var text = over ? "0:00" : fmt(720 * (1 - t));
+    if (text !== lastText) { clock.textContent = text; lastText = text; }
+    qs.forEach(function (el, i) {
+      el.classList.toggle("is-now", i === q && !over);
+      el.classList.toggle("is-done", i < q || over);
+      if (i === q && !over) el.setAttribute("aria-current", "true"); else el.removeAttribute("aria-current");
+    });
+    document.body.classList.toggle("is-zero", over);
+    if (over && !fired) { fired = true; if (!reduce) document.body.classList.add("buzz"); }
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", function () { measure(); update(); });
+  window.addEventListener("load", function () { measure(); update(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); update(); });
+  measure(); update();
+
+  /* Background clips: media injected as markup does not always start itself. */
+  if (!reduce) {
+    document.querySelectorAll("video[data-hero-video], video[data-cta-video]").forEach(function (v) {
+      v.muted = true;
+      var play = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+      if (v.readyState >= 2) play(); else v.addEventListener("canplay", play, { once: true });
+    });
+  } else {
+    document.querySelectorAll("video[data-hero-video], video[data-cta-video]").forEach(function (v) { v.style.display = "none"; });
+  }
+})();
+</script>
+</body>
+</html>
