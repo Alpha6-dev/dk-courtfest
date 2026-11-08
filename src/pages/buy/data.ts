@@ -34,7 +34,7 @@ export const QTY_MAX = 5
 
 // CourtFest-branded Hello-Tix checkout (Wave and card). Empty until Hello-Tix
 // sends the event link; the Wave/card option then switches on by itself.
-export const HELLOTIX_URL = ''
+export const HELLOTIX_URL = 'https://hello-tix.com/e/courtfest26'
 
 // Orange Money is not available on Hello-Tix: buyers send the amount to this
 // number, then confirm on WhatsApp and the team issues their QR pass.
