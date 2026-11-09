@@ -6,12 +6,15 @@ export interface TicketOption {
   type: TicketType
   label: string
   price: number
-  presale: number
+  // Presale price while the presale lasts; absent for tickets without a presale (kids).
+  presale?: number
   blurb: Record<Lang, string>
 }
 
 // Full prices; the presale (first 50 tickets) is applied by Hello-Tix for Wave
-// and card, and confirmed by the team for Orange Money buyers.
+// and card, and confirmed by the team for Orange Money buyers. Set on
+// Hello-Tix on 8 Nov 2026: kids 5 to 12 at 3,000 (50 tickets, no presale) and
+// a group price, 10% off from 5 tickets, kids included.
 export const TICKETS: TicketOption[] = [
   {
     type: 'general',
@@ -27,10 +30,26 @@ export const TICKETS: TicketOption[] = [
     presale: 12000,
     blurb: { fr: 'Toute la journée, avec place assise dans l’espace VIP.', en: 'All day, with a seat in the VIP area.' },
   },
+  {
+    type: 'kids',
+    label: 'Enfant',
+    price: 3000,
+    blurb: { fr: 'Enfants de 5 à 12 ans, toute la journée. 50 billets.', en: 'Kids aged 5 to 12, all day. 50 tickets.' },
+  },
 ]
 
 export const PRESALE_CAP = 50
-export const QTY_MAX = 5
+export const KIDS_CAP = 50
+// Group price: 10% off from GROUP_MIN tickets, kids included (applied by
+// Hello-Tix; confirmed on WhatsApp for Orange Money).
+export const GROUP_MIN = 5
+export const GROUP_OFF = 0.1
+export const QTY_MAX = 10
+
+export function orderTotal(price: number, quantity: number) {
+  const gross = price * quantity
+  return quantity >= GROUP_MIN ? Math.round(gross * (1 - GROUP_OFF)) : gross
+}
 
 // CourtFest-branded Hello-Tix checkout (Wave and card). Empty until Hello-Tix
 // sends the event link; the Wave/card option then switches on by itself.
@@ -72,7 +91,9 @@ export const T = {
     step2: '2 · Tes infos',
     step3: '3 · Paiement',
     presaleBadge: 'Prévente',
-    presaleNote: `Prévente pour les ${PRESALE_CAP} premiers billets, puis plein tarif. Joueur ou staff ? Ton entrée est offerte, pas besoin de billet.`,
+    groupLine: 'Tarif groupe (-10 %)',
+    groupApplied: 'appliqué au paiement à partir de 5 billets, enfants compris.',
+    presaleNote: `Prévente Général et VIP pour les ${PRESALE_CAP} premiers billets, puis plein tarif. Enfants de 5 à 12 ans : 3 000 XOF, ${KIDS_CAP} billets. Groupe de ${GROUP_MIN} billets et plus : -10 %, enfants compris. Joueur ou staff ? Ton entrée est offerte, pas besoin de billet.`,
     chosen: 'Choisi',
     quantity: 'Nombre de billets',
     fewer: 'Un billet de moins',
@@ -113,6 +134,7 @@ export const T = {
     waPhone: 'Téléphone',
     waPay: 'Je paie par Orange Money au',
     waPresale: 'ou prix de prévente si encore disponible',
+    waGroup: 'tarif groupe -10 % inclus',
     waProof: "J'envoie la confirmation du transfert ici.",
     payNow: 'Payer',
     copy: 'Copier le numéro',
@@ -132,7 +154,9 @@ export const T = {
     step2: '2 · Your details',
     step3: '3 · Payment',
     presaleBadge: 'Presale',
-    presaleNote: `Presale for the first ${PRESALE_CAP} tickets, then full price. Player or staff? Your entry is free, no ticket needed.`,
+    presaleNote: `General and VIP presale for the first ${PRESALE_CAP} tickets, then full price. Kids aged 5 to 12: 3,000 XOF, ${KIDS_CAP} tickets. Groups of ${GROUP_MIN} tickets or more: 10% off, kids included. Player or staff? Your entry is free, no ticket needed.`,
+    groupLine: 'Group price (10% off)',
+    groupApplied: 'applied at checkout from 5 tickets, kids included.',
     chosen: 'Chosen',
     quantity: 'Number of tickets',
     fewer: 'One ticket fewer',
@@ -173,6 +197,7 @@ export const T = {
     waPhone: 'Phone',
     waPay: 'I pay by Orange Money to',
     waPresale: 'or the presale price if still available',
+    waGroup: 'group price 10% off included',
     waProof: 'I will send the transfer confirmation here.',
     payNow: 'Pay',
     copy: 'Copy number',

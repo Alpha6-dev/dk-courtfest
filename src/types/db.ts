@@ -23,7 +23,7 @@ export interface Roster {
   notes: string | null
   created_at: string
 }
-export type TicketType = 'general' | 'vip' | 'player' | 'staff'
+export type TicketType = 'general' | 'vip' | 'kids' | 'player' | 'staff'
 export type TicketStatus = 'valid' | 'used' | 'void'
 export type MatchStatus = 'scheduled' | 'live' | 'final' | 'cancelled'
 

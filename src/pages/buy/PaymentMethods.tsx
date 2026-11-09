@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { track } from '../../lib/analytics'
-import { HELLOTIX_URL, ORANGE_MONEY_HOLDER, ORANGE_MONEY_NUMBER, WHATSAPP_DIGITS, T, xof, type Lang, type TicketOption } from './data'
+import { GROUP_MIN, HELLOTIX_URL, ORANGE_MONEY_HOLDER, ORANGE_MONEY_NUMBER, WHATSAPP_DIGITS, orderTotal, T, xof, type Lang, type TicketOption } from './data'
 
 export type Method = 'hellotix' | 'orange'
 
@@ -17,7 +17,8 @@ interface Props {
 
 export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone, method, onPick }: Props) {
   const t = T[lang]
-  const total = ticket.price * quantity
+  const total = orderTotal(ticket.price, quantity)
+  const priceNotes = [quantity >= GROUP_MIN ? t.waGroup : null, ticket.presale !== undefined ? t.waPresale : null].filter(Boolean).join(', ')
   const panelRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (method === 'orange') panelRef.current?.focus()
@@ -27,7 +28,7 @@ export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone,
     `${t.waIntro} ${quantity} ${quantity > 1 ? t.waTickets : t.waTicket} ${ticket.label} ${t.waFor} ${eventName}.`,
     `${t.waName} : ${name}`,
     `${t.waPhone} : ${phone}`,
-    `${t.waPay} ${ORANGE_MONEY_NUMBER} (${xof(total)}, ${t.waPresale}).`,
+    `${t.waPay} ${ORANGE_MONEY_NUMBER} (${xof(total)}${priceNotes ? `, ${priceNotes}` : ''}).`,
     t.waProof,
   ].join('\n')
   const waHref = `https://wa.me/${WHATSAPP_DIGITS}?text=${encodeURIComponent(waText)}`
