@@ -65,9 +65,11 @@ function Option({ lang, option, checked, onChange }: { lang: Lang; option: Ticke
       <input id={id} type="radio" name="ticket" value={option.type} checked={checked} onChange={() => onChange(option.type)} className="sr-only" />
       <div className="flex items-start justify-between gap-3">
         <span className="font-display text-3xl uppercase leading-none text-bone">{option.label}</span>
-        <span className="label bg-sun px-2 py-1 text-onyx">
-          {t.presaleBadge} {option.presale.toLocaleString('fr-FR')}
-        </span>
+        {option.presale !== undefined && (
+          <span className="label bg-sun px-2 py-1 text-onyx">
+            {t.presaleBadge} {option.presale.toLocaleString('fr-FR')}
+          </span>
+        )}
       </div>
       <div className="mt-3 font-display text-2xl text-sun">{xof(option.price)}</div>
       <p className="mt-1 pr-16 text-sm text-white/70">{option.blurb[lang]}</p>

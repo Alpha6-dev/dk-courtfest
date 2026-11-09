@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useBrand } from '../../lib/brand'
-import { T, xof, type Lang, type TicketOption } from './data'
+import { GROUP_MIN, orderTotal, T, xof, type Lang, type TicketOption } from './data'
 
 // Sticky on wide screens: what you are buying, when and where, what you pay.
 export function OrderSummary({ lang, ticket, quantity }: { lang: Lang; ticket: TicketOption; quantity: number }) {
@@ -11,8 +11,9 @@ export function OrderSummary({ lang, ticket, quantity }: { lang: Lang; ticket: T
     ? new Date(edition.event_date).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
     : null
   const date = raw ? raw.charAt(0).toUpperCase() + raw.slice(1) : null
-  const total = ticket.price * quantity
-  const presaleTotal = ticket.presale * quantity
+  const total = orderTotal(ticket.price, quantity)
+  const group = quantity >= GROUP_MIN
+  const presaleTotal = ticket.presale !== undefined ? orderTotal(ticket.presale, quantity) : null
 
   return (
     <aside aria-label={t.summary} className="border border-white/15 bg-white/5 p-5 lg:sticky lg:top-6 lg:self-start">
@@ -31,9 +32,16 @@ export function OrderSummary({ lang, ticket, quantity }: { lang: Lang; ticket: T
           <span className="font-display text-3xl text-sun">{xof(total)}</span>
         </div>
         {quantity > 1 && <p className="mt-1 text-sm text-white/60">{quantity} × {xof(ticket.price)}</p>}
-        <p className="mt-1 text-sm text-white/60">
-          {t.presaleLine}&nbsp;: <span className="text-bone">{xof(presaleTotal)}</span>, {t.presaleApplied}
-        </p>
+        {group && (
+          <p className="mt-1 text-sm text-white/60">
+            {t.groupLine}&nbsp;: <span className="text-bone">{xof(total)}</span>, {t.groupApplied}
+          </p>
+        )}
+        {presaleTotal !== null && (
+          <p className="mt-1 text-sm text-white/60">
+            {t.presaleLine}&nbsp;: <span className="text-bone">{xof(presaleTotal)}</span>, {t.presaleApplied}
+          </p>
+        )}
       </div>
       <p className="mt-4 text-sm text-white/60">{t.qrNote}</p>
     </aside>
