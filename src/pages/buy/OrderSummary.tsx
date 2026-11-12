@@ -13,7 +13,6 @@ export function OrderSummary({ lang, ticket, quantity }: { lang: Lang; ticket: T
   const date = raw ? raw.charAt(0).toUpperCase() + raw.slice(1) : null
   const total = orderTotal(ticket.price, quantity)
   const group = quantity >= GROUP_MIN
-  const presaleTotal = ticket.presale !== undefined ? orderTotal(ticket.presale, quantity) : null
 
   return (
     <aside aria-label={t.summary} className="border border-white/15 bg-white/5 p-5 lg:sticky lg:top-6 lg:self-start">
@@ -35,11 +34,6 @@ export function OrderSummary({ lang, ticket, quantity }: { lang: Lang; ticket: T
         {group && (
           <p className="mt-1 text-sm text-white/60">
             {t.groupLine}&nbsp;: <span className="text-bone">{xof(total)}</span>, {t.groupApplied}
-          </p>
-        )}
-        {presaleTotal !== null && (
-          <p className="mt-1 text-sm text-white/60">
-            {t.presaleLine}&nbsp;: <span className="text-bone">{xof(presaleTotal)}</span>, {t.presaleApplied}
           </p>
         )}
       </div>

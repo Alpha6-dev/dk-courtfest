@@ -18,7 +18,7 @@ interface Props {
 export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone, method, onPick }: Props) {
   const t = T[lang]
   const total = orderTotal(ticket.price, quantity)
-  const priceNotes = [quantity >= GROUP_MIN ? t.waGroup : null, ticket.presale !== undefined ? t.waPresale : null].filter(Boolean).join(', ')
+  const priceNotes = quantity >= GROUP_MIN ? t.waGroup : ''
   const panelRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (method === 'orange') panelRef.current?.focus()
@@ -58,7 +58,7 @@ export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone,
           <ol className="space-y-4">
             <Step n={1} title={t.sendTitle}>
               <span className="font-display text-2xl text-sun">{xof(total)}</span> {t.sendBy}{' '}
-              <span className="font-mono text-bone">{ORANGE_MONEY_NUMBER}</span> <CopyNumber lang={lang} /> ({ORANGE_MONEY_HOLDER}). {t.presaleCheck}
+              <span className="font-mono text-bone">{ORANGE_MONEY_NUMBER}</span> <CopyNumber lang={lang} /> ({ORANGE_MONEY_HOLDER}).
             </Step>
             <Step n={2} title={t.confirmTitle}>
               {t.confirmBody} {name}.
