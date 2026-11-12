@@ -5,29 +5,38 @@ export type Lang = 'fr' | 'en'
 export interface TicketOption {
   type: TicketType
   label: string
+  // Online price today: the presale price until the presale ends, the advance price after.
   price: number
-  // Presale price while the presale lasts; absent for tickets without a presale (kids).
-  presale?: number
+  // True while `price` is the presale price; absent for tickets without a presale (kids).
+  presale?: boolean
   blurb: Record<Lang, string>
 }
 
-// Full prices; the presale (first 50 tickets) is applied by Hello-Tix for Wave
-// and card, and confirmed by the team for Orange Money buyers. Set on
-// Hello-Tix on 8 Nov 2026: kids 5 to 12 at 3,000 (50 tickets, no presale) and
-// a group price, 10% off from 5 tickets, kids included.
+// Same prices as Hello-Tix (set there on 11 Nov 2026). General and VIP have
+// three levels: presale until 30 Nov, advance until the event, door on the day
+// (door tickets are not sold here). Kids 5 to 12 at 3,000 (50 tickets, one
+// price) and a group price, 10% off from 5 tickets, kids included.
+export const PRICES = {
+  general: { presale: 6000, advance: 8000, door: 10000 },
+  vip: { presale: 11000, advance: 13000, door: 15000 },
+} as const
+// The presale ends on Monday 30 Nov 2026 at 00:00 in Dakar (UTC+0), as on Hello-Tix.
+export const PRESALE_OPEN = Date.now() < Date.UTC(2026, 10, 30)
+const online = (p: { presale: number; advance: number }) => (PRESALE_OPEN ? p.presale : p.advance)
+
 export const TICKETS: TicketOption[] = [
   {
     type: 'general',
     label: 'Général',
-    price: 10000,
-    presale: 8000,
+    price: online(PRICES.general),
+    presale: PRESALE_OPEN,
     blurb: { fr: 'Toute la journée : open runs, tournois, musique.', en: 'All day: open runs, tournaments, music.' },
   },
   {
     type: 'vip',
     label: 'VIP',
-    price: 15000,
-    presale: 12000,
+    price: online(PRICES.vip),
+    presale: PRESALE_OPEN,
     blurb: { fr: 'Toute la journée, avec place assise dans l’espace VIP.', en: 'All day, with a seat in the VIP area.' },
   },
   {
@@ -38,7 +47,6 @@ export const TICKETS: TicketOption[] = [
   },
 ]
 
-export const PRESALE_CAP = 50
 export const KIDS_CAP = 50
 // Group price: 10% off from GROUP_MIN tickets, kids included (applied by
 // Hello-Tix; confirmed on WhatsApp for Orange Money).
@@ -61,7 +69,13 @@ export const ORANGE_MONEY_NUMBER = '+221 77 284 26 50'
 export const ORANGE_MONEY_HOLDER = 'Mouhamadou Lamine Diop'
 export const WHATSAPP_DIGITS = '221772842650'
 
-export const xof = (n: number) => `${n.toLocaleString('fr-FR')} XOF`
+// Buyers say FCFA, and so does Hello-Tix; XOF stays in the data and the JSON-LD.
+export const xof = (n: number) => `${n.toLocaleString('fr-FR')} FCFA`
+
+const frN = (n: number) => n.toLocaleString('fr-FR')
+const enN = (n: number) => n.toLocaleString('en-US')
+const G = PRICES.general
+const V = PRICES.vip
 
 // Language preference shared with /register (key cf_lang).
 export function readLang(): Lang {
@@ -93,7 +107,11 @@ export const T = {
     presaleBadge: 'Prévente',
     groupLine: 'Tarif groupe (-10 %)',
     groupApplied: 'appliqué au paiement à partir de 5 billets, enfants compris.',
-    presaleNote: `Prévente Général et VIP pour les ${PRESALE_CAP} premiers billets, puis plein tarif. Enfants de 5 à 12 ans : 3 000 XOF, ${KIDS_CAP} billets. Groupe de ${GROUP_MIN} billets et plus : -10 %, enfants compris. Joueur ou staff ? Ton entrée est offerte, pas besoin de billet.`,
+    presaleNote: `${
+      PRESALE_OPEN
+        ? `Prévente jusqu’au 30 novembre à 0 h. Ensuite : Général ${frN(G.advance)} FCFA, VIP ${frN(V.advance)} FCFA. Sur place : ${frN(G.door)} et ${frN(V.door)} FCFA, selon disponibilité.`
+        : `Sur place : Général ${frN(G.door)} FCFA, VIP ${frN(V.door)} FCFA, selon disponibilité.`
+    } Enfants de 5 à 12 ans : 3 000 FCFA, ${KIDS_CAP} billets. Groupe de ${GROUP_MIN} billets et plus : -10 %, enfants compris. Joueur ou staff ? Ton entrée est offerte, pas besoin de billet.`,
     chosen: 'Choisi',
     quantity: 'Nombre de billets',
     fewer: 'Un billet de moins',
@@ -110,7 +128,6 @@ export const T = {
     orangeNote: 'Transfert au numéro Courtfest, confirmation sur WhatsApp. Pass QR envoyé par l’équipe.',
     sendTitle: 'Envoie le montant',
     sendBy: 'par Orange Money au',
-    presaleCheck: 'Si la prévente est encore ouverte, on te confirme le prix sur WhatsApp avant le transfert.',
     confirmTitle: 'Confirme sur WhatsApp',
     confirmBody: 'Envoie la capture du transfert. Tes pass QR arrivent en retour, au nom de',
     confirmBtn: 'Confirmer sur WhatsApp',
@@ -122,8 +139,6 @@ export const T = {
     allDay: 'Toute la journée',
     ticket: 'Billet',
     tickets: 'billets',
-    presaleLine: 'En prévente',
-    presaleApplied: 'appliqué au paiement tant qu’il en reste.',
     total: 'Total',
     qrNote: 'Billets nominatifs avec code QR, contrôlés à l’entrée.',
     waIntro: 'Bonjour, je souhaite',
@@ -133,7 +148,6 @@ export const T = {
     waName: 'Nom',
     waPhone: 'Téléphone',
     waPay: 'Je paie par Orange Money au',
-    waPresale: 'ou prix de prévente si encore disponible',
     waGroup: 'tarif groupe -10 % inclus',
     waProof: "J'envoie la confirmation du transfert ici.",
     payNow: 'Payer',
@@ -154,7 +168,11 @@ export const T = {
     step2: '2 · Your details',
     step3: '3 · Payment',
     presaleBadge: 'Presale',
-    presaleNote: `General and VIP presale for the first ${PRESALE_CAP} tickets, then full price. Kids aged 5 to 12: 3,000 XOF, ${KIDS_CAP} tickets. Groups of ${GROUP_MIN} tickets or more: 10% off, kids included. Player or staff? Your entry is free, no ticket needed.`,
+    presaleNote: `${
+      PRESALE_OPEN
+        ? `Presale until 30 November, 12:00 am. After that: General ${enN(G.advance)} FCFA, VIP ${enN(V.advance)} FCFA. At the door: ${enN(G.door)} and ${enN(V.door)} FCFA, subject to availability.`
+        : `At the door: General ${enN(G.door)} FCFA, VIP ${enN(V.door)} FCFA, subject to availability.`
+    } Kids aged 5 to 12: 3,000 FCFA, ${KIDS_CAP} tickets. Groups of ${GROUP_MIN} tickets or more: 10% off, kids included. Player or staff? Your entry is free, no ticket needed.`,
     groupLine: 'Group price (10% off)',
     groupApplied: 'applied at checkout from 5 tickets, kids included.',
     chosen: 'Chosen',
@@ -173,7 +191,6 @@ export const T = {
     orangeNote: 'Transfer to the Courtfest number, confirm on WhatsApp. QR pass sent by the team.',
     sendTitle: 'Send the amount',
     sendBy: 'by Orange Money to',
-    presaleCheck: 'If the presale is still open, we confirm the price on WhatsApp before you transfer.',
     confirmTitle: 'Confirm on WhatsApp',
     confirmBody: 'Send the transfer screenshot. Your QR passes come back, in the name of',
     confirmBtn: 'Confirm on WhatsApp',
@@ -185,8 +202,6 @@ export const T = {
     allDay: 'All day',
     ticket: 'Ticket',
     tickets: 'tickets',
-    presaleLine: 'Presale',
-    presaleApplied: 'applied at checkout while it lasts.',
     total: 'Total',
     qrNote: 'Named tickets with QR code, checked at the gate.',
     waIntro: 'Hello, I would like',
@@ -196,7 +211,6 @@ export const T = {
     waName: 'Name',
     waPhone: 'Phone',
     waPay: 'I pay by Orange Money to',
-    waPresale: 'or the presale price if still available',
     waGroup: 'group price 10% off included',
     waProof: 'I will send the transfer confirmation here.',
     payNow: 'Pay',

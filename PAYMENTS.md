@@ -15,7 +15,7 @@ Live test completed: `/buy` → `payment-init` → PayDunya hosted checkout → 
 - Still not live: PayDunya KYC not done, mode test. The public `/buy` page sends an email request and does not call `payment-init` (only the academy `/pay/<id>` links do). Courtfest Dakar 2026 tickets are sold on Hello-Tix (Wave, card); Orange Money buyers pay the personal Orange Money account and get a free QR pass on Hello-Tix.
 
 ## Ticket sales for Courtfest Dakar 2026 (buy page, 21 Oct 2026)
-- `/buy` no longer sends an email request. It shows the full prices (General 10,000, VIP 15,000) and the presale (8,000 / 12,000, first 50 tickets), then two payment paths:
+- `/buy` no longer sends an email request. It shows the online price of the day, same as Hello-Tix (presale General 6,000 / VIP 11,000 until 30 Nov 2026, then 8,000 / 13,000; door 10,000 / 15,000 is shown as a note only), then two payment paths:
   - **Wave or card**: opens the CourtFest-branded Hello-Tix checkout. The link lives in the `HELLOTIX_URL` constant in `src/pages/buy/data.ts` (the page is split into `src/pages/Buy.tsx` plus `src/pages/buy/`: ticket options, order summary, payment methods); while it is empty the button is disabled and reads "bientôt disponible". Paste the link when Hello-Tix sends it.
   - **Orange Money**: the buyer sends the amount to the personal Orange Money number shown on the page, then confirms on WhatsApp with a prefilled message (name, ticket, amount). The team issues the QR pass (free pass on Hello-Tix, or a manual ticket in `/admin/tickets`, recorded as a cash payment).
 - Analytics events: `buy_hellotix`, `buy_orange_money`, `buy_orange_money_whatsapp`.
