@@ -261,9 +261,15 @@ export default function LandingPage({ page }: { page: LandingPageId }) {
     // in the background so no lead is lost.
     //  - "Rejoindre" (CTA): email only, source 'landing'
     //  - "Devenir partenaire" (events page): organisation + email, source 'partner'
+    //  - Footer newsletter: a native POST to the listmonk public form (double
+    //    opt-in), opened in a new tab; only the funnel beacon runs here
     const onSubmit = (e: Event) => {
-      e.preventDefault()
       const form = e.target as HTMLFormElement
+      if (form.matches('[data-newsletter-form]')) {
+        track('newsletter_submit', { page })
+        return
+      }
+      e.preventDefault()
       const input = form.querySelector<HTMLInputElement>('input[type="email"]')
       const email = input?.value.trim() ?? ''
 
