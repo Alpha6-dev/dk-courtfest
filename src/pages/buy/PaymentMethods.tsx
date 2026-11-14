@@ -86,6 +86,7 @@ export function PaymentMethods({ lang, ticket, quantity, eventName, name, phone,
           {t.helpLink}
         </a>
       </p>
+      <p className="mt-3 border-l-2 border-sun pl-3 text-sm text-white/70">{t.official}</p>
     </section>
   )
 }

@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { supabase } from '../lib/supabase'
 import { track } from '../lib/analytics'
 import { useBrand } from '../lib/brand'
+import { waLink } from '../lib/contact'
 import { use3DTier } from '../three/use3DTier'
 import navFr from './landing/nav.fr.html?raw'
 import navEn from './landing/nav.en.html?raw'
@@ -200,6 +201,12 @@ export default function LandingPage({ page }: { page: LandingPageId }) {
     const el = ref.current
     if (!el) return
     document.documentElement.lang = lang
+
+    // WhatsApp links: the fragments carry a bare https://wa.me/ with data-cf-wa;
+    // the team number is filled in here so it never sits in the HTML source.
+    el.querySelectorAll<HTMLAnchorElement>('a[data-cf-wa]').forEach((a) => {
+      a.href = waLink()
+    })
 
     // Nav: mark the link of the page we are on.
     el.querySelectorAll<HTMLAnchorElement>('[data-nav="desk"] a, [data-nav="mlink"]').forEach((a) => {

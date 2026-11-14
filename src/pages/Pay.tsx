@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { ArrowLeft, CheckCircle2, Copy, Smartphone, CreditCard, MessageCircle, ShieldCheck, Zap } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { Wordmark } from '../components/Wordmark'
+import { CONTACT_DIGITS, CONTACT_DISPLAY } from '../lib/contact'
 
 // Public payment link for an academy cotisation: /pay/<membership_id>, sent to
 // guardians on WhatsApp. payment-init returns the hosted checkout URL when a
@@ -20,8 +21,8 @@ type State =
 
 type Rail = 'wave' | 'orange_money' | 'whatsapp'
 
-const MERCHANT_PHONE = '+221 77 284 26 50'
-const WHATSAPP_DIGITS = '221772842650'
+const MERCHANT_PHONE = CONTACT_DISPLAY
+const WHATSAPP_DIGITS = CONTACT_DIGITS
 const fcfa = (n: number) => `${n.toLocaleString('fr-FR')} FCFA`
 
 export default function Pay() {

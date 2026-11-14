@@ -1,3 +1,4 @@
+import { CONTACT_DIGITS, CONTACT_DISPLAY } from '../../lib/contact'
 import type { TicketType } from '../../types/db'
 
 export type Lang = 'fr' | 'en'
@@ -65,9 +66,9 @@ export const HELLOTIX_URL = 'https://hello-tix.com/e/courtfest26'
 
 // Orange Money is not available on Hello-Tix: buyers send the amount to this
 // number, then confirm on WhatsApp and the team issues their QR pass.
-export const ORANGE_MONEY_NUMBER = '+221 77 284 26 50'
+export const ORANGE_MONEY_NUMBER = CONTACT_DISPLAY
 export const ORANGE_MONEY_HOLDER = 'Mouhamadou Lamine Diop'
-export const WHATSAPP_DIGITS = '221772842650'
+export const WHATSAPP_DIGITS = CONTACT_DIGITS
 
 // Buyers say FCFA, and so does Hello-Tix; XOF stays in the data and the JSON-LD.
 export const xof = (n: number) => `${n.toLocaleString('fr-FR')} FCFA`
@@ -155,6 +156,8 @@ export const T = {
     copied: 'Numéro copié',
     help: 'Une question ?',
     helpLink: 'Écris-nous sur WhatsApp',
+    official:
+      'Billets officiels : uniquement sur cette page (Hello-Tix, ou Orange Money au numéro affiché ici). Courtfest ne vend aucun billet par un autre numéro, un autre compte ou une autre page.',
     langSwitch: 'EN',
     langAria: 'Switch to English',
   },
@@ -218,6 +221,8 @@ export const T = {
     copied: 'Number copied',
     help: 'A question?',
     helpLink: 'Message us on WhatsApp',
+    official:
+      'Official tickets: only on this page (Hello-Tix, or Orange Money to the number shown here). Courtfest never sells tickets through another number, account or page.',
     langSwitch: 'FR',
     langAria: 'Passer en français',
   },
